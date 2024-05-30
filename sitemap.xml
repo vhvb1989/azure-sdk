@@ -1,24 +1,3853 @@
----
-layout: none
-search: exclude
----
-
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  {% for post in site.posts %}
-  {% unless post.search == "exclude" %}
+  
+  
   <url>
-    <loc>{{site.url}}{{post.url}}</loc>
+    <loc>/posts/2020-06-02/async-iterators.html</loc>
   </url>
-  {% endunless %}
-  {% endfor %}
+  
+  
+  
+  <url>
+    <loc>/posts/2020-05-19/formrecognizer.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/posts/2020-05-12/may-release.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/posts/2020-05-05/jupyter-notebooks.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/posts/2020-04-28/net-cancellation.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/posts/2020-04-21/js-cancellation.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/posts/2020-04-14/april-release.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/posts/2020-04-07/java-eventprocessorclient.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/posts/2020-03-31/aspnet-core-integration.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/posts/2020-03-24/python-tracing.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/posts/2020-03-17/march-release.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/posts/2020-03-10/monorepo.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/posts/2020-03-03/java-pluggable-http.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/posts/2020-02-25/defaultazurecredentials.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/posts/2020-02-11/february-release.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/posts/2020-01-13/january-release.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/posts/2019-12-13/december-release.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/posts/2019-11-11/november-ga-release.html</loc>
+  </url>
+  
+  
 
 
-  {% for page in site.pages %}
-  {% unless page.search == "exclude" %}
+  
+  
   <url>
-    <loc>{{site.url}}{{ page.url}}</loc>
+    <loc>/releases/2019-07-10/dotnet.html</loc>
   </url>
-  {% endunless %}
-  {% endfor %}
+  
+  
+  
+  <url>
+    <loc>/releases/2019-07-10/java.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2019-07-10/js.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2019-07-10/python.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2019-08-06/dotnet.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2019-08-06/java.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2019-08-06/js.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2019-08-06/python.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2019-09-17/dotnet.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2019-09-17/java.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2019-09-17/js.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2019-09-17/python.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2019-10-11/dotnet.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2019-10-11/java.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2019-10-11/js.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2019-10-11/python.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2019-11/dotnet.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2019-11/java.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2019-11/js.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2019-11/python.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2019-12/dotnet.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2019-12/java.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2019-12/js.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2019-12/python.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/policies_adoption.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-03/android.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-03/android.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-05/android.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-04/android.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-06/android.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-12/android.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-09/android.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-06/android.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-07/android.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-11/android.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-02/android.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-10/android.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-11/android.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-08/android.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-10/android.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2024-01/android.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-07/android.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-11/android.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-12/android.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-01/android.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-08/android.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-10/android.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-02/android.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/latest/android.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-03/android.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-11/android.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2024-04/android.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-10/android.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-05/android.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2024-05/android.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-01/android.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-04/android.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-12/android.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-09/android.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-01/android.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-06/android.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-08/android.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-12/android.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-04/android.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-07/android.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2024-02/android.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-09/android.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-02/android.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2024-03/android.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-05/android.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/general_azurecore.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-03/c.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-03/c.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-04/c.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-12/c.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-09/c.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-06/c.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-07/c.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-11/c.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-10/c.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-11/c.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-08/c.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-10/c.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2024-01/c.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-07/c.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-11/c.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-12/c.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-01/c.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-10/c.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-02/c.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/latest/c.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-03/c.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-11/c.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2024-04/c.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-10/c.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-05/c.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2024-05/c.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-01/c.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-04/c.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-12/c.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-09/c.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-06/c.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-09/c.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-08/c.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-12/c.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-07/c.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2024-02/c.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-09/c.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-02/c.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2024-03/c.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-05/c.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/clang_introduction.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/general_compatibility.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-03/cpp.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-03/cpp.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-05/cpp.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-04/cpp.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-06/cpp.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-12/cpp.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-09/cpp.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-06/cpp.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-07/cpp.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-11/cpp.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-02/cpp.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-10/cpp.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-11/cpp.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-08/cpp.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-10/cpp.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2024-01/cpp.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-07/cpp.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-11/cpp.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-12/cpp.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-01/cpp.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-08/cpp.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-10/cpp.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-02/cpp.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/latest/cpp.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-03/cpp.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-11/cpp.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2024-04/cpp.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-10/cpp.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-05/cpp.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2024-05/cpp.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-01/cpp.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-04/cpp.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-12/cpp.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-09/cpp.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-01/cpp.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-06/cpp.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-09/cpp.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-08/cpp.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-12/cpp.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-04/cpp.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-07/cpp.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2024-02/cpp.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-09/cpp.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-02/cpp.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2024-03/cpp.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-05/cpp.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/dependency_addition_checklist.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/clang_design.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/python_design.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/typescript_design.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/android_design.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/general_design.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/ios_design.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/distributed_tracing_conventions.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/python_documentation.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/typescript_documentation.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/general_documentation.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/ios_documentation.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/dotnet/guidelines/index.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-03/dotnet.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-03/dotnet.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-05/dotnet.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-04/dotnet.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-06/dotnet.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-12/dotnet.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-02/dotnet.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-09/dotnet.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-06/dotnet.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-07/dotnet.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-11/dotnet.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-02/dotnet.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-10/dotnet.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-06/dotnet.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-11/dotnet.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-08/dotnet.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-08/dotnet.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-10/dotnet.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2024-01/dotnet.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-07/dotnet.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-03/dotnet.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-11/dotnet.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-12/dotnet.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-01/dotnet.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-05/dotnet.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-08/dotnet.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-01/dotnet.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-07/dotnet.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-10/dotnet.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-02/dotnet.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/latest/mgmt/dotnet.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/latest/all/dotnet.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/latest/dotnet.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-03/dotnet.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-11/dotnet.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2024-04/dotnet.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-10/dotnet.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-05/dotnet.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2024-05/dotnet.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-01/dotnet.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-04/dotnet.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-12/dotnet.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-09/dotnet.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-01/dotnet.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-06/dotnet.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-09/dotnet.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-08/dotnet.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-12/dotnet.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-04/dotnet.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-07/dotnet.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/deprecated/dotnet.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2024-02/dotnet.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-04/dotnet.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-09/dotnet.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-02/dotnet.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2024-03/dotnet.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-05/dotnet.html</loc>
+  </url>
+  
+  
+  
+  
+  
+  <url>
+    <loc>/general/guidelines/index.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-03/go.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-03/go.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-05/go.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-04/go.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-06/go.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-12/go.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-09/go.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-06/go.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-07/go.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-11/go.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-02/go.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-10/go.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-08/go.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-10/go.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2024-01/go.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-07/go.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-11/go.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-01/go.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-08/go.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-10/go.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-02/go.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/latest/mgmt/go.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/latest/all/go.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/latest/go.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-03/go.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-11/go.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2024-04/go.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-05/go.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2024-05/go.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-01/go.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-04/go.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-12/go.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-09/go.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-06/go.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-08/go.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-12/go.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-04/go.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-07/go.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/deprecated/go.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2024-02/go.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-09/go.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-02/go.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2024-03/go.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-05/go.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/rust_implementation.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/dotnet_implementation.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/clang_implementation.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/python_implementation.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/cpp_implementation.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/java_implementation.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/typescript_implementation.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/android_implementation.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/golang_implementation.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/general_implementation.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/ios_implementation.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-03/</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-03/</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-05/</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-04/</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-06/</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-12/</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-02/index.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-09/</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-06/</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-07/</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-11/</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2019-09-17/index.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-02/</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-10/</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-06/index.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-11/index.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-08/</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-08/index.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-10/</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2024-01/</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-07/</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-03/index.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-11/</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-12/index.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-01/</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-05/index.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-08/</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-01/index.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-07/index.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-10/</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-02/</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2019-10-11/index.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/latest/mgmt/</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/latest/all/</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/latest/index.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-03/</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-11/</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2024-04/</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-10/index.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-05/</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2024-05/</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-01/</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-04/</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2019-07-10/index.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2019-11/index.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-12/</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-09/</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-01/</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-06/</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-09/index.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-08/</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2019-08-06/index.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-12/</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2019-12/index.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-04/</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-07/</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/deprecated/</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2024-02/</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-04/index.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-09/</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-02/</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2024-03/</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-05/</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/rust_introduction.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/dotnet_introduction.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/cpp_introduction.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/java_introduction.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/typescript_introduction.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/golang_introduction.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/general_introduction.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/ios_introduction.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-03/ios.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-03/ios.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-05/ios.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-04/ios.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-06/ios.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-12/ios.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-09/ios.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-06/ios.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-07/ios.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-11/ios.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-02/ios.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-10/ios.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-11/ios.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-08/ios.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-10/ios.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2024-01/ios.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-07/ios.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-11/ios.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-12/ios.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-01/ios.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-08/ios.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-10/ios.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-02/ios.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/latest/ios.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-03/ios.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-11/ios.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2024-04/ios.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-10/ios.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-05/ios.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2024-05/ios.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-01/ios.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-04/ios.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-12/ios.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-09/ios.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-01/ios.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-06/ios.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-08/ios.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-12/ios.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-04/ios.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-07/ios.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2024-02/ios.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-09/ios.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-02/ios.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2024-03/ios.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-05/ios.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/java/guidelines/index.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-03/java.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-03/java.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-05/java.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-04/java.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-06/java.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-12/java.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-02/java.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-09/java.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-06/java.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-07/java.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-11/java.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-02/java.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-10/java.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-06/java.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-11/java.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-08/java.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-08/java.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-10/java.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2024-01/java.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-07/java.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-03/java.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-11/java.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-12/java.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-01/java.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-05/java.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-08/java.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-01/java.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-07/java.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-10/java.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-02/java.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/latest/mgmt/java.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/latest/all/java.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/latest/java.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-03/java.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-11/java.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2024-04/java.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-05/java.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2024-05/java.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-01/java.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-04/java.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-12/java.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-09/java.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-01/java.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-06/java.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-09/java.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-08/java.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-12/java.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-04/java.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-07/java.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/deprecated/java.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2024-02/java.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-04/java.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-09/java.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-02/java.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2024-03/java.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-05/java.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-03/js.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-03/js.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-05/js.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-04/js.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-06/js.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-12/js.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-02/js.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-09/js.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-06/js.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-07/js.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-11/js.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-02/js.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-10/js.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-06/js.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-11/js.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-08/js.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-08/js.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-10/js.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2024-01/js.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-07/js.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-03/js.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-11/js.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-12/js.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-01/js.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-05/js.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-08/js.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-01/js.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-07/js.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-10/js.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-02/js.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/latest/mgmt/js.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/latest/all/js.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/latest/js.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-03/js.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-11/js.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2024-04/js.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-10/js.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-05/js.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2024-05/js.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-01/js.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-04/js.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-12/js.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-09/js.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-01/js.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-06/js.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-09/js.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-08/js.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-12/js.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-04/js.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-07/js.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/deprecated/js.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2024-02/js.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-04/js.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-09/js.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-02/js.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2024-03/js.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-05/js.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/policies_opensource.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/policies_pipelines.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/latest/all/preview-only-specs.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/python/guidelines/index.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/python/guidelines/python_introduction.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-03/python.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-03/python.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-05/python.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-04/python.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-06/python.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-12/python.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-02/python.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-09/python.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-06/python.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-07/python.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-11/python.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-02/python.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-10/python.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-06/python.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-11/python.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-08/python.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-08/python.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-10/python.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2024-01/python.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-07/python.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-03/python.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-11/python.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-12/python.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-01/python.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-05/python.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-08/python.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-01/python.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-07/python.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-10/python.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-02/python.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/latest/mgmt/python.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/latest/all/python.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/latest/python.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-03/python.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-11/python.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2024-04/python.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-10/python.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-05/python.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2024-05/python.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-01/python.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-04/python.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-12/python.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-09/python.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-01/python.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-06/python.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-09/python.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-08/python.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-12/python.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-04/python.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-07/python.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/deprecated/python.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2024-02/python.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-04/python.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2021-09/python.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2022-02/python.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2024-03/python.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2023-05/python.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/registered_namespaces.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/policies_releasenotes.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/policies_releases.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/policies_repobranching.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/policies_repostructure.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/policies_reviewprocess.html</loc>
+  </url>
+  
+  
+  
+  
+  
+  <url>
+    <loc>/search.html</loc>
+  </url>
+  
+  
+  
+  
+  
+  <url>
+    <loc>/releases/latest/mgmt/specs.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/latest/all/specs.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/latest/specs.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/java_spring.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/policies_support.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/general_terminology.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/js/tipuesearch_content.js</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/typescript/guidelines/index.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/assets/css/style.css</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/SECURITY.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/docs/android/approved_dependencies.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/docs/android/refs.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/docs/clang/approved_dependencies.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/docs/clang/refs.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/docs/cpp/approved_dependencies.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/docs/cpp/refs.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/docs/dotnet/APIListingExample.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/docs/dotnet/refs.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/docs/golang/approved_dependencies.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/docs/golang/refs.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/docs/ios/approved_dependencies.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/docs/ios/refs.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/docs/java/approved_dependencies.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/docs/java/refs.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/docs/policies/migration-guide-template.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/docs/python/approved_dependencies.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/docs/python/conditionally_approved_dependencies.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/docs/python/refs.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/docs/rust/refs.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/docs/typescript/approved_dependencies.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/docs/typescript/refs.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2019-11/java-quicklinks.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2019-11/js-quicklinks.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2019-11/net-quicklinks.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2019-11/python-quicklinks.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/releases/2020-10/java.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>/robots.txt</loc>
+  </url>
+  
+  
 </urlset>

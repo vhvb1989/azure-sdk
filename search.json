@@ -1,33 +1,7034 @@
----
-title: search
-layout: none
-search: exclude
----
-
 [
-{% for page in site.pages %}
-{% unless page.search == "exclude" %}
-{
-"title": "{{ page.title | escape }}",
-"tags": "{{ page.tags }}",
-"keywords": "{{page.keywords}}",
-"url": "{{ page.url | remove: "/"}}",
-"summary": "{{page.summary | strip }}"
-}
-{% unless forloop.last and site.posts.size < 1 %},{% endunless %}
-{% endunless %}
-{% endfor %}
 
-{% for post in site.posts %}
 
 {
-"title": "{{ post.title | escape }}",
-"tags": "{{ post.tags }}",
-"keywords": "{{post.keywords}}",
-"url": "{{ post.url | remove: "/" }}",
-"summary": "{{post.summary | strip }}"
+"title": "Azure SDK for .NET (July 2019 Preview)",
+"tags": "dotnet",
+"keywords": "",
+"url": "releases2019-07-10dotnet.html",
+"summary": ""
 }
-{% unless forloop.last %},{% endunless %}
-{% endfor %}
+,
+
+
+
+{
+"title": "Azure SDK for Java (July 2019 Preview)",
+"tags": "java",
+"keywords": "",
+"url": "releases2019-07-10java.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for JavaScript (July 2019 Preview)",
+"tags": "javascript typescript",
+"keywords": "",
+"url": "releases2019-07-10js.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Python (July 2019 Preview)",
+"tags": "python",
+"keywords": "",
+"url": "releases2019-07-10python.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for .NET (August 2019 Preview)",
+"tags": "dotnet",
+"keywords": "",
+"url": "releases2019-08-06dotnet.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Java (August 2019 Preview)",
+"tags": "java",
+"keywords": "",
+"url": "releases2019-08-06java.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for JavaScript (August 2019 Preview)",
+"tags": "javascript typescript",
+"keywords": "",
+"url": "releases2019-08-06js.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Python (August 2019 Preview)",
+"tags": "python",
+"keywords": "",
+"url": "releases2019-08-06python.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for .NET (September 2019 Preview)",
+"tags": "dotnet",
+"keywords": "",
+"url": "releases2019-09-17dotnet.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Java (September 2019 Preview)",
+"tags": "java",
+"keywords": "",
+"url": "releases2019-09-17java.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for JavaScript (September 2019 Preview)",
+"tags": "javascript typescript",
+"keywords": "",
+"url": "releases2019-09-17js.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Python (September 2019 Preview)",
+"tags": "python",
+"keywords": "",
+"url": "releases2019-09-17python.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for .NET (October 2019 Preview)",
+"tags": "dotnet",
+"keywords": "",
+"url": "releases2019-10-11dotnet.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Java (October 2019 Preview)",
+"tags": "java",
+"keywords": "",
+"url": "releases2019-10-11java.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for JavaScript (October 2019 Preview)",
+"tags": "javascript typescript",
+"keywords": "",
+"url": "releases2019-10-11js.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Python (October 2019 Preview)",
+"tags": "python",
+"keywords": "",
+"url": "releases2019-10-11python.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for .NET (November 2019)",
+"tags": "dotnet",
+"keywords": "",
+"url": "releases2019-11dotnet.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Java (November 2019)",
+"tags": "java azure",
+"keywords": "",
+"url": "releases2019-11java.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for JavaScript (November 2019)",
+"tags": "javascript typescript",
+"keywords": "",
+"url": "releases2019-11js.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Python (November 2019)",
+"tags": "python",
+"keywords": "",
+"url": "releases2019-11python.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for .NET (December 2019)",
+"tags": "dotnet",
+"keywords": "",
+"url": "releases2019-12dotnet.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Java (December 2019)",
+"tags": "java azure",
+"keywords": "",
+"url": "releases2019-12java.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for JavaScript (December 2019)",
+"tags": "javascript typescript",
+"keywords": "",
+"url": "releases2019-12js.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Python (December 2019)",
+"tags": "python",
+"keywords": "",
+"url": "releases2019-12python.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Policies: Guideline Adoption",
+"tags": "",
+"keywords": "",
+"url": "policies_adoption.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Android (March 2021)",
+"tags": "android azure",
+"keywords": "",
+"url": "releases2021-03android.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Android (March 2023)",
+"tags": "android azure",
+"keywords": "",
+"url": "releases2023-03android.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Android (May 2021)",
+"tags": "android azure",
+"keywords": "",
+"url": "releases2021-05android.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Android (April 2022)",
+"tags": "android azure",
+"keywords": "",
+"url": "releases2022-04android.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Android (June 2021)",
+"tags": "android azure",
+"keywords": "",
+"url": "releases2021-06android.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Android (December 2022)",
+"tags": "android azure",
+"keywords": "",
+"url": "releases2022-12android.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Android (September 2023)",
+"tags": "android azure",
+"keywords": "",
+"url": "releases2023-09android.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Android (June 2023)",
+"tags": "android azure",
+"keywords": "",
+"url": "releases2023-06android.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Android (July 2023)",
+"tags": "android azure",
+"keywords": "",
+"url": "releases2023-07android.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Android (November 2022)",
+"tags": "android azure",
+"keywords": "",
+"url": "releases2022-11android.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Android (February 2021)",
+"tags": "android azure",
+"keywords": "",
+"url": "releases2021-02android.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Android (October 2021)",
+"tags": "android azure",
+"keywords": "",
+"url": "releases2021-10android.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Android (November 2020)",
+"tags": "android azure",
+"keywords": "",
+"url": "releases2020-11android.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Android (August 2022)",
+"tags": "android azure",
+"keywords": "",
+"url": "releases2022-08android.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Android (October 2022)",
+"tags": "android azure",
+"keywords": "",
+"url": "releases2022-10android.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Android (January 2024)",
+"tags": "android azure",
+"keywords": "",
+"url": "releases2024-01android.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Android (July 2022)",
+"tags": "android azure",
+"keywords": "",
+"url": "releases2022-07android.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Android (November 2023)",
+"tags": "android azure",
+"keywords": "",
+"url": "releases2023-11android.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Android (December 2020)",
+"tags": "android azure",
+"keywords": "",
+"url": "releases2020-12android.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Android (January 2022)",
+"tags": "android azure",
+"keywords": "",
+"url": "releases2022-01android.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Android (August 2021)",
+"tags": "android azure",
+"keywords": "",
+"url": "releases2021-08android.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Android (October 2023)",
+"tags": "android azure",
+"keywords": "",
+"url": "releases2023-10android.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Android (February 2023)",
+"tags": "android azure",
+"keywords": "",
+"url": "releases2023-02android.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Android (Latest)",
+"tags": "android",
+"keywords": "",
+"url": "releaseslatestandroid.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Android (March 2022)",
+"tags": "android azure",
+"keywords": "",
+"url": "releases2022-03android.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Android (November 2021)",
+"tags": "android azure",
+"keywords": "",
+"url": "releases2021-11android.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Android (April 2024)",
+"tags": "android azure",
+"keywords": "",
+"url": "releases2024-04android.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Android (October 2020)",
+"tags": "android azure",
+"keywords": "",
+"url": "releases2020-10android.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Android (May 2022)",
+"tags": "android azure",
+"keywords": "",
+"url": "releases2022-05android.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Android (May 2024)",
+"tags": "android azure",
+"keywords": "",
+"url": "releases2024-05android.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Android (January 2023)",
+"tags": "android azure",
+"keywords": "",
+"url": "releases2023-01android.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Android (April 2023)",
+"tags": "android azure",
+"keywords": "",
+"url": "releases2023-04android.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Android (December 2023)",
+"tags": "android azure",
+"keywords": "",
+"url": "releases2023-12android.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Android (September 2022)",
+"tags": "android azure",
+"keywords": "",
+"url": "releases2022-09android.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Android (January 2021)",
+"tags": "android azure",
+"keywords": "",
+"url": "releases2021-01android.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Android (June 2022)",
+"tags": "android azure",
+"keywords": "",
+"url": "releases2022-06android.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Android (August 2023)",
+"tags": "android azure",
+"keywords": "",
+"url": "releases2023-08android.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Android (December 2021)",
+"tags": "android azure",
+"keywords": "",
+"url": "releases2021-12android.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Android (April 2021)",
+"tags": "android azure",
+"keywords": "",
+"url": "releases2021-04android.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Android (July 2021)",
+"tags": "android azure",
+"keywords": "",
+"url": "releases2021-07android.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Android (February 2024)",
+"tags": "android azure",
+"keywords": "",
+"url": "releases2024-02android.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Android (September 2021)",
+"tags": "android azure",
+"keywords": "",
+"url": "releases2021-09android.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Android (February 2022)",
+"tags": "android azure",
+"keywords": "",
+"url": "releases2022-02android.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Android (March 2024)",
+"tags": "android azure",
+"keywords": "",
+"url": "releases2024-03android.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Android (May 2023)",
+"tags": "android azure",
+"keywords": "",
+"url": "releases2023-05android.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "General Guidelines: Azure Core",
+"tags": "",
+"keywords": "guidelines",
+"url": "general_azurecore.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Embedded C (March 2021)",
+"tags": "c",
+"keywords": "",
+"url": "releases2021-03c.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Embedded C (March 2023)",
+"tags": "c",
+"keywords": "",
+"url": "releases2023-03c.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Embedded C (April 2022)",
+"tags": "c",
+"keywords": "",
+"url": "releases2022-04c.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Embedded C (December 2022)",
+"tags": "c",
+"keywords": "",
+"url": "releases2022-12c.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Embedded C (September 2023)",
+"tags": "c",
+"keywords": "",
+"url": "releases2023-09c.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Embedded C (June 2023)",
+"tags": "c",
+"keywords": "",
+"url": "releases2023-06c.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Embedded C (July 2023)",
+"tags": "c",
+"keywords": "",
+"url": "releases2023-07c.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Embedded C (November 2022)",
+"tags": "c",
+"keywords": "",
+"url": "releases2022-11c.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Embedded C (October 2021)",
+"tags": "c",
+"keywords": "",
+"url": "releases2021-10c.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Embedded C (November 2020)",
+"tags": "c",
+"keywords": "",
+"url": "releases2020-11c.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Embedded C (August 2022)",
+"tags": "c",
+"keywords": "",
+"url": "releases2022-08c.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Embedded C (October 2022)",
+"tags": "c",
+"keywords": "",
+"url": "releases2022-10c.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Embedded C (January 2024)",
+"tags": "c",
+"keywords": "",
+"url": "releases2024-01c.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Embedded C (July 2022)",
+"tags": "c",
+"keywords": "",
+"url": "releases2022-07c.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Embedded C (November 2023)",
+"tags": "c",
+"keywords": "",
+"url": "releases2023-11c.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Embedded C (December 2020)",
+"tags": "c",
+"keywords": "",
+"url": "releases2020-12c.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Embedded C (January 2022)",
+"tags": "c",
+"keywords": "",
+"url": "releases2022-01c.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Embedded C (October 2023)",
+"tags": "c",
+"keywords": "",
+"url": "releases2023-10c.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Embedded C (February 2023)",
+"tags": "c",
+"keywords": "",
+"url": "releases2023-02c.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Embedded C (Latest)",
+"tags": "c",
+"keywords": "",
+"url": "releaseslatestc.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Embedded C (March 2022)",
+"tags": "c",
+"keywords": "",
+"url": "releases2022-03c.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Embedded C (November 2021)",
+"tags": "c",
+"keywords": "",
+"url": "releases2021-11c.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Embedded C (April 2024)",
+"tags": "c",
+"keywords": "",
+"url": "releases2024-04c.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Embedded C (October 2020)",
+"tags": "c",
+"keywords": "",
+"url": "releases2020-10c.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Embedded C (May 2022)",
+"tags": "c",
+"keywords": "",
+"url": "releases2022-05c.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Embedded C (May 2024)",
+"tags": "c",
+"keywords": "",
+"url": "releases2024-05c.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Embedded C (January 2023)",
+"tags": "c",
+"keywords": "",
+"url": "releases2023-01c.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Embedded C (April 2023)",
+"tags": "c",
+"keywords": "",
+"url": "releases2023-04c.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Embedded C (December 2023)",
+"tags": "c",
+"keywords": "",
+"url": "releases2023-12c.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Embedded C (September 2022)",
+"tags": "c",
+"keywords": "",
+"url": "releases2022-09c.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Embedded C (June 2022)",
+"tags": "c",
+"keywords": "",
+"url": "releases2022-06c.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Embedded C (September 2020)",
+"tags": "c",
+"keywords": "",
+"url": "releases2020-09c.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Embedded C (August 2023)",
+"tags": "c",
+"keywords": "",
+"url": "releases2023-08c.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Embedded C (December 2021)",
+"tags": "c",
+"keywords": "",
+"url": "releases2021-12c.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Embedded C (July 2021)",
+"tags": "c",
+"keywords": "",
+"url": "releases2021-07c.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Embedded C (February 2024)",
+"tags": "c",
+"keywords": "",
+"url": "releases2024-02c.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Embedded C (September 2021)",
+"tags": "c",
+"keywords": "",
+"url": "releases2021-09c.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Embedded C (February 2022)",
+"tags": "c",
+"keywords": "",
+"url": "releases2022-02c.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Embedded C (March 2024)",
+"tags": "c",
+"keywords": "",
+"url": "releases2024-03c.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Embedded C (May 2023)",
+"tags": "c",
+"keywords": "",
+"url": "releases2023-05c.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "",
+"tags": "",
+"keywords": "",
+"url": "clang_introduction.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "General Guidelines: Compatibility",
+"tags": "",
+"keywords": "guidelines",
+"url": "general_compatibility.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for C++ (March 2021)",
+"tags": "C++ cpp",
+"keywords": "",
+"url": "releases2021-03cpp.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for C++ (March 2023)",
+"tags": "C++ cpp",
+"keywords": "",
+"url": "releases2023-03cpp.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for C++ (May 2021)",
+"tags": "C++ cpp",
+"keywords": "",
+"url": "releases2021-05cpp.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for C++ (April 2022)",
+"tags": "C++ cpp",
+"keywords": "",
+"url": "releases2022-04cpp.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for C++ (June 2021)",
+"tags": "C++ cpp",
+"keywords": "",
+"url": "releases2021-06cpp.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for C++ (December 2022)",
+"tags": "C++ cpp",
+"keywords": "",
+"url": "releases2022-12cpp.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for C++ (September 2023)",
+"tags": "C++ cpp",
+"keywords": "",
+"url": "releases2023-09cpp.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for C++ (June 2023)",
+"tags": "C++ cpp",
+"keywords": "",
+"url": "releases2023-06cpp.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for C++ (July 2023)",
+"tags": "C++ cpp",
+"keywords": "",
+"url": "releases2023-07cpp.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for C++ (November 2022)",
+"tags": "C++ cpp",
+"keywords": "",
+"url": "releases2022-11cpp.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for C++ (February 2021)",
+"tags": "C++ cpp",
+"keywords": "",
+"url": "releases2021-02cpp.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for C++ (October 2021)",
+"tags": "C++ cpp",
+"keywords": "",
+"url": "releases2021-10cpp.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for C++ (November 2020)",
+"tags": "C++ cpp",
+"keywords": "",
+"url": "releases2020-11cpp.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for C++ (August 2022)",
+"tags": "C++ cpp",
+"keywords": "",
+"url": "releases2022-08cpp.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for C++ (October 2022)",
+"tags": "C++ cpp",
+"keywords": "",
+"url": "releases2022-10cpp.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for C++ (January 2024)",
+"tags": "C++ cpp",
+"keywords": "",
+"url": "releases2024-01cpp.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for C++ (July 2022)",
+"tags": "C++ cpp",
+"keywords": "",
+"url": "releases2022-07cpp.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for C++ (November 2023)",
+"tags": "C++ cpp",
+"keywords": "",
+"url": "releases2023-11cpp.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for C++ (December 2020)",
+"tags": "C++ cpp",
+"keywords": "",
+"url": "releases2020-12cpp.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for C++ (January 2022)",
+"tags": "C++ cpp",
+"keywords": "",
+"url": "releases2022-01cpp.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for C++ (August 2021)",
+"tags": "C++ cpp",
+"keywords": "",
+"url": "releases2021-08cpp.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for C++ (October 2023)",
+"tags": "C++ cpp",
+"keywords": "",
+"url": "releases2023-10cpp.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for C++ (February 2023)",
+"tags": "C++ cpp",
+"keywords": "",
+"url": "releases2023-02cpp.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for C++ (Latest)",
+"tags": "c++",
+"keywords": "",
+"url": "releaseslatestcpp.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for C++ (March 2022)",
+"tags": "C++ cpp",
+"keywords": "",
+"url": "releases2022-03cpp.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for C++ (November 2021)",
+"tags": "C++ cpp",
+"keywords": "",
+"url": "releases2021-11cpp.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for C++ (April 2024)",
+"tags": "C++ cpp",
+"keywords": "",
+"url": "releases2024-04cpp.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for C++ (October 2020)",
+"tags": "C++ cpp",
+"keywords": "",
+"url": "releases2020-10cpp.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for C++ (May 2022)",
+"tags": "C++ cpp",
+"keywords": "",
+"url": "releases2022-05cpp.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for C++ (May 2024)",
+"tags": "C++ cpp",
+"keywords": "",
+"url": "releases2024-05cpp.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for C++ (January 2023)",
+"tags": "C++ cpp",
+"keywords": "",
+"url": "releases2023-01cpp.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for C++ (April 2023)",
+"tags": "C++ cpp",
+"keywords": "",
+"url": "releases2023-04cpp.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for C++ (December 2023)",
+"tags": "C++ cpp",
+"keywords": "",
+"url": "releases2023-12cpp.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for C++ (September 2022)",
+"tags": "C++ cpp",
+"keywords": "",
+"url": "releases2022-09cpp.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for C++ (January 2021)",
+"tags": "C++ cpp",
+"keywords": "",
+"url": "releases2021-01cpp.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for C++ (June 2022)",
+"tags": "C++ cpp",
+"keywords": "",
+"url": "releases2022-06cpp.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for C++ (September 2020)",
+"tags": "C++ cpp",
+"keywords": "",
+"url": "releases2020-09cpp.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for C++ (August 2023)",
+"tags": "C++ cpp",
+"keywords": "",
+"url": "releases2023-08cpp.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for C++ (December 2021)",
+"tags": "C++ cpp",
+"keywords": "",
+"url": "releases2021-12cpp.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for C++ (April 2021)",
+"tags": "C++ cpp",
+"keywords": "",
+"url": "releases2021-04cpp.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for C++ (July 2021)",
+"tags": "C++ cpp",
+"keywords": "",
+"url": "releases2021-07cpp.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for C++ (February 2024)",
+"tags": "C++ cpp",
+"keywords": "",
+"url": "releases2024-02cpp.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for C++ (September 2021)",
+"tags": "C++ cpp",
+"keywords": "",
+"url": "releases2021-09cpp.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for C++ (February 2022)",
+"tags": "C++ cpp",
+"keywords": "",
+"url": "releases2022-02cpp.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for C++ (March 2024)",
+"tags": "C++ cpp",
+"keywords": "",
+"url": "releases2024-03cpp.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for C++ (May 2023)",
+"tags": "C++ cpp",
+"keywords": "",
+"url": "releases2023-05cpp.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Dependency addition checklist",
+"tags": "",
+"keywords": "",
+"url": "dependency_addition_checklist.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Embedded C Azure SDK Design Guidelines",
+"tags": "",
+"keywords": "guidelines clang",
+"url": "clang_design.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Python Guidelines: API Design",
+"tags": "",
+"keywords": "guidelines python",
+"url": "python_design.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "TypeScript Guidelines: API Design",
+"tags": "",
+"keywords": "guidelines typescript",
+"url": "typescript_design.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Android Azure SDK Design Guidelines",
+"tags": "",
+"keywords": "guidelines android",
+"url": "android_design.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "General Guidelines: API Design",
+"tags": "",
+"keywords": "guidelines",
+"url": "general_design.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "iOS Azure SDK Design Guidelines",
+"tags": "",
+"keywords": "guidelines ios",
+"url": "ios_design.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Distributed Tracing Conventions",
+"tags": "",
+"keywords": "opentelemetry conventions",
+"url": "distributed_tracing_conventions.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Python Guidelines: Documentation",
+"tags": "",
+"keywords": "guidelines python",
+"url": "python_documentation.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "TypeScript Guidelines: Documentation",
+"tags": "",
+"keywords": "guidelines typescript",
+"url": "typescript_documentation.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "General Guidelines: Documentation",
+"tags": "",
+"keywords": "guidelines",
+"url": "general_documentation.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "iOS Guidelines: Documentation",
+"tags": "",
+"keywords": "guidelines ios",
+"url": "ios_documentation.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "",
+"tags": "",
+"keywords": "",
+"url": "dotnetguidelinesindex.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for .NET (March 2021)",
+"tags": "dotnet",
+"keywords": "",
+"url": "releases2021-03dotnet.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for .NET (March 2023)",
+"tags": "dotnet azure",
+"keywords": "",
+"url": "releases2023-03dotnet.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for .NET (May 2021)",
+"tags": "dotnet azure",
+"keywords": "",
+"url": "releases2021-05dotnet.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for .NET (April 2022)",
+"tags": "dotnet azure",
+"keywords": "",
+"url": "releases2022-04dotnet.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for .NET (June 2021)",
+"tags": "dotnet azure",
+"keywords": "",
+"url": "releases2021-06dotnet.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for .NET (December 2022)",
+"tags": "dotnet azure",
+"keywords": "",
+"url": "releases2022-12dotnet.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for .NET (February 2020)",
+"tags": "dotnet",
+"keywords": "",
+"url": "releases2020-02dotnet.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for .NET (September 2023)",
+"tags": "dotnet azure",
+"keywords": "",
+"url": "releases2023-09dotnet.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for .NET (June 2023)",
+"tags": "dotnet azure",
+"keywords": "",
+"url": "releases2023-06dotnet.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for .NET (July 2023)",
+"tags": "dotnet azure",
+"keywords": "",
+"url": "releases2023-07dotnet.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for .NET (November 2022)",
+"tags": "dotnet azure",
+"keywords": "",
+"url": "releases2022-11dotnet.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for .NET (February 2021)",
+"tags": "dotnet",
+"keywords": "",
+"url": "releases2021-02dotnet.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for .NET (October 2021)",
+"tags": "dotnet azure",
+"keywords": "",
+"url": "releases2021-10dotnet.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for .NET (June 2020)",
+"tags": "dotnet",
+"keywords": "",
+"url": "releases2020-06dotnet.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for .NET (November 2020)",
+"tags": "dotnet",
+"keywords": "",
+"url": "releases2020-11dotnet.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for .NET (August 2022)",
+"tags": "dotnet azure",
+"keywords": "",
+"url": "releases2022-08dotnet.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for .NET (August 2020)",
+"tags": "dotnet",
+"keywords": "",
+"url": "releases2020-08dotnet.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for .NET (October 2022)",
+"tags": "dotnet azure",
+"keywords": "",
+"url": "releases2022-10dotnet.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for .NET (January 2024)",
+"tags": "dotnet azure",
+"keywords": "",
+"url": "releases2024-01dotnet.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for .NET (July 2022)",
+"tags": "dotnet azure",
+"keywords": "",
+"url": "releases2022-07dotnet.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for .NET (March 2020)",
+"tags": "dotnet",
+"keywords": "",
+"url": "releases2020-03dotnet.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for .NET (November 2023)",
+"tags": "dotnet azure",
+"keywords": "",
+"url": "releases2023-11dotnet.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for .NET (December 2020)",
+"tags": "dotnet",
+"keywords": "",
+"url": "releases2020-12dotnet.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for .NET (January 2022)",
+"tags": "dotnet azure",
+"keywords": "",
+"url": "releases2022-01dotnet.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for .NET (May 2020)",
+"tags": "dotnet",
+"keywords": "",
+"url": "releases2020-05dotnet.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for .NET (August 2021)",
+"tags": "dotnet azure",
+"keywords": "",
+"url": "releases2021-08dotnet.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for .NET (January 2020)",
+"tags": "dotnet",
+"keywords": "",
+"url": "releases2020-01dotnet.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for .NET (July 2020)",
+"tags": "dotnet",
+"keywords": "",
+"url": "releases2020-07dotnet.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for .NET (October 2023)",
+"tags": "dotnet azure",
+"keywords": "",
+"url": "releases2023-10dotnet.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for .NET (February 2023)",
+"tags": "dotnet azure",
+"keywords": "",
+"url": "releases2023-02dotnet.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for .NET (Mgmt)",
+"tags": "dotnet",
+"keywords": "",
+"url": "releaseslatestmgmtdotnet.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for .NET (All)",
+"tags": "dotnet",
+"keywords": "",
+"url": "releaseslatestalldotnet.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for .NET (Latest)",
+"tags": "dotnet",
+"keywords": "",
+"url": "releaseslatestdotnet.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for .NET (March 2022)",
+"tags": "dotnet azure",
+"keywords": "",
+"url": "releases2022-03dotnet.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for .NET (November 2021)",
+"tags": "dotnet azure",
+"keywords": "",
+"url": "releases2021-11dotnet.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for .NET (April 2024)",
+"tags": "dotnet azure",
+"keywords": "",
+"url": "releases2024-04dotnet.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for .NET (October 2020)",
+"tags": "dotnet",
+"keywords": "",
+"url": "releases2020-10dotnet.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for .NET (May 2022)",
+"tags": "dotnet azure",
+"keywords": "",
+"url": "releases2022-05dotnet.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for .NET (May 2024)",
+"tags": "dotnet azure",
+"keywords": "",
+"url": "releases2024-05dotnet.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for .NET (January 2023)",
+"tags": "dotnet azure",
+"keywords": "",
+"url": "releases2023-01dotnet.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for .NET (April 2023)",
+"tags": "dotnet azure",
+"keywords": "",
+"url": "releases2023-04dotnet.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for .NET (December 2023)",
+"tags": "dotnet azure",
+"keywords": "",
+"url": "releases2023-12dotnet.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for .NET (September 2022)",
+"tags": "dotnet azure",
+"keywords": "",
+"url": "releases2022-09dotnet.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for .NET (January 2021)",
+"tags": "dotnet",
+"keywords": "",
+"url": "releases2021-01dotnet.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for .NET (June 2022)",
+"tags": "dotnet azure",
+"keywords": "",
+"url": "releases2022-06dotnet.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for .NET (September 2020)",
+"tags": "dotnet",
+"keywords": "",
+"url": "releases2020-09dotnet.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for .NET (August 2023)",
+"tags": "dotnet azure",
+"keywords": "",
+"url": "releases2023-08dotnet.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for .NET (December 2021)",
+"tags": "dotnet azure",
+"keywords": "",
+"url": "releases2021-12dotnet.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for .NET (April 2021)",
+"tags": "dotnet",
+"keywords": "",
+"url": "releases2021-04dotnet.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for .NET (July 2021)",
+"tags": "dotnet azure",
+"keywords": "",
+"url": "releases2021-07dotnet.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for .NET (Deprecated)",
+"tags": "dotnet",
+"keywords": "",
+"url": "releasesdeprecateddotnet.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for .NET (February 2024)",
+"tags": "dotnet azure",
+"keywords": "",
+"url": "releases2024-02dotnet.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for .NET (April 2020)",
+"tags": "dotnet",
+"keywords": "",
+"url": "releases2020-04dotnet.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for .NET (September 2021)",
+"tags": "dotnet azure",
+"keywords": "",
+"url": "releases2021-09dotnet.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for .NET (February 2022)",
+"tags": "dotnet azure",
+"keywords": "",
+"url": "releases2022-02dotnet.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for .NET (March 2024)",
+"tags": "dotnet azure",
+"keywords": "",
+"url": "releases2024-03dotnet.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for .NET (May 2023)",
+"tags": "dotnet azure",
+"keywords": "",
+"url": "releases2023-05dotnet.html",
+"summary": ""
+}
+,
+
+
+
+
+
+{
+"title": "",
+"tags": "",
+"keywords": "",
+"url": "generalguidelinesindex.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Go (March 2021)",
+"tags": "go",
+"keywords": "",
+"url": "releases2021-03go.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Go (March 2023)",
+"tags": "go",
+"keywords": "",
+"url": "releases2023-03go.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Go (May 2021)",
+"tags": "go",
+"keywords": "",
+"url": "releases2021-05go.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Go (April 2022)",
+"tags": "go",
+"keywords": "",
+"url": "releases2022-04go.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Go (June 2021)",
+"tags": "go",
+"keywords": "",
+"url": "releases2021-06go.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Go (December 2022)",
+"tags": "go",
+"keywords": "",
+"url": "releases2022-12go.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Go (September 2023)",
+"tags": "go",
+"keywords": "",
+"url": "releases2023-09go.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Go (June 2023)",
+"tags": "go",
+"keywords": "",
+"url": "releases2023-06go.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Go (July 2023)",
+"tags": "go",
+"keywords": "",
+"url": "releases2023-07go.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Go (November 2022)",
+"tags": "go",
+"keywords": "",
+"url": "releases2022-11go.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Go (February 2021)",
+"tags": "go",
+"keywords": "",
+"url": "releases2021-02go.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Go (October 2021)",
+"tags": "go",
+"keywords": "",
+"url": "releases2021-10go.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Go (August 2022)",
+"tags": "go",
+"keywords": "",
+"url": "releases2022-08go.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Go (October 2022)",
+"tags": "go",
+"keywords": "",
+"url": "releases2022-10go.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Go (January 2024)",
+"tags": "go",
+"keywords": "",
+"url": "releases2024-01go.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Go (July 2022)",
+"tags": "go",
+"keywords": "",
+"url": "releases2022-07go.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Go (November 2023)",
+"tags": "go",
+"keywords": "",
+"url": "releases2023-11go.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Go (January 2022)",
+"tags": "go",
+"keywords": "",
+"url": "releases2022-01go.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Go (August 2021)",
+"tags": "go",
+"keywords": "",
+"url": "releases2021-08go.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Go (October 2023)",
+"tags": "go",
+"keywords": "",
+"url": "releases2023-10go.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Go (February 2023)",
+"tags": "go",
+"keywords": "",
+"url": "releases2023-02go.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Go (Mgmt)",
+"tags": "go",
+"keywords": "",
+"url": "releaseslatestmgmtgo.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Go (All)",
+"tags": "go",
+"keywords": "",
+"url": "releaseslatestallgo.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Go (Latest)",
+"tags": "go",
+"keywords": "",
+"url": "releaseslatestgo.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Go (March 2022)",
+"tags": "go",
+"keywords": "",
+"url": "releases2022-03go.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Go (November 2021)",
+"tags": "go",
+"keywords": "",
+"url": "releases2021-11go.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Go (April 2024)",
+"tags": "go",
+"keywords": "",
+"url": "releases2024-04go.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Go (May 2022)",
+"tags": "go",
+"keywords": "",
+"url": "releases2022-05go.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Go (May 2024)",
+"tags": "go",
+"keywords": "",
+"url": "releases2024-05go.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Go (January 2023)",
+"tags": "go",
+"keywords": "",
+"url": "releases2023-01go.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Go (April 2023)",
+"tags": "go",
+"keywords": "",
+"url": "releases2023-04go.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Go (December 2023)",
+"tags": "go",
+"keywords": "",
+"url": "releases2023-12go.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Go (September 2022)",
+"tags": "go",
+"keywords": "",
+"url": "releases2022-09go.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Go (June 2022)",
+"tags": "go",
+"keywords": "",
+"url": "releases2022-06go.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Go (August 2023)",
+"tags": "go",
+"keywords": "",
+"url": "releases2023-08go.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Go (December 2021)",
+"tags": "go",
+"keywords": "",
+"url": "releases2021-12go.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Go (April 2021)",
+"tags": "go",
+"keywords": "",
+"url": "releases2021-04go.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Go (July 2021)",
+"tags": "go",
+"keywords": "",
+"url": "releases2021-07go.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Go (Deprecated)",
+"tags": "go",
+"keywords": "",
+"url": "releasesdeprecatedgo.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Go (February 2024)",
+"tags": "go",
+"keywords": "",
+"url": "releases2024-02go.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Go (September 2021)",
+"tags": "go",
+"keywords": "",
+"url": "releases2021-09go.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Go (February 2022)",
+"tags": "go",
+"keywords": "",
+"url": "releases2022-02go.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Go (March 2024)",
+"tags": "go",
+"keywords": "",
+"url": "releases2024-03go.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Go (May 2023)",
+"tags": "go",
+"keywords": "",
+"url": "releases2023-05go.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Rust Guidelines: Implementation",
+"tags": "",
+"keywords": "guidelines rust",
+"url": "rust_implementation.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "C#.NET Guidelines: Implementation",
+"tags": "",
+"keywords": "guidelines dotnet",
+"url": "dotnet_implementation.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Embedded C Guidelines: Implementation",
+"tags": "",
+"keywords": "guidelines clang",
+"url": "clang_implementation.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Python Guidelines: Implementation",
+"tags": "",
+"keywords": "guidelines python",
+"url": "python_implementation.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "C++ Guidelines: Implementation",
+"tags": "",
+"keywords": "guidelines cpp",
+"url": "cpp_implementation.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Java Guidelines: Implementation",
+"tags": "",
+"keywords": "guidelines java",
+"url": "java_implementation.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "TypeScript Guidelines: Implementation",
+"tags": "",
+"keywords": "guidelines typescript",
+"url": "typescript_implementation.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Android Guidelines: Implementation",
+"tags": "",
+"keywords": "guidelines android",
+"url": "android_implementation.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Go Azure SDK Design Guidelines: Implementation",
+"tags": "",
+"keywords": "guidelines golang",
+"url": "golang_implementation.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "General Guidelines: Implementation",
+"tags": "",
+"keywords": "guidelines",
+"url": "general_implementation.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "iOS Guidelines: Implementation",
+"tags": "",
+"keywords": "guidelines ios",
+"url": "ios_implementation.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK (March 2021)",
+"tags": "release",
+"keywords": "",
+"url": "releases2021-03",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK (March 2023)",
+"tags": "release",
+"keywords": "",
+"url": "releases2023-03",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK (May 2021)",
+"tags": "release",
+"keywords": "",
+"url": "releases2021-05",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK (April 2022)",
+"tags": "release",
+"keywords": "",
+"url": "releases2022-04",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK (June 2021)",
+"tags": "release",
+"keywords": "",
+"url": "releases2021-06",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK (December 2022)",
+"tags": "release",
+"keywords": "",
+"url": "releases2022-12",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK February 2020",
+"tags": "release",
+"keywords": "",
+"url": "releases2020-02index.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK (September 2023)",
+"tags": "release",
+"keywords": "",
+"url": "releases2023-09",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK (June 2023)",
+"tags": "release",
+"keywords": "",
+"url": "releases2023-06",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK (July 2023)",
+"tags": "release",
+"keywords": "",
+"url": "releases2023-07",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK (November 2022)",
+"tags": "release",
+"keywords": "",
+"url": "releases2022-11",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK September 2019 Preview",
+"tags": "release",
+"keywords": "",
+"url": "releases2019-09-17index.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK (February 2021)",
+"tags": "release",
+"keywords": "",
+"url": "releases2021-02",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK (October 2021)",
+"tags": "release",
+"keywords": "",
+"url": "releases2021-10",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK (June 2020)",
+"tags": "release",
+"keywords": "",
+"url": "releases2020-06index.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK (November 2020)",
+"tags": "release",
+"keywords": "",
+"url": "releases2020-11index.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK (August 2022)",
+"tags": "release",
+"keywords": "",
+"url": "releases2022-08",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK (August 2020)",
+"tags": "release",
+"keywords": "",
+"url": "releases2020-08index.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK (October 2022)",
+"tags": "release",
+"keywords": "",
+"url": "releases2022-10",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK (January 2024)",
+"tags": "release",
+"keywords": "",
+"url": "releases2024-01",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK (July 2022)",
+"tags": "release",
+"keywords": "",
+"url": "releases2022-07",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK March 2020",
+"tags": "release",
+"keywords": "",
+"url": "releases2020-03index.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK (November 2023)",
+"tags": "release",
+"keywords": "",
+"url": "releases2023-11",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK (December 2020)",
+"tags": "release",
+"keywords": "",
+"url": "releases2020-12index.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK (January 2022)",
+"tags": "release",
+"keywords": "",
+"url": "releases2022-01",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK May 2020",
+"tags": "release",
+"keywords": "",
+"url": "releases2020-05index.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK (August 2021)",
+"tags": "release",
+"keywords": "",
+"url": "releases2021-08",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK January 2020",
+"tags": "release",
+"keywords": "",
+"url": "releases2020-01index.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK (July 2020)",
+"tags": "release",
+"keywords": "",
+"url": "releases2020-07index.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK (October 2023)",
+"tags": "release",
+"keywords": "",
+"url": "releases2023-10",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK (February 2023)",
+"tags": "release",
+"keywords": "",
+"url": "releases2023-02",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK October 2019 Preview",
+"tags": "release",
+"keywords": "",
+"url": "releases2019-10-11index.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK Releases",
+"tags": "",
+"keywords": "",
+"url": "releaseslatestmgmt",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK Releases",
+"tags": "",
+"keywords": "",
+"url": "releaseslatestall",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK Releases",
+"tags": "",
+"keywords": "",
+"url": "releaseslatestindex.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK (March 2022)",
+"tags": "release",
+"keywords": "",
+"url": "releases2022-03",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK (November 2021)",
+"tags": "release",
+"keywords": "",
+"url": "releases2021-11",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK (April 2024)",
+"tags": "release",
+"keywords": "",
+"url": "releases2024-04",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK (October 2020)",
+"tags": "release",
+"keywords": "",
+"url": "releases2020-10index.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK (May 2022)",
+"tags": "release",
+"keywords": "",
+"url": "releases2022-05",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK (May 2024)",
+"tags": "release",
+"keywords": "",
+"url": "releases2024-05",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK (January 2023)",
+"tags": "release",
+"keywords": "",
+"url": "releases2023-01",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK (April 2023)",
+"tags": "release",
+"keywords": "",
+"url": "releases2023-04",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Previewing Azure SDKs following new Azure SDK API Standards",
+"tags": "release",
+"keywords": "",
+"url": "releases2019-07-10index.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK November 2019",
+"tags": "release",
+"keywords": "",
+"url": "releases2019-11index.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK (December 2023)",
+"tags": "release",
+"keywords": "",
+"url": "releases2023-12",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK (September 2022)",
+"tags": "release",
+"keywords": "",
+"url": "releases2022-09",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK (January 2021)",
+"tags": "release",
+"keywords": "",
+"url": "releases2021-01",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK (June 2022)",
+"tags": "release",
+"keywords": "",
+"url": "releases2022-06",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK (September 2020)",
+"tags": "release",
+"keywords": "",
+"url": "releases2020-09index.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK (August 2023)",
+"tags": "release",
+"keywords": "",
+"url": "releases2023-08",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK August 2019 Preview and a dive into Consistency",
+"tags": "release",
+"keywords": "",
+"url": "releases2019-08-06index.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK (December 2021)",
+"tags": "release",
+"keywords": "",
+"url": "releases2021-12",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK December 2019",
+"tags": "release",
+"keywords": "",
+"url": "releases2019-12index.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK (April 2021)",
+"tags": "release",
+"keywords": "",
+"url": "releases2021-04",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK (July 2021)",
+"tags": "release",
+"keywords": "",
+"url": "releases2021-07",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK Releases (Deprecated)",
+"tags": "",
+"keywords": "",
+"url": "releasesdeprecated",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK (February 2024)",
+"tags": "release",
+"keywords": "",
+"url": "releases2024-02",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK April 2020",
+"tags": "release",
+"keywords": "",
+"url": "releases2020-04index.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK (September 2021)",
+"tags": "release",
+"keywords": "",
+"url": "releases2021-09",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK (February 2022)",
+"tags": "release",
+"keywords": "",
+"url": "releases2022-02",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK (March 2024)",
+"tags": "release",
+"keywords": "",
+"url": "releases2024-03",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK (May 2023)",
+"tags": "release",
+"keywords": "",
+"url": "releases2023-05",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK Releases",
+"tags": "",
+"keywords": "",
+"url": "",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Rust Guidelines: Introduction",
+"tags": "",
+"keywords": "guidelines rust",
+"url": "rust_introduction.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": ".NET Azure SDK Design Guidelines",
+"tags": "",
+"keywords": "guidelines dotnet",
+"url": "dotnet_introduction.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "C++ Guidelines: Introduction",
+"tags": "",
+"keywords": "guidelines cpp",
+"url": "cpp_introduction.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Java Azure SDK Design Guidelines",
+"tags": "",
+"keywords": "guidelines java",
+"url": "java_introduction.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "TypeScript Guidelines: Introduction",
+"tags": "",
+"keywords": "guidelines typescript",
+"url": "typescript_introduction.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Go Azure SDK Design Guidelines",
+"tags": "",
+"keywords": "guidelines golang",
+"url": "golang_introduction.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "General Guidelines: Introduction",
+"tags": "",
+"keywords": "guidelines",
+"url": "general_introduction.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "iOS Guidelines: Introduction",
+"tags": "",
+"keywords": "guidelines ios",
+"url": "ios_introduction.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for iOS (March 2021)",
+"tags": "ios azure",
+"keywords": "",
+"url": "releases2021-03ios.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for iOS (March 2023)",
+"tags": "ios azure",
+"keywords": "",
+"url": "releases2023-03ios.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for iOS (May 2021)",
+"tags": "ios azure",
+"keywords": "",
+"url": "releases2021-05ios.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for iOS (April 2022)",
+"tags": "ios azure",
+"keywords": "",
+"url": "releases2022-04ios.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for iOS (June 2021)",
+"tags": "ios azure",
+"keywords": "",
+"url": "releases2021-06ios.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for iOS (December 2022)",
+"tags": "ios azure",
+"keywords": "",
+"url": "releases2022-12ios.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for iOS (September 2023)",
+"tags": "ios azure",
+"keywords": "",
+"url": "releases2023-09ios.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for iOS (June 2023)",
+"tags": "ios azure",
+"keywords": "",
+"url": "releases2023-06ios.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for iOS (July 2023)",
+"tags": "ios azure",
+"keywords": "",
+"url": "releases2023-07ios.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for iOS (November 2022)",
+"tags": "ios azure",
+"keywords": "",
+"url": "releases2022-11ios.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for iOS (February 2021)",
+"tags": "ios azure",
+"keywords": "",
+"url": "releases2021-02ios.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for iOS (October 2021)",
+"tags": "ios azure",
+"keywords": "",
+"url": "releases2021-10ios.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for iOS (November 2020)",
+"tags": "ios azure",
+"keywords": "",
+"url": "releases2020-11ios.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for iOS (August 2022)",
+"tags": "ios azure",
+"keywords": "",
+"url": "releases2022-08ios.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for iOS (October 2022)",
+"tags": "ios azure",
+"keywords": "",
+"url": "releases2022-10ios.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for iOS (January 2024)",
+"tags": "ios azure",
+"keywords": "",
+"url": "releases2024-01ios.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for iOS (July 2022)",
+"tags": "ios azure",
+"keywords": "",
+"url": "releases2022-07ios.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for iOS (November 2023)",
+"tags": "ios azure",
+"keywords": "",
+"url": "releases2023-11ios.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for iOS (December 2020)",
+"tags": "ios azure",
+"keywords": "",
+"url": "releases2020-12ios.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for iOS (January 2022)",
+"tags": "ios azure",
+"keywords": "",
+"url": "releases2022-01ios.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for iOS (August 2021)",
+"tags": "ios azure",
+"keywords": "",
+"url": "releases2021-08ios.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for iOS (October 2023)",
+"tags": "ios azure",
+"keywords": "",
+"url": "releases2023-10ios.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for iOS (February 2023)",
+"tags": "ios azure",
+"keywords": "",
+"url": "releases2023-02ios.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for iOS (Latest)",
+"tags": "ios",
+"keywords": "",
+"url": "releaseslatestios.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for iOS (March 2022)",
+"tags": "ios azure",
+"keywords": "",
+"url": "releases2022-03ios.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for iOS (November 2021)",
+"tags": "ios azure",
+"keywords": "",
+"url": "releases2021-11ios.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for iOS (April 2024)",
+"tags": "ios azure",
+"keywords": "",
+"url": "releases2024-04ios.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for iOS (October 2020)",
+"tags": "ios azure",
+"keywords": "",
+"url": "releases2020-10ios.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for iOS (May 2022)",
+"tags": "ios azure",
+"keywords": "",
+"url": "releases2022-05ios.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for iOS (May 2024)",
+"tags": "ios azure",
+"keywords": "",
+"url": "releases2024-05ios.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for iOS (January 2023)",
+"tags": "ios azure",
+"keywords": "",
+"url": "releases2023-01ios.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for iOS (April 2023)",
+"tags": "ios azure",
+"keywords": "",
+"url": "releases2023-04ios.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for iOS (December 2023)",
+"tags": "ios azure",
+"keywords": "",
+"url": "releases2023-12ios.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for iOS (September 2022)",
+"tags": "ios azure",
+"keywords": "",
+"url": "releases2022-09ios.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for iOS (January 2021)",
+"tags": "ios azure",
+"keywords": "",
+"url": "releases2021-01ios.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for iOS (June 2022)",
+"tags": "ios azure",
+"keywords": "",
+"url": "releases2022-06ios.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for iOS (August 2023)",
+"tags": "ios azure",
+"keywords": "",
+"url": "releases2023-08ios.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for iOS (December 2021)",
+"tags": "ios azure",
+"keywords": "",
+"url": "releases2021-12ios.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for iOS (April 2021)",
+"tags": "ios azure",
+"keywords": "",
+"url": "releases2021-04ios.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for iOS (July 2021)",
+"tags": "ios azure",
+"keywords": "",
+"url": "releases2021-07ios.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for iOS (February 2024)",
+"tags": "ios azure",
+"keywords": "",
+"url": "releases2024-02ios.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for iOS (September 2021)",
+"tags": "ios azure",
+"keywords": "",
+"url": "releases2021-09ios.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for iOS (February 2022)",
+"tags": "ios azure",
+"keywords": "",
+"url": "releases2022-02ios.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for iOS (March 2024)",
+"tags": "ios azure",
+"keywords": "",
+"url": "releases2024-03ios.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for iOS (May 2023)",
+"tags": "ios azure",
+"keywords": "",
+"url": "releases2023-05ios.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "",
+"tags": "",
+"keywords": "",
+"url": "javaguidelinesindex.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Java (March 2021)",
+"tags": "java azure",
+"keywords": "",
+"url": "releases2021-03java.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Java (March 2023)",
+"tags": "java azure",
+"keywords": "",
+"url": "releases2023-03java.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Java (May 2021)",
+"tags": "java azure",
+"keywords": "",
+"url": "releases2021-05java.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Java (April 2022)",
+"tags": "java azure",
+"keywords": "",
+"url": "releases2022-04java.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Java (June 2021)",
+"tags": "java azure",
+"keywords": "",
+"url": "releases2021-06java.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Java (December 2022)",
+"tags": "java azure",
+"keywords": "",
+"url": "releases2022-12java.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Java (February 2020)",
+"tags": "java azure",
+"keywords": "",
+"url": "releases2020-02java.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Java (September 2023)",
+"tags": "java azure",
+"keywords": "",
+"url": "releases2023-09java.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Java (June 2023)",
+"tags": "java azure",
+"keywords": "",
+"url": "releases2023-06java.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Java (July 2023)",
+"tags": "java azure",
+"keywords": "",
+"url": "releases2023-07java.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Java (November 2022)",
+"tags": "java azure",
+"keywords": "",
+"url": "releases2022-11java.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Java (February 2021)",
+"tags": "java azure",
+"keywords": "",
+"url": "releases2021-02java.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Java (October 2021)",
+"tags": "java azure",
+"keywords": "",
+"url": "releases2021-10java.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Java (June 2020)",
+"tags": "java azure",
+"keywords": "",
+"url": "releases2020-06java.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Java (November 2020)",
+"tags": "java azure",
+"keywords": "",
+"url": "releases2020-11java.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Java (August 2022)",
+"tags": "java azure",
+"keywords": "",
+"url": "releases2022-08java.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Java (August 2020)",
+"tags": "java azure",
+"keywords": "",
+"url": "releases2020-08java.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Java (October 2022)",
+"tags": "java azure",
+"keywords": "",
+"url": "releases2022-10java.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Java (January 2024)",
+"tags": "java azure",
+"keywords": "",
+"url": "releases2024-01java.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Java (July 2022)",
+"tags": "java azure",
+"keywords": "",
+"url": "releases2022-07java.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Java (March 2020)",
+"tags": "java azure",
+"keywords": "",
+"url": "releases2020-03java.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Java (November 2023)",
+"tags": "java azure",
+"keywords": "",
+"url": "releases2023-11java.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Java (December 2020)",
+"tags": "java azure",
+"keywords": "",
+"url": "releases2020-12java.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Java (January 2022)",
+"tags": "java azure",
+"keywords": "",
+"url": "releases2022-01java.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Java (May 2020)",
+"tags": "java azure",
+"keywords": "",
+"url": "releases2020-05java.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Java (August 2021)",
+"tags": "java azure",
+"keywords": "",
+"url": "releases2021-08java.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Java (January 2020)",
+"tags": "java azure",
+"keywords": "",
+"url": "releases2020-01java.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Java (July 2020)",
+"tags": "java azure",
+"keywords": "",
+"url": "releases2020-07java.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Java (October 2023)",
+"tags": "java azure",
+"keywords": "",
+"url": "releases2023-10java.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Java (February 2023)",
+"tags": "java azure",
+"keywords": "",
+"url": "releases2023-02java.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Java (Mgmt)",
+"tags": "java",
+"keywords": "",
+"url": "releaseslatestmgmtjava.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Java (All)",
+"tags": "java",
+"keywords": "",
+"url": "releaseslatestalljava.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Java (Latest)",
+"tags": "java",
+"keywords": "",
+"url": "releaseslatestjava.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Java (March 2022)",
+"tags": "java azure",
+"keywords": "",
+"url": "releases2022-03java.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Java (November 2021)",
+"tags": "java azure",
+"keywords": "",
+"url": "releases2021-11java.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Java (April 2024)",
+"tags": "java azure",
+"keywords": "",
+"url": "releases2024-04java.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Java (May 2022)",
+"tags": "java azure",
+"keywords": "",
+"url": "releases2022-05java.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Java (May 2024)",
+"tags": "java azure",
+"keywords": "",
+"url": "releases2024-05java.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Java (January 2023)",
+"tags": "java azure",
+"keywords": "",
+"url": "releases2023-01java.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Java (April 2023)",
+"tags": "java azure",
+"keywords": "",
+"url": "releases2023-04java.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Java (December 2023)",
+"tags": "java azure",
+"keywords": "",
+"url": "releases2023-12java.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Java (September 2022)",
+"tags": "java azure",
+"keywords": "",
+"url": "releases2022-09java.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Java (January 2021)",
+"tags": "java azure",
+"keywords": "",
+"url": "releases2021-01java.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Java (June 2022)",
+"tags": "java azure",
+"keywords": "",
+"url": "releases2022-06java.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Java (September 2020)",
+"tags": "java azure",
+"keywords": "",
+"url": "releases2020-09java.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Java (August 2023)",
+"tags": "java azure",
+"keywords": "",
+"url": "releases2023-08java.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Java (December 2021)",
+"tags": "java azure",
+"keywords": "",
+"url": "releases2021-12java.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Java (April 2021)",
+"tags": "java azure",
+"keywords": "",
+"url": "releases2021-04java.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Java (July 2021)",
+"tags": "java azure",
+"keywords": "",
+"url": "releases2021-07java.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Java (Deprecated)",
+"tags": "java",
+"keywords": "",
+"url": "releasesdeprecatedjava.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Java (February 2024)",
+"tags": "java azure",
+"keywords": "",
+"url": "releases2024-02java.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Java (April 2020)",
+"tags": "java azure",
+"keywords": "",
+"url": "releases2020-04java.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Java (September 2021)",
+"tags": "java azure",
+"keywords": "",
+"url": "releases2021-09java.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Java (February 2022)",
+"tags": "java azure",
+"keywords": "",
+"url": "releases2022-02java.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Java (March 2024)",
+"tags": "java azure",
+"keywords": "",
+"url": "releases2024-03java.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Java (May 2023)",
+"tags": "java azure",
+"keywords": "",
+"url": "releases2023-05java.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for JavaScript (March 2021)",
+"tags": "javascript typescript",
+"keywords": "",
+"url": "releases2021-03js.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for JavaScript (March 2023)",
+"tags": "javascript typescript azure",
+"keywords": "",
+"url": "releases2023-03js.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for JavaScript (May 2021)",
+"tags": "javascript typescript azure",
+"keywords": "",
+"url": "releases2021-05js.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for JavaScript (April 2022)",
+"tags": "javascript typescript azure",
+"keywords": "",
+"url": "releases2022-04js.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for JavaScript (June 2021)",
+"tags": "javascript typescript azure",
+"keywords": "",
+"url": "releases2021-06js.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for JavaScript (December 2022)",
+"tags": "javascript typescript azure",
+"keywords": "",
+"url": "releases2022-12js.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for JavaScript (February 2020)",
+"tags": "javascript typescript",
+"keywords": "",
+"url": "releases2020-02js.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for JavaScript (September 2023)",
+"tags": "javascript typescript azure",
+"keywords": "",
+"url": "releases2023-09js.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for JavaScript (June 2023)",
+"tags": "javascript typescript azure",
+"keywords": "",
+"url": "releases2023-06js.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for JavaScript (July 2023)",
+"tags": "javascript typescript azure",
+"keywords": "",
+"url": "releases2023-07js.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for JavaScript (November 2022)",
+"tags": "javascript typescript azure",
+"keywords": "",
+"url": "releases2022-11js.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for JavaScript (February 2021)",
+"tags": "javascript typescript",
+"keywords": "",
+"url": "releases2021-02js.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for JavaScript (October 2021)",
+"tags": "javascript typescript azure",
+"keywords": "",
+"url": "releases2021-10js.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for JavaScript (June 2020)",
+"tags": "javascript typescript",
+"keywords": "",
+"url": "releases2020-06js.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for JavaScript (November 2020)",
+"tags": "javascript typescript",
+"keywords": "",
+"url": "releases2020-11js.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for JavaScript (August 2022)",
+"tags": "javascript typescript azure",
+"keywords": "",
+"url": "releases2022-08js.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for JavaScript (August 2020)",
+"tags": "javascript typescript",
+"keywords": "",
+"url": "releases2020-08js.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for JavaScript (October 2022)",
+"tags": "javascript typescript azure",
+"keywords": "",
+"url": "releases2022-10js.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for JavaScript (January 2024)",
+"tags": "javascript typescript azure",
+"keywords": "",
+"url": "releases2024-01js.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for JavaScript (July 2022)",
+"tags": "javascript typescript azure",
+"keywords": "",
+"url": "releases2022-07js.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for JavaScript (March 2020)",
+"tags": "javascript typescript",
+"keywords": "",
+"url": "releases2020-03js.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for JavaScript (November 2023)",
+"tags": "javascript typescript azure",
+"keywords": "",
+"url": "releases2023-11js.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for JavaScript (December 2020)",
+"tags": "javascript typescript",
+"keywords": "",
+"url": "releases2020-12js.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for JavaScript (January 2022)",
+"tags": "javascript typescript azure",
+"keywords": "",
+"url": "releases2022-01js.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for JavaScript (May 2020)",
+"tags": "javascript typescript",
+"keywords": "",
+"url": "releases2020-05js.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for JavaScript (August 2021)",
+"tags": "javascript typescript azure",
+"keywords": "",
+"url": "releases2021-08js.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for JavaScript (January 2020)",
+"tags": "javascript typescript",
+"keywords": "",
+"url": "releases2020-01js.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for JavaScript (July 2020)",
+"tags": "javascript typescript",
+"keywords": "",
+"url": "releases2020-07js.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for JavaScript (October 2023)",
+"tags": "javascript typescript azure",
+"keywords": "",
+"url": "releases2023-10js.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for JavaScript (February 2023)",
+"tags": "javascript typescript azure",
+"keywords": "",
+"url": "releases2023-02js.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for JavaScript (Mgmt)",
+"tags": "javascript typescript",
+"keywords": "",
+"url": "releaseslatestmgmtjs.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for JavaScript (All)",
+"tags": "javascript typescript",
+"keywords": "",
+"url": "releaseslatestalljs.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for JavaScript (Latest)",
+"tags": "javascript typescript",
+"keywords": "",
+"url": "releaseslatestjs.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for JavaScript (March 2022)",
+"tags": "javascript typescript azure",
+"keywords": "",
+"url": "releases2022-03js.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for JavaScript (November 2021)",
+"tags": "javascript typescript azure",
+"keywords": "",
+"url": "releases2021-11js.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for JavaScript (April 2024)",
+"tags": "javascript typescript azure",
+"keywords": "",
+"url": "releases2024-04js.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for JavaScript (October 2020)",
+"tags": "javascript typescript",
+"keywords": "",
+"url": "releases2020-10js.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for JavaScript (May 2022)",
+"tags": "javascript typescript azure",
+"keywords": "",
+"url": "releases2022-05js.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for JavaScript (May 2024)",
+"tags": "javascript typescript azure",
+"keywords": "",
+"url": "releases2024-05js.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for JavaScript (January 2023)",
+"tags": "javascript typescript azure",
+"keywords": "",
+"url": "releases2023-01js.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for JavaScript (April 2023)",
+"tags": "javascript typescript azure",
+"keywords": "",
+"url": "releases2023-04js.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for JavaScript (December 2023)",
+"tags": "javascript typescript azure",
+"keywords": "",
+"url": "releases2023-12js.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for JavaScript (September 2022)",
+"tags": "javascript typescript azure",
+"keywords": "",
+"url": "releases2022-09js.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for JavaScript (January 2021)",
+"tags": "javascript typescript",
+"keywords": "",
+"url": "releases2021-01js.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for JavaScript (June 2022)",
+"tags": "javascript typescript azure",
+"keywords": "",
+"url": "releases2022-06js.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for JavaScript (September 2020)",
+"tags": "javascript typescript",
+"keywords": "",
+"url": "releases2020-09js.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for JavaScript (August 2023)",
+"tags": "javascript typescript azure",
+"keywords": "",
+"url": "releases2023-08js.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for JavaScript (December 2021)",
+"tags": "javascript typescript azure",
+"keywords": "",
+"url": "releases2021-12js.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for JavaScript (April 2021)",
+"tags": "javascript typescript",
+"keywords": "",
+"url": "releases2021-04js.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for JavaScript (July 2021)",
+"tags": "javascript typescript azure",
+"keywords": "",
+"url": "releases2021-07js.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for JavaScript (Deprecated)",
+"tags": "javascript typescript",
+"keywords": "",
+"url": "releasesdeprecatedjs.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for JavaScript (February 2024)",
+"tags": "javascript typescript azure",
+"keywords": "",
+"url": "releases2024-02js.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for JavaScript (April 2020)",
+"tags": "javascript typescript",
+"keywords": "",
+"url": "releases2020-04js.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for JavaScript (September 2021)",
+"tags": "javascript typescript azure",
+"keywords": "",
+"url": "releases2021-09js.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for JavaScript (February 2022)",
+"tags": "javascript typescript azure",
+"keywords": "",
+"url": "releases2022-02js.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for JavaScript (March 2024)",
+"tags": "javascript typescript azure",
+"keywords": "",
+"url": "releases2024-03js.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for JavaScript (May 2023)",
+"tags": "javascript typescript azure",
+"keywords": "",
+"url": "releases2023-05js.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Policies: Open source",
+"tags": "",
+"keywords": "",
+"url": "policies_opensource.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Policies: Pipelines",
+"tags": "",
+"keywords": "",
+"url": "policies_pipelines.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure Rest API Specs (Latest)",
+"tags": "",
+"keywords": "",
+"url": "releaseslatestallpreview-only-specs.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "",
+"tags": "",
+"keywords": "",
+"url": "pythonguidelinesindex.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "",
+"tags": "",
+"keywords": "",
+"url": "pythonguidelinespython_introduction.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Python (March 2021)",
+"tags": "python",
+"keywords": "",
+"url": "releases2021-03python.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Python (March 2023)",
+"tags": "python azure",
+"keywords": "",
+"url": "releases2023-03python.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Python (May 2021)",
+"tags": "python azure",
+"keywords": "",
+"url": "releases2021-05python.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Python (April 2022)",
+"tags": "python azure",
+"keywords": "",
+"url": "releases2022-04python.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Python (June 2021)",
+"tags": "python azure",
+"keywords": "",
+"url": "releases2021-06python.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Python (December 2022)",
+"tags": "python azure",
+"keywords": "",
+"url": "releases2022-12python.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Python (February 2020)",
+"tags": "python",
+"keywords": "",
+"url": "releases2020-02python.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Python (September 2023)",
+"tags": "python azure",
+"keywords": "",
+"url": "releases2023-09python.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Python (June 2023)",
+"tags": "python azure",
+"keywords": "",
+"url": "releases2023-06python.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Python (July 2023)",
+"tags": "python azure",
+"keywords": "",
+"url": "releases2023-07python.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Python (November 2022)",
+"tags": "python azure",
+"keywords": "",
+"url": "releases2022-11python.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Python (February 2021)",
+"tags": "python",
+"keywords": "",
+"url": "releases2021-02python.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Python (October 2021)",
+"tags": "python azure",
+"keywords": "",
+"url": "releases2021-10python.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Python (June 2020)",
+"tags": "python",
+"keywords": "",
+"url": "releases2020-06python.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Python (November 2020)",
+"tags": "python",
+"keywords": "",
+"url": "releases2020-11python.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Python (August 2022)",
+"tags": "python azure",
+"keywords": "",
+"url": "releases2022-08python.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Python (August 2020)",
+"tags": "python",
+"keywords": "",
+"url": "releases2020-08python.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Python (October 2022)",
+"tags": "python azure",
+"keywords": "",
+"url": "releases2022-10python.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Python (January 2024)",
+"tags": "python azure",
+"keywords": "",
+"url": "releases2024-01python.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Python (July 2022)",
+"tags": "python azure",
+"keywords": "",
+"url": "releases2022-07python.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Python (March 2020)",
+"tags": "python",
+"keywords": "",
+"url": "releases2020-03python.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Python (November 2023)",
+"tags": "python azure",
+"keywords": "",
+"url": "releases2023-11python.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Python (December 2020)",
+"tags": "python",
+"keywords": "",
+"url": "releases2020-12python.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Python (January 2022)",
+"tags": "python azure",
+"keywords": "",
+"url": "releases2022-01python.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Python (May 2020)",
+"tags": "python",
+"keywords": "",
+"url": "releases2020-05python.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Python (August 2021)",
+"tags": "python azure",
+"keywords": "",
+"url": "releases2021-08python.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Python (January 2020)",
+"tags": "python",
+"keywords": "",
+"url": "releases2020-01python.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Python (July 2020)",
+"tags": "python",
+"keywords": "",
+"url": "releases2020-07python.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Python (October 2023)",
+"tags": "python azure",
+"keywords": "",
+"url": "releases2023-10python.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Python (February 2023)",
+"tags": "python azure",
+"keywords": "",
+"url": "releases2023-02python.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Python (Mgmt)",
+"tags": "python",
+"keywords": "",
+"url": "releaseslatestmgmtpython.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Python (All)",
+"tags": "python",
+"keywords": "",
+"url": "releaseslatestallpython.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Python (Latest)",
+"tags": "python",
+"keywords": "",
+"url": "releaseslatestpython.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Python (March 2022)",
+"tags": "python azure",
+"keywords": "",
+"url": "releases2022-03python.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Python (November 2021)",
+"tags": "python azure",
+"keywords": "",
+"url": "releases2021-11python.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Python (April 2024)",
+"tags": "python azure",
+"keywords": "",
+"url": "releases2024-04python.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Python (October 2020)",
+"tags": "python",
+"keywords": "",
+"url": "releases2020-10python.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Python (May 2022)",
+"tags": "python azure",
+"keywords": "",
+"url": "releases2022-05python.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Python (May 2024)",
+"tags": "python azure",
+"keywords": "",
+"url": "releases2024-05python.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Python (January 2023)",
+"tags": "python azure",
+"keywords": "",
+"url": "releases2023-01python.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Python (April 2023)",
+"tags": "python azure",
+"keywords": "",
+"url": "releases2023-04python.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Python (December 2023)",
+"tags": "python azure",
+"keywords": "",
+"url": "releases2023-12python.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Python (September 2022)",
+"tags": "python azure",
+"keywords": "",
+"url": "releases2022-09python.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Python (January 2021)",
+"tags": "python",
+"keywords": "",
+"url": "releases2021-01python.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Python (June 2022)",
+"tags": "python azure",
+"keywords": "",
+"url": "releases2022-06python.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Python (September 2020)",
+"tags": "python",
+"keywords": "",
+"url": "releases2020-09python.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Python (August 2023)",
+"tags": "python azure",
+"keywords": "",
+"url": "releases2023-08python.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Python (December 2021)",
+"tags": "python azure",
+"keywords": "",
+"url": "releases2021-12python.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Python (April 2021)",
+"tags": "python",
+"keywords": "",
+"url": "releases2021-04python.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Python (July 2021)",
+"tags": "python azure",
+"keywords": "",
+"url": "releases2021-07python.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Python (Deprecated)",
+"tags": "python",
+"keywords": "",
+"url": "releasesdeprecatedpython.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Python (February 2024)",
+"tags": "python azure",
+"keywords": "",
+"url": "releases2024-02python.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Python (April 2020)",
+"tags": "python",
+"keywords": "",
+"url": "releases2020-04python.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Python (September 2021)",
+"tags": "python azure",
+"keywords": "",
+"url": "releases2021-09python.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Python (February 2022)",
+"tags": "python azure",
+"keywords": "",
+"url": "releases2022-02python.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Python (March 2024)",
+"tags": "python azure",
+"keywords": "",
+"url": "releases2024-03python.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure SDK for Python (May 2023)",
+"tags": "python azure",
+"keywords": "",
+"url": "releases2023-05python.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Registered Namespaces",
+"tags": "",
+"keywords": "",
+"url": "registered_namespaces.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Policies: Release Notes",
+"tags": "",
+"keywords": "",
+"url": "policies_releasenotes.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Policies: Releases",
+"tags": "",
+"keywords": "",
+"url": "policies_releases.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Policies: Repository Branching",
+"tags": "",
+"keywords": "",
+"url": "policies_repobranching.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Policies: Repository Structure",
+"tags": "",
+"keywords": "",
+"url": "policies_repostructure.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Policies: Review Process",
+"tags": "",
+"keywords": "",
+"url": "policies_reviewprocess.html",
+"summary": ""
+}
+,
+
+
+
+
+
+{
+"title": "Search results",
+"tags": "",
+"keywords": "guidelines",
+"url": "search.html",
+"summary": ""
+}
+,
+
+
+
+
+
+{
+"title": "Azure Rest API Specs (Latest)",
+"tags": "",
+"keywords": "",
+"url": "releaseslatestmgmtspecs.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure Rest API Specs (Latest)",
+"tags": "",
+"keywords": "",
+"url": "releaseslatestallspecs.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Azure Rest API Specs (Latest)",
+"tags": "",
+"keywords": "",
+"url": "releaseslatestspecs.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Spring Guidelines",
+"tags": "",
+"keywords": "guidelines java spring",
+"url": "java_spring.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Policies: Support",
+"tags": "",
+"keywords": "",
+"url": "policies_support.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "General Guidelines: Terminology",
+"tags": "",
+"keywords": "guidelines",
+"url": "general_terminology.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "",
+"tags": "",
+"keywords": "",
+"url": "jstipuesearch_content.js",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "",
+"tags": "",
+"keywords": "",
+"url": "typescriptguidelinesindex.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "",
+"tags": "",
+"keywords": "",
+"url": "assetscssstyle.css",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "",
+"tags": "",
+"keywords": "",
+"url": "SECURITY.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "",
+"tags": "",
+"keywords": "",
+"url": "docsandroidapproved_dependencies.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "",
+"tags": "",
+"keywords": "",
+"url": "docsandroidrefs.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "",
+"tags": "",
+"keywords": "",
+"url": "docsclangapproved_dependencies.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "",
+"tags": "",
+"keywords": "",
+"url": "docsclangrefs.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "",
+"tags": "",
+"keywords": "",
+"url": "docscppapproved_dependencies.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "",
+"tags": "",
+"keywords": "",
+"url": "docscpprefs.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "",
+"tags": "",
+"keywords": "",
+"url": "docsdotnetAPIListingExample.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "",
+"tags": "",
+"keywords": "",
+"url": "docsdotnetrefs.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "",
+"tags": "",
+"keywords": "",
+"url": "docsgolangapproved_dependencies.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "",
+"tags": "",
+"keywords": "",
+"url": "docsgolangrefs.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "",
+"tags": "",
+"keywords": "",
+"url": "docsiosapproved_dependencies.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "",
+"tags": "",
+"keywords": "",
+"url": "docsiosrefs.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "",
+"tags": "",
+"keywords": "",
+"url": "docsjavaapproved_dependencies.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "",
+"tags": "",
+"keywords": "",
+"url": "docsjavarefs.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Guide for migrating to (name of new package here) from (name of old package here)",
+"tags": "",
+"keywords": "",
+"url": "docspoliciesmigration-guide-template.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "",
+"tags": "",
+"keywords": "",
+"url": "docspythonapproved_dependencies.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "",
+"tags": "",
+"keywords": "",
+"url": "docspythonconditionally_approved_dependencies.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "",
+"tags": "",
+"keywords": "",
+"url": "docspythonrefs.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "",
+"tags": "",
+"keywords": "",
+"url": "docsrustrefs.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "",
+"tags": "",
+"keywords": "",
+"url": "docstypescriptapproved_dependencies.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "",
+"tags": "",
+"keywords": "",
+"url": "docstypescriptrefs.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "",
+"tags": "",
+"keywords": "",
+"url": "releases2019-11java-quicklinks.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "",
+"tags": "",
+"keywords": "",
+"url": "releases2019-11js-quicklinks.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "",
+"tags": "",
+"keywords": "",
+"url": "releases2019-11net-quicklinks.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "",
+"tags": "",
+"keywords": "",
+"url": "releases2019-11python-quicklinks.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "",
+"tags": "",
+"keywords": "",
+"url": "releases2020-10java.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "",
+"tags": "",
+"keywords": "",
+"url": "robots.txt",
+"summary": ""
+}
+,
+
+
+
+
+
+{
+"title": "Async Iterators in the Azure SDK for JavaScript &amp;amp; TypeScript",
+"tags": "",
+"keywords": "",
+"url": "posts2020-06-02async-iterators.html",
+"summary": ""
+}
+,
+
+
+{
+"title": "Introducing Form Recognizer client library: AI-powered document extraction",
+"tags": "",
+"keywords": "",
+"url": "posts2020-05-19formrecognizer.html",
+"summary": ""
+}
+,
+
+
+{
+"title": "Azure SDK Releases (May 2020)",
+"tags": "",
+"keywords": "",
+"url": "posts2020-05-12may-release.html",
+"summary": ""
+}
+,
+
+
+{
+"title": "Forecasting Service Scale Out with Jupyter Notebooks in Visual Studio Code",
+"tags": "",
+"keywords": "",
+"url": "posts2020-05-05jupyter-notebooks.html",
+"summary": ""
+}
+,
+
+
+{
+"title": "How to use CancellationTokens to cancel tasks in the Azure SDK for .NET",
+"tags": "",
+"keywords": "",
+"url": "posts2020-04-28net-cancellation.html",
+"summary": ""
+}
+,
+
+
+{
+"title": "How to use abort signals to cancel operations in the Azure SDK for JavaScript/TypeScript",
+"tags": "",
+"keywords": "",
+"url": "posts2020-04-21js-cancellation.html",
+"summary": ""
+}
+,
+
+
+{
+"title": "Azure SDK Releases (April 2020)",
+"tags": "",
+"keywords": "",
+"url": "posts2020-04-14april-release.html",
+"summary": ""
+}
+,
+
+
+{
+"title": "Process data in real-time with Java and Azure Event Hubs",
+"tags": "",
+"keywords": "",
+"url": "posts2020-04-07java-eventprocessorclient.html",
+"summary": ""
+}
+,
+
+
+{
+"title": "Best practices for using Azure SDK with ASP.NET Core",
+"tags": "",
+"keywords": "",
+"url": "posts2020-03-31aspnet-core-integration.html",
+"summary": ""
+}
+,
+
+
+{
+"title": "Enabling distributed tracing with the Azure SDK for Python",
+"tags": "",
+"keywords": "",
+"url": "posts2020-03-24python-tracing.html",
+"summary": ""
+}
+,
+
+
+{
+"title": "Azure SDK Releases (March 2020)",
+"tags": "",
+"keywords": "",
+"url": "posts2020-03-17march-release.html",
+"summary": ""
+}
+,
+
+
+{
+"title": "Building the Azure SDK - Repository Structure",
+"tags": "",
+"keywords": "",
+"url": "posts2020-03-10monorepo.html",
+"summary": ""
+}
+,
+
+
+{
+"title": "Pluggable HTTP Modules with the Azure SDK for Java",
+"tags": "",
+"keywords": "",
+"url": "posts2020-03-03java-pluggable-http.html",
+"summary": ""
+}
+,
+
+
+{
+"title": "Authentication and the Azure SDK",
+"tags": "",
+"keywords": "",
+"url": "posts2020-02-25defaultazurecredentials.html",
+"summary": ""
+}
+,
+
+
+{
+"title": "Azure SDK Releases (February 2020)",
+"tags": "",
+"keywords": "",
+"url": "posts2020-02-11february-release.html",
+"summary": ""
+}
+,
+
+
+{
+"title": "Azure SDK Releases (January 2020)",
+"tags": "",
+"keywords": "",
+"url": "posts2020-01-13january-release.html",
+"summary": ""
+}
+,
+
+
+{
+"title": "Azure SDK Releases (December 2019)",
+"tags": "",
+"keywords": "",
+"url": "posts2019-12-13december-release.html",
+"summary": ""
+}
+,
+
+
+{
+"title": "Azure SDK Releases (November 2019)",
+"tags": "",
+"keywords": "",
+"url": "posts2019-11-11november-ga-release.html",
+"summary": ""
+}
+
+
 
 ]
