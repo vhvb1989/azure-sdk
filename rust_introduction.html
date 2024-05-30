@@ -1,0 +1,1868 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="keywords" content=" guidelines rust">
+<title>Rust Guidelines: Introduction | Azure SDKs</title>
+<link rel="stylesheet" href="/azure-sdk/css/syntax.css" />
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/azure-sdk/css/modern-business.css" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="/azure-sdk/css/boxshadowproperties.css" />
+<link rel="stylesheet" href="/azure-sdk/css/theme-azure.css" />
+<link rel="stylesheet" href="/azure-sdk/css/customstyles.css" />
+<link rel="stylesheet" href="/azure-sdk/css/normalize.css">
+<link rel="stylesheet" href="/azure-sdk/css/tipuesearch.css">
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="/azure-sdk/js/jquery.navgoco.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.2.0/anchor.min.js"></script>
+<script src="/azure-sdk/js/toc.js"></script>
+<script src="/azure-sdk/js/customscripts.js"></script>
+
+<link rel="shortcut icon" href="/azure-sdk/images/azure-sdk-glyph.svg"/>
+<link rel="alternate" type="application/rss+xml" title="Azure SDKs" href="/azure-sdk/feed.xml" />
+
+    <script>
+        $(document).ready(function () {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function (e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function (e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+
+        });
+
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function () {
+            $("#tg-sb-link").click(function () {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+    <!-- Due to the page header height, all anchors uses top padding to offset the top possion and appear below the main header.
+        If one requirement icon is just below another, the padding of the icon overlaps the one on top of it and block the clicking surface.
+        The script below finds all requirements icons and adds z-index decrementally to place any previous icon on top of the next ones.
+        The script runs after the page is completelly load (all content is downloaded).
+      -->
+    <script>
+        $(window).bind("load", function () {
+            let requeriments = $('.requirement');
+            requeriments.each(function (index, element) {
+                $(element).css("z-index", requeriments.length - index);
+            });
+        });
+    </script>
+
+</head>
+
+<body>
+    <!-- Navigation -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/azure-sdk/releases/latest/index.html"/>
+                <span class="projectTitle"><img style="margin-top: -8px;" class="d-inline-block align-top" src="/azure-sdk/images/azure-sdk-glyph.svg" width="35" height="35" alt=""/> Azure SDKs</span>
+            </a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <!-- toggle sidebar button -->
+                <!-- <li><a id="tg-sb-link" href="#"><i id="tg-sb-icon" class="fa fa-toggle-on"></i> Nav</a></li> -->
+                <!-- entries without drop-downs appear here -->
+
+
+
+
+
+                
+                
+                
+                <li><a href="https://aka.ms/azsdk/blog" rel="noopener">Blog</a></li>
+                
+                
+                
+                <li><a href="/azure-sdk/releases/latest/">Releases</a></li>
+                
+                
+                
+                <!-- entries with drop-downs appear here -->
+                <!-- conditional logic to control which topnav appears for the audience defined in the configuration file.-->
+                
+                
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Guidelines<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        
+                        
+                        <li><a href="/azure-sdk/general_introduction.html" rel="noopener">General Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/dotnet_introduction.html" rel="noopener">.NET Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/java_introduction.html" rel="noopener">Java Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/python_design.html" rel="noopener">Python Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/typescript_introduction.html" rel="noopener">TypeScript Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/android_design.html" rel="noopener">Android Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/ios_design.html" rel="noopener">iOS Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/clang_design.html" rel="noopener">C Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/cpp_introduction.html" rel="noopener">C++ Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/golang_introduction.html" rel="noopener">Go Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/rust_introduction.html" rel="noopener">Rust Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/policies_adoption.html" rel="noopener">GitHub Repos</a></li>
+                        
+                        <li><a href="/azure-sdk/policies_reviewprocess.html" rel="noopener">Policies</a></li>
+                        
+                        
+                    </ul>
+                </li>
+                
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">API References<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        
+                        
+                        
+                        <li><a href="https://aka.ms/net-docs" rel="noopener">.NET</a></li>
+                        
+                        
+                        
+                        <li><a href="https://aka.ms/java-docs" rel="noopener">Java</a></li>
+                        
+                        
+                        
+                        <li><a href="https://aka.ms/python-docs" rel="noopener">Python</a></li>
+                        
+                        
+                        
+                        <li><a href="https://aka.ms/js-docs" rel="noopener">TypeScript</a></li>
+                        
+                        
+                        
+                    </ul>
+                </li>
+                
+                
+                
+                <li>
+                    
+                        <a style="font-size: 1.666em !important" class="fa fa-github fa-2x" title="GitHub Link" href="https://github.com/azure/azure-sdk"></a>
+                    
+                </li>
+                <li>
+                    <a style="font-size: 1.666em !important" class="fa fa-twitter fa-2x" title="Twitter Link" href="https://twitter.com/AzureSDK"></a>
+                </li>
+            </ul>
+        </div>
+        </div>
+        <!-- /.container -->
+</nav>
+
+    <!-- Page Content -->
+    <div class="container-fluid" style="margin-top: 60px; min-height: calc(100vh - 50px);">
+        <div id="main">
+            <!-- Content Row -->
+            <div class="row">
+                
+                
+                <!-- Sidebar Column -->
+                <div class="col-md-2 col-xs-12" id="tg-sb-sidebar">
+                    
+
+<div id="mysidebar" class="nav">
+
+  <script src="/azure-sdk/js/tipuesearch_content.js"></script>
+  <script src="/azure-sdk/js/tipuesearch_set.js"></script>
+  <script src="/azure-sdk/js/tipuesearch.min.js"></script>
+
+<p>
+<form action="/azure-sdk/search.html" >
+    <div class=" tipue_search_left"><img src="/azure-sdk/images/search.png" alt="Search Icon" class="tipue_search_icon"></div>
+    <input type="text" class="form-control tipue_search_right" name="q" id="tipue_search_input" pattern=".{3,}" title="At least 3 characters" required placeholder="Search website">
+</form>
+</p>
+<div style="clear: both;"></div>
+  <ol>
+    <li class="sidebarTitle"> </li>
+    
+      
+        
+        <li>
+        
+          
+          <a title="General Guidelines" href="#">General Guidelines</a>
+          
+          <ul>
+            
+              
+                <li><a title="Introduction" href="/azure-sdk/general_introduction.html">Introduction</a></li>
+              
+              
+            
+              
+                <li><a title="Terminology" href="/azure-sdk/general_terminology.html">Terminology</a></li>
+              
+              
+            
+              
+                <li><a title="API Design" href="/azure-sdk/general_design.html">API Design</a></li>
+              
+              
+            
+              
+                <li><a title="Implementation" href="/azure-sdk/general_implementation.html">Implementation</a></li>
+              
+              
+            
+              
+                <li><a title="Documentation" href="/azure-sdk/general_documentation.html">Documentation</a></li>
+              
+              
+            
+              
+                <li><a title="Azure Core" href="/azure-sdk/general_azurecore.html">Azure Core</a></li>
+              
+              
+            
+              
+                <li><a title="Contribution Guidelines" href="/azure-sdk/policies_opensource.html">Contribution Guidelines</a></li>
+              
+              
+            
+          </ul>
+        </li>
+      
+        
+        <li>
+        
+          
+          <a title=".NET Guidelines" href="#">.NET Guidelines</a>
+          
+          <ul>
+            
+              
+                <li><a title="Design" href="/azure-sdk/dotnet_introduction.html">Design</a></li>
+              
+              
+            
+              
+                <li><a title="Implementation" href="/azure-sdk/dotnet_implementation.html">Implementation</a></li>
+              
+              
+                <li class="subfolders">
+                  <a title="API Documentation" href="#">API Documentation</a>
+                  <ul>
+                    
+                      
+                        <li><a title="Microsoft.Azure.Cosmos" href="https://docs.microsoft.com/dotnet/api/microsoft.azure.cosmos" target="_blank" rel="noopener">Microsoft.Azure.Cosmos</a></li>
+                      
+                    
+                      
+                        <li><a title="Azure.Messaging.EventHubs" href="https://azure.github.io/azure-sdk-for-net/eventhubs.html#azuremessagingeventhubs" target="_blank" rel="noopener">Azure.Messaging.EventHubs</a></li>
+                      
+                    
+                      
+                        <li><a title="Azure.Security.KeyVault.Keys" href="https://azure.github.io/azure-sdk-for-net/keyvault.html#azuresecuritykeyvaultkeys" target="_blank" rel="noopener">Azure.Security.KeyVault.Keys</a></li>
+                      
+                    
+                      
+                        <li><a title="Azure.Security.KeyVault.Secrets" href="https://azure.github.io/azure-sdk-for-net/keyvault.html#azuresecuritykeyvaultsecrets" target="_blank" rel="noopener">Azure.Security.KeyVault.Secrets</a></li>
+                      
+                    
+                      
+                        <li><a title="Azure.Storage.Blobs" href="https://azure.github.io/azure-sdk-for-net/storage.html#azurestorageblobs" target="_blank" rel="noopener">Azure.Storage.Blobs</a></li>
+                      
+                    
+                      
+                        <li><a title="Azure.Storage.Files.Shares" href="https://azure.github.io/azure-sdk-for-net/storage.html#azurestoragefilesshares" target="_blank" rel="noopener">Azure.Storage.Files.Shares</a></li>
+                      
+                    
+                      
+                        <li><a title="Azure.Storage.Queues" href="https://azure.github.io/azure-sdk-for-net/storage.html#azurestoragequeues" target="_blank" rel="noopener">Azure.Storage.Queues</a></li>
+                      
+                    
+                  </ul>
+                </li>
+              
+            
+          </ul>
+        </li>
+      
+        
+        <li>
+        
+          
+          <a title="Java Guidelines" href="#">Java Guidelines</a>
+          
+          <ul>
+            
+              
+                <li><a title="Design" href="/azure-sdk/java_introduction.html">Design</a></li>
+              
+              
+            
+              
+                <li><a title="Implementation" href="/azure-sdk/java_implementation.html">Implementation</a></li>
+              
+              
+            
+              
+                <li><a title="Spring Guidelines" href="/azure-sdk/java_spring.html">Spring Guidelines</a></li>
+              
+              
+                <li class="subfolders">
+                  <a title="API Documentation" href="#">API Documentation</a>
+                  <ul>
+                    
+                      
+                        <li><a title="azure-data-appconfiguration" href="https://azure.github.io/azure-sdk-for-java/appconfiguration.html#azure-data-appconfiguration" target="_blank" rel="noopener">azure-data-appconfiguration</a></li>
+                      
+                    
+                      
+                        <li><a title="azure-cosmos" href="https://azure.github.io/azure-sdk-for-java/cosmosdb.html#azure-cosmos" target="_blank" rel="noopener">azure-cosmos</a></li>
+                      
+                    
+                      
+                        <li><a title="azure-messaging-eventhubs" href="https://azure.github.io/azure-sdk-for-java/eventhubs.html#azure-messaging-eventhubs" target="_blank" rel="noopener">azure-messaging-eventhubs</a></li>
+                      
+                    
+                      
+                        <li><a title="azure-keyvault-keys" href="https://azure.github.io/azure-sdk-for-java/keyvault.html#azure-security-keyvault-keys" target="_blank" rel="noopener">azure-keyvault-keys</a></li>
+                      
+                    
+                      
+                        <li><a title="azure-keyvault-secrets" href="https://azure.github.io/azure-sdk-for-java/keyvault.html#azure-security-keyvault-secrets" target="_blank" rel="noopener">azure-keyvault-secrets</a></li>
+                      
+                    
+                      
+                        <li><a title="azure-storage-blob" href="https://azure.github.io/azure-sdk-for-java/storage.html#azure-storage-blob" target="_blank" rel="noopener">azure-storage-blob</a></li>
+                      
+                    
+                      
+                        <li><a title="azure-storage-file-share" href="https://azure.github.io/azure-sdk-for-java/storage.html#azure-storage-file-share" target="_blank" rel="noopener">azure-storage-file-share</a></li>
+                      
+                    
+                      
+                        <li><a title="azure-storage-queue" href="https://azure.github.io/azure-sdk-for-java/storage.html#azure-storage-queue" target="_blank" rel="noopener">azure-storage-queue</a></li>
+                      
+                    
+                  </ul>
+                </li>
+              
+            
+          </ul>
+        </li>
+      
+        
+        <li>
+        
+          
+          <a title="Python Guidelines" href="#">Python Guidelines</a>
+          
+          <ul>
+            
+              
+                <li><a title="Design" href="/azure-sdk/python_design.html">Design</a></li>
+              
+              
+            
+              
+                <li><a title="Implementation" href="/azure-sdk/python_implementation.html">Implementation</a></li>
+              
+              
+            
+              
+                <li><a title="Documentation" href="/azure-sdk/python_documentation.html">Documentation</a></li>
+              
+              
+                <li class="subfolders">
+                  <a title="API Documentation" href="#">API Documentation</a>
+                  <ul>
+                    
+                      
+                        <li><a title="azure-cosmos" href="https://azure.github.io/azure-sdk-for-python/cosmosdb.html#azure-cosmos" target="_blank" rel="noopener">azure-cosmos</a></li>
+                      
+                    
+                      
+                        <li><a title="azure-eventhub" href="https://azure.github.io/azure-sdk-for-python/eventhubs.html#azure-eventhub" target="_blank" rel="noopener">azure-eventhub</a></li>
+                      
+                    
+                      
+                        <li><a title="azure-keyvault-keys" href="https://azure.github.io/azure-sdk-for-python/keyvault.html#azure-keyvault-keys" target="_blank" rel="noopener">azure-keyvault-keys</a></li>
+                      
+                    
+                      
+                        <li><a title="azure-keyvault-secrets" href="https://azure.github.io/azure-sdk-for-python/keyvault.html#azure-keyvault-secrets" target="_blank" rel="noopener">azure-keyvault-secrets</a></li>
+                      
+                    
+                      
+                        <li><a title="azure-storage-blob" href="https://azure.github.io/azure-sdk-for-python/storage.html#azure-storage-blob" target="_blank" rel="noopener">azure-storage-blob</a></li>
+                      
+                    
+                      
+                        <li><a title="azure-storage-file-share" href="https://azure.github.io/azure-sdk-for-python/storage.html#azure-storage-file-share" target="_blank" rel="noopener">azure-storage-file-share</a></li>
+                      
+                    
+                      
+                        <li><a title="azure-storage-queue" href="https://azure.github.io/azure-sdk-for-python/storage.html#azure-storage-queue" target="_blank" rel="noopener">azure-storage-queue</a></li>
+                      
+                    
+                  </ul>
+                </li>
+              
+            
+          </ul>
+        </li>
+      
+        
+        <li>
+        
+          
+          <a title="TypeScript Guidelines" href="#">TypeScript Guidelines</a>
+          
+          <ul>
+            
+              
+                <li><a title="Introduction" href="/azure-sdk/typescript_introduction.html">Introduction</a></li>
+              
+              
+            
+              
+                <li><a title="API Design" href="/azure-sdk/typescript_design.html">API Design</a></li>
+              
+              
+            
+              
+                <li><a title="Implementation" href="/azure-sdk/typescript_implementation.html">Implementation</a></li>
+              
+              
+            
+              
+                <li><a title="Documentation" href="/azure-sdk/typescript_documentation.html">Documentation</a></li>
+              
+              
+                <li class="subfolders">
+                  <a title="API Documentation" href="#">API Documentation</a>
+                  <ul>
+                    
+                      
+                        <li><a title="@azure/cosmos" href="https://azure.github.io/azure-cosmos-js/" target="_blank" rel="noopener">@azure/cosmos</a></li>
+                      
+                    
+                      
+                        <li><a title="@azure/event-hubs" href="https://azure.github.io/azure-sdk-for-js/eventhubs.html#azure-event-hubs" target="_blank" rel="noopener">@azure/event-hubs</a></li>
+                      
+                    
+                      
+                        <li><a title="@azure/keyvault-keys" href="https://azure.github.io/azure-sdk-for-js/keyvault.html#azure-keyvault-keys" target="_blank" rel="noopener">@azure/keyvault-keys</a></li>
+                      
+                    
+                      
+                        <li><a title="@azure/keyvault-secrets" href="https://azure.github.io/azure-sdk-for-js/keyvault.html#azure-keyvault-secrets" target="_blank" rel="noopener">@azure/keyvault-secrets</a></li>
+                      
+                    
+                      
+                        <li><a title="@azure/storage-blob" href="https://azure.github.io/azure-sdk-for-js/storage.html#azure-storage-blob" target="_blank" rel="noopener">@azure/storage-blob</a></li>
+                      
+                    
+                      
+                        <li><a title="@azure/storage-file-share" href="https://azure.github.io/azure-sdk-for-js/storage.html#azure-storage-file-share" target="_blank" rel="noopener">@azure/storage-file-share</a></li>
+                      
+                    
+                      
+                        <li><a title="@azure/storage-queue" href="https://azure.github.io/azure-sdk-for-js/storage.html#azure-storage-queue" target="_blank" rel="noopener">@azure/storage-queue</a></li>
+                      
+                    
+                  </ul>
+                </li>
+              
+            
+          </ul>
+        </li>
+      
+        
+        <li>
+        
+          
+          <a title="Android Guidelines" href="#">Android Guidelines</a>
+          
+          <ul>
+            
+              
+                <li><a title="Design" href="/azure-sdk/android_design.html">Design</a></li>
+              
+              
+            
+              
+                <li><a title="Implementation" href="/azure-sdk/android_implementation.html">Implementation</a></li>
+              
+              
+            
+          </ul>
+        </li>
+      
+        
+        <li>
+        
+          
+          <a title="iOS Guidelines" href="#">iOS Guidelines</a>
+          
+          <ul>
+            
+              
+                <li><a title="Design" href="/azure-sdk/ios_design.html">Design</a></li>
+              
+              
+            
+              
+                <li><a title="Implementation" href="/azure-sdk/ios_implementation.html">Implementation</a></li>
+              
+              
+            
+          </ul>
+        </li>
+      
+        
+        <li>
+        
+          
+          <a title="C Guidelines" href="#">C Guidelines</a>
+          
+          <ul>
+            
+              
+                <li><a title="Design" href="/azure-sdk/clang_design.html">Design</a></li>
+              
+              
+            
+              
+                <li><a title="Implementation" href="/azure-sdk/clang_implementation.html">Implementation</a></li>
+              
+              
+                <li class="subfolders">
+                  <a title="API Documentation" href="#">API Documentation</a>
+                  <ul>
+                    
+                      
+                        <li><a title="az_iot" href="https://azuresdkdocs.blob.core.windows.net/$web/c/az_iot/latest/index.html" target="_blank" rel="noopener">az_iot</a></li>
+                      
+                    
+                  </ul>
+                </li>
+              
+            
+          </ul>
+        </li>
+      
+        
+        <li>
+        
+          
+          <a title="C++ Guidelines" href="#">C++ Guidelines</a>
+          
+          <ul>
+            
+              
+                <li><a title="Design" href="/azure-sdk/cpp_introduction.html">Design</a></li>
+              
+              
+            
+              
+                <li><a title="Implementation" href="/azure-sdk/cpp_implementation.html">Implementation</a></li>
+              
+              
+                <li class="subfolders">
+                  <a title="API Documentation" href="#">API Documentation</a>
+                  <ul>
+                    
+                      
+                        <li><a title="azure-storage-blob" href="https://azure.github.io/azure-sdk-for-cpp/storage.html#azure-storage-blob" target="_blank" rel="noopener">azure-storage-blob</a></li>
+                      
+                    
+                      
+                        <li><a title="azure-storage-file-datalake" href="https://azure.github.io/azure-sdk-for-cpp/storage.html#azure-storage-file-datalake" target="_blank" rel="noopener">azure-storage-file-datalake</a></li>
+                      
+                    
+                      
+                        <li><a title="azure-storage-file-share" href="https://azure.github.io/azure-sdk-for-cpp/storage.html#azure-storage-file-shares" target="_blank" rel="noopener">azure-storage-file-share</a></li>
+                      
+                    
+                  </ul>
+                </li>
+              
+            
+          </ul>
+        </li>
+      
+        
+        <li>
+        
+          
+          <a title="Go Guidelines" href="#">Go Guidelines</a>
+          
+          <ul>
+            
+              
+                <li><a title="Design" href="/azure-sdk/golang_introduction.html">Design</a></li>
+              
+              
+            
+              
+                <li><a title="Implementation" href="/azure-sdk/golang_implementation.html">Implementation</a></li>
+              
+              
+            
+          </ul>
+        </li>
+      
+        
+        <li>
+        
+          
+          <a title="Rust Guidelines" href="#">Rust Guidelines</a>
+          
+          <ul>
+            
+              
+                <li class="active"><a title="Design" href="/azure-sdk/rust_introduction.html">Design</a></li>
+              
+              
+            
+              
+                <li><a title="Implementation" href="/azure-sdk/rust_implementation.html">Implementation</a></li>
+              
+              
+            
+          </ul>
+        </li>
+      
+        
+        <li>
+        
+          
+          <a title="GitHub Repos" href="#">GitHub Repos</a>
+          
+          <ul>
+            
+              
+                <li><a title="Guidelines Contributions" href="/azure-sdk/policies_adoption.html">Guidelines Contributions</a></li>
+              
+              
+            
+              
+                <li><a title="Repository structure" href="/azure-sdk/policies_repostructure.html">Repository structure</a></li>
+              
+              
+            
+              
+                <li><a title="Repository branching" href="/azure-sdk/policies_repobranching.html">Repository branching</a></li>
+              
+              
+            
+              
+                <li><a title="Pipelines" href="/azure-sdk/policies_pipelines.html">Pipelines</a></li>
+              
+              
+            
+          </ul>
+        </li>
+      
+        
+        <li>
+        
+          
+          <a title="Policies" href="#">Policies</a>
+          
+          <ul>
+            
+              
+                <li><a title="Review Process" href="/azure-sdk/policies_reviewprocess.html">Review Process</a></li>
+              
+              
+            
+              
+                <li><a title="Releases" href="/azure-sdk/policies_releases.html">Releases</a></li>
+              
+              
+            
+              
+                <li><a title="Release notes" href="/azure-sdk/policies_releasenotes.html">Release notes</a></li>
+              
+              
+            
+              
+                <li><a title="Support" href="/azure-sdk/policies_support.html">Support</a></li>
+              
+              
+            
+          </ul>
+        </li>
+      
+    
+  </ol>
+</div>
+
+<script>$("li.active").parents('li').toggleClass("active");</script>
+
+                </div>
+                
+                
+
+                <!-- Content Column -->
+                <div class="col-md-10 col-xs-12" id="tg-sb-content">
+                    <div class="row">
+    
+    <div class="col-md-2 col-xs-12 content-right pull-right">
+        
+<!-- this handles the automatic toc. use ## for subheads to auto-generate the on-page minitoc. if you use html tags, you must supply an ID for the heading element in order for it to appear in the minitoc. -->
+<script>
+$( document ).ready(function() {
+  // Handler for .ready() called.
+
+$('#toc').toc({ minimumHeaders: 0, listType: 'ul', showSpeed: 0, headers: 'h2,h3,h4' });
+
+/* this offset helps account for the space taken up by the floating toolbar. */
+$('#toc').on('click', 'a', function() {
+  var target = $(this.getAttribute('href'))
+    , scroll_target = target.offset().top
+
+  $(window).scrollTop(scroll_target - 60);
+  return false
+})
+  
+});
+</script>
+
+<div id="toc"></div>
+
+    </div>
+    
+
+    <div class="col-md-10  col-xs-12 content-center pull-left">
+        <div class="post-header">
+        <h1 class="post-title-main">Rust Guidelines: Introduction</h1>
+        </div>
+        
+        
+        
+        <div class="post-content">
+            
+        
+            
+        
+            <div class="alert alert-danger" role="alert"><i class="fa fa-exclamation-circle"></i> <b>DRAFT:</b> The Rust Language guidelines are in DRAFT status</div>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>The Rust guidelines are for the benefit of client library designers targeting service applications written in Rust. You do not have to write a client library for Rust if your service is not normally accessed from Rust.</p>
+
+<h3 id="rust-principles">Design Principles</h3>
+
+<p>The Azure SDK should be designed to enhance the productivity of developers connecting to Azure services. Other qualities (such as completeness, extensibility, and performance) are important but secondary. Productivity is achieved by adhering to the principles described below:</p>
+
+<h4 id="idiomatic">Idiomatic</h4>
+
+<ul>
+  <li>The SDK should follow the general <a href="https://rust-lang.github.io/api-guidelines/about.html">design guidelines and conventions</a> for the Rust language. It should feel natural to a developer in the Rust language.</li>
+  <li>We embrace the ecosystem with its strengths and its flaws.</li>
+  <li>We work with the ecosystem to improve it for all developers.</li>
+</ul>
+
+<h4 id="consistent">Consistent</h4>
+
+<ul>
+  <li>Client libraries should be consistent within the language, consistent with the service and consistent between all target languages. In cases of conflict, consistency within the language is the highest priority and consistency between all target languages is the lowest priority.</li>
+  <li>Service-agnostic concepts such as logging, HTTP communication, and error handling should be consistent. The developer should not have to relearn service-agnostic concepts as they move between client libraries.</li>
+  <li>Consistency of terminology between the client library and the service is a good thing that aids in diagnostics.</li>
+  <li>All differences between the service and client library must have a good (articulated) reason for existing, rooted in idiomatic usage rather than whim.</li>
+  <li>The Azure SDK for each target language feels like a single product developed by a single team.</li>
+  <li>There should be feature parity across target languages. This is more important than feature parity with the service.</li>
+</ul>
+
+<h4 id="approachable">Approachable</h4>
+
+<ul>
+  <li>We are experts in the supported technologies so our customers, the developers, don’t have to be.</li>
+  <li>Developers should find great documentation (hero tutorial, how to articles, samples, and API documentation) that makes it easy to be successful with the Azure service.</li>
+  <li>Getting off the ground should be easy through the use of predictable defaults that implement best practices. Think about progressive concept disclosure.</li>
+  <li>The SDK should be easily acquired through the most normal mechanisms in the target language and ecosystem.</li>
+  <li>Developers can be overwhelmed when learning new service concepts. The core use cases should be discoverable.</li>
+</ul>
+
+<h4 id="diagnosable">Diagnosable</h4>
+
+<ul>
+  <li>The developer should be able to understand what is going on.</li>
+  <li>It should be discoverable when and under what circumstances a network call is made.</li>
+  <li>Defaults are discoverable and their intent is clear.</li>
+  <li>Logging, tracing, and exception handling are fundamental and should be thoughtful.</li>
+  <li>Error messages should be concise, correlated with the service, actionable, and human readable. Ideally, the error message should lead the consumer to a useful action that they can take.</li>
+  <li>Integrating with the preferred debugger for the target language should be easy.</li>
+</ul>
+
+<h4 id="dependable">Dependable</h4>
+
+<ul>
+  <li>Breaking changes are more harmful to a user’s experience than most new features and improvements are beneficial.</li>
+  <li>Incompatibilities should never be introduced deliberately without thorough review and very strong justification.</li>
+  <li>Do not rely on dependencies that can force our hand on compatibility.</li>
+</ul>
+
+<h3 id="rust-general">General Guidelines</h3>
+
+<p><a href="#rust-general-follow-general-guidelines" name="rust-general-follow-general-guidelines" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  follow the <a href="/azure-sdk/general_introduction.html">General Azure SDK Guidelines</a>.</p>
+
+<p><a href="#rust-general-pipeline" name="rust-general-pipeline" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  use <code class="language-plaintext highlighter-rouge">azure_core::Pipeline</code> to implement all methods that call Azure REST services.</p>
+
+<p><a href="#rust-general-idiomatic-code" name="rust-general-idiomatic-code" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  write idiomatic Rust code. If you’re not familiar with the language, a great place to start is <a href="https://www.rust-lang.org/learn">https://www.rust-lang.org/learn</a>. Do <strong>NOT</strong> simply attempt to translate your language of choice into Rust.</p>
+
+<p><a href="#rust-general-version" name="rust-general-version" class="requirement" role="img" aria-label="DO NOT">⛔️</a> <strong>DO NOT</strong>  use grammar or features newer than the <code class="language-plaintext highlighter-rouge">rust-version</code> declared in the root <code class="language-plaintext highlighter-rouge">Cargo.toml</code> workspace.</p>
+
+<p><a href="#rust-general-dependencies" name="rust-general-dependencies" class="requirement" role="img" aria-label="DO NOT">⛔️</a> <strong>DO NOT</strong>  unconditionally depend on any particular async runtime or HTTP stack.</p>
+
+<p><a href="#rust-general-dependencies-default" name="rust-general-dependencies-default" class="requirement" role="img" aria-label="YOU SHOULD">☑️</a> <strong>YOU SHOULD</strong>  depend on <code class="language-plaintext highlighter-rouge">tokio</code> (async runtime) and <code class="language-plaintext highlighter-rouge">reqwest</code> (HTTP stack) in the <code class="language-plaintext highlighter-rouge">default</code> feature for crates e.g.:</p>
+
+<div class="language-toml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">[dependencies]</span>
+<span class="nn">reqwest</span> <span class="o">=</span> <span class="p">{</span> <span class="py">workspace</span> <span class="p">=</span> <span class="kc">true</span><span class="p">,</span> <span class="py">optional</span> <span class="p">=</span> <span class="kc">true</span> <span class="p">}</span>
+
+<span class="nn">[features]</span>
+<span class="py">default</span> <span class="p">=</span> <span class="p">[</span> <span class="s">"reqwest"</span> <span class="p">]</span>
+<span class="py">reqwest</span> <span class="p">=</span> <span class="p">[</span> <span class="s">"dep:reqwest"</span> <span class="p">]</span>
+</code></pre></div></div>
+
+<p>Default features can be ignored by consumers and individual features enabled as needed. This allows consumers to ignore default features and use their own HTTP stack and/or async runtime to implement a client.</p>
+
+<p><a href="#rust-general-unwrap" name="rust-general-unwrap" class="requirement" role="img" aria-label="DO NOT">⛔️</a> <strong>DO NOT</strong>  call <code class="language-plaintext highlighter-rouge">unwrap()</code>, <code class="language-plaintext highlighter-rouge">expect()</code>, or other functions that may panic unless you are absolutely sure they never will. It’s almost always better to use <code class="language-plaintext highlighter-rouge">map()</code>, <code class="language-plaintext highlighter-rouge">unwrap_or_else()</code>, or a myriad of related functions to remap errors, return suitable defaults, etc.</p>
+
+<p><a href="#rust-general-prelude" name="rust-general-prelude" class="requirement" role="img" aria-label="DO NOT">⛔️</a> <strong>DO NOT</strong>  define a <code class="language-plaintext highlighter-rouge">prelude</code> module.</p>
+
+<p>These may lead to name collisions, especially when multiple versions of a crate are imported.</p>
+
+<h3 id="support-for-non-http-protocols">Support for non-HTTP Protocols</h3>
+
+<p>This document contains guidelines developed primarily for typical Azure REST services i.e., stateless services with request-response based interaction model. Many of the guidelines in this document are more broadly applicable, but some might be specific to such REST services.</p>
+
+<h2 id="rust-api">Azure SDK API Design</h2>
+
+<p>The API surface of your client library must have the most thought as it is the primary interaction that the consumer has with your service.</p>
+
+<p><a href="#rust-api-naming-concise" name="rust-api-naming-concise" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  use clear, concise, and meaningful names.</p>
+
+<p><a href="#rust-api-naming-standard" name="rust-api-naming-standard" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  follow <a href="https://rust-lang.github.io/api-guidelines/naming.html">Rust naming conventions</a>.</p>
+
+<p><a href="#rust-api-naming-abbreviation" name="rust-api-naming-abbreviation" class="requirement" role="img" aria-label="YOU SHOULD NOT">⚠️</a> <strong>YOU SHOULD NOT</strong>  use abbreviations unless necessary or when they are commonly used and understood. For example, <code class="language-plaintext highlighter-rouge">iot</code> is used since it is a commonly understood industry term; however, using <code class="language-plaintext highlighter-rouge">kv</code> for Key Vault would not be allowed since <code class="language-plaintext highlighter-rouge">kv</code> is not commonly used to refer to Key Vault.</p>
+
+<p>With mixed casing like “IoT”, consider the following guidelines:</p>
+
+<ul>
+  <li>For module and method names, always use lowercase e.g., <code class="language-plaintext highlighter-rouge">get_iot_device()</code>.</li>
+  <li>For type names, use PascalCase e.g., <code class="language-plaintext highlighter-rouge">IotClient</code>.</li>
+</ul>
+
+<p><a href="#rust-api-dependencies" name="rust-api-dependencies" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  consult the <a href="https://github.com/azure/azure-sdk/issues">Architecture Board</a> if you wish to use a dependency that is not on the list of <a href="https://github.com/Azure/azure-sdk-for-rust/blob/main/Cargo.toml">centrally managed dependencies</a>.</p>
+
+<h3 id="rust-client">Service Client</h3>
+
+<p>Service clients are the main starting points for developers calling Azure services with the Azure SDK. Each client library should have at least one client in its main namespace, so it’s easy to discover. The guidelines in this section describe patterns for the design of a service client.</p>
+
+<p>There exists a distinction that must be made clear with service clients: not all classes that perform HTTP (or otherwise) requests to a service are automatically designated as a service client. A service client designation is only applied to classes that are able to be directly constructed because they are uniquely represented on the service. Additionally, a service client designation is only applied if there is a specific scenario that applies where the direct creation of the client is appropriate. If a resource can not be uniquely identified or there is no need for direct creation of the type, then the service client designation should not apply.</p>
+
+<p><a href="#rust-client-name" name="rust-client-name" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  name service client types with the <em>Client</em> suffix e.g., <code class="language-plaintext highlighter-rouge">SecretClient</code>.</p>
+
+<p>Client names are specific to the service to avoid ambiguity when using multiple clients without requiring <code class="language-plaintext highlighter-rouge">as</code> to change the binding name when importing e.g.,</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>error[E0252]: the name `Client` is defined multiple times
+  --&gt; src/main.rs:2:38
+   |
+1  |     use azure_storage_blob::Client;
+   |         ----------- previous import of the type `Client` here
+2  |     use azure_security_keyvault::secrets::Client;
+   |         ^^^^^^^^^^^ `Client` reimported here
+   |
+</code></pre></div></div>
+
+<p><a href="#rust-client-namespace" name="rust-client-namespace" class="requirement" role="img" aria-label="YOU SHOULD">☑️</a> <strong>YOU SHOULD</strong>  place service client types that the consumer is most likely to interact with in the root module of the client library e.g., <code class="language-plaintext highlighter-rouge">azure_security_keyvault</code>. Specialized service clients should be placed in submodules e.g., <code class="language-plaintext highlighter-rouge">azure_security_keyvault::secrets</code>.</p>
+
+<p><a href="#rust-client-immutable" name="rust-client-immutable" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  ensure that all service client methods are thread safe (usually by making them immutable and stateless).</p>
+
+<p><a href="#rust-client-endpoint" name="rust-client-endpoint" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  define a public <code class="language-plaintext highlighter-rouge">endpoint(&amp;self) -&gt; &amp;azure_core::Url</code> method to get the endpoint used to create the client.</p>
+
+<h4 id="rust-client-constructors">Service Client Constructors</h4>
+
+<p><a href="#rust-client-constructors-new" name="rust-client-constructors-new" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  define a public function <code class="language-plaintext highlighter-rouge">new</code> that takes the following form and returns <code class="language-plaintext highlighter-rouge">Self</code> or <code class="language-plaintext highlighter-rouge">azure_core::Result&lt;Self&gt;</code> if the function may fail.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">impl</span> <span class="n">SecretClient</span> <span class="p">{</span>
+    <span class="k">pub</span> <span class="k">fn</span> <span class="nf">new</span><span class="p">(</span><span class="n">endpoint</span><span class="p">:</span> <span class="k">impl</span> <span class="nb">AsRef</span><span class="o">&lt;</span><span class="nb">str</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">credential</span><span class="p">:</span> <span class="nn">std</span><span class="p">::</span><span class="nn">sync</span><span class="p">::</span><span class="nb">Arc</span><span class="o">&lt;</span><span class="k">dyn</span> <span class="nn">azure_core</span><span class="p">::</span><span class="n">TokenCredential</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">options</span><span class="p">:</span> <span class="nb">Option</span><span class="o">&lt;</span><span class="n">SecretClientOptions</span><span class="o">&gt;</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nn">azure_core</span><span class="p">::</span><span class="nb">Result</span><span class="o">&lt;</span><span class="k">Self</span><span class="o">&gt;</span> <span class="p">{</span>
+        <span class="k">let</span> <span class="n">endpoint</span> <span class="o">=</span> <span class="nn">azure_core</span><span class="p">::</span><span class="nn">Url</span><span class="p">::</span><span class="nf">parse</span><span class="p">(</span><span class="n">endpoint</span><span class="nf">.as_ref</span><span class="p">())</span><span class="o">?</span><span class="p">;</span>
+        <span class="k">let</span> <span class="n">options</span> <span class="o">=</span> <span class="n">options</span><span class="nf">.unwrap_or_default</span><span class="p">();</span>
+
+        <span class="nd">todo!</span><span class="p">()</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><a href="#rust-client-constructors-credential" name="rust-client-constructors-credential" class="requirement" role="img" aria-label="YOU MAY">✔️</a> <strong>YOU MAY</strong>  accept a different credential type if the service does not support AAD authentication.</p>
+
+<p><a href="#rust-client-constructors-multiple-credentials" name="rust-client-constructors-multiple-credentials" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  define a <code class="language-plaintext highlighter-rouge">new</code> function that takes a <code class="language-plaintext highlighter-rouge">TokenCredential</code> and a <code class="language-plaintext highlighter-rouge">with_{credential_type}</code> function e.g., <code class="language-plaintext highlighter-rouge">with_key_credential</code> if a client supports both AAD authentication and other token credentials that do not implement <code class="language-plaintext highlighter-rouge">TokenCredential</code>.</p>
+
+<p>In cases when different credential types are supported, we want the primary use case to support AAD authentication over other authentication schemes.</p>
+
+<h5 id="rust-client-configuration">Client Configuration</h5>
+
+<p><a href="#rust-client-configuration-name" name="rust-client-configuration-name" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  name the client options struct with the same as the client name + “Options” e.g., a <code class="language-plaintext highlighter-rouge">SecretClient</code> takes a <code class="language-plaintext highlighter-rouge">SecretClientOptions</code>.</p>
+
+<p><a href="#rust-client-configuration-version" name="rust-client-configuration-version" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  define a <code class="language-plaintext highlighter-rouge">pub api_version: String</code> field to pass to the service for the HTTP client.</p>
+
+<p><a href="#rust-client-configuration-core" name="rust-client-configuration-core" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  define a <code class="language-plaintext highlighter-rouge">pub options: azure_core::ClientOptions</code> field on client-specific options to define global configuration shared by any HTTP client.</p>
+
+<p><a href="#rust-client-configuration-clone" name="rust-client-configuration-clone" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  derive <code class="language-plaintext highlighter-rouge">Clone</code> to support cloning client configuration for other clients.</p>
+
+<p><a href="#rust-client-configuration-default" name="rust-client-configuration-default" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  derive <code class="language-plaintext highlighter-rouge">Default</code> to support creating default client configuration including the default <code class="language-plaintext highlighter-rouge">api-version</code> used when calling into the service.</p>
+
+<p>The requirements above would define an example client options struct like:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">#[derive(Clone,</span> <span class="nd">Default)]</span>
+<span class="k">pub</span> <span class="k">struct</span> <span class="n">SecretClientOptions</span> <span class="p">{</span>
+    <span class="k">pub</span> <span class="n">api_version</span><span class="p">:</span> <span class="nb">String</span><span class="p">,</span>
+    <span class="k">pub</span> <span class="n">options</span><span class="p">:</span> <span class="nn">azure_core</span><span class="p">::</span><span class="n">ClientOptions</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><a href="#rust-client-configuration-env" name="rust-client-configuration-env" class="requirement" role="img" aria-label="DO NOT">⛔️</a> <strong>DO NOT</strong>  use client library-specific runtime configuration such as environment variables or configuration files. Some environments e.g., WASM or many IoT devices won’t have access to an environment block or file system.</p>
+
+<p><a href="#rust-client-configuration-env-sys" name="rust-client-configuration-env-sys" class="requirement" role="img" aria-label="DO NOT">⛔️</a> <strong>DO NOT</strong>  change the default values of the client options based on system or program state.</p>
+
+<p><a href="#rust-client-configuration-env-build" name="rust-client-configuration-env-build" class="requirement" role="img" aria-label="DO NOT">⛔️</a> <strong>DO NOT</strong>  change the default values of the client options based on how the client library was built.</p>
+
+<p><a href="#rust-client-configuration-immutable" name="rust-client-configuration-immutable" class="requirement" role="img" aria-label="DO NOT">⛔️</a> <strong>DO NOT</strong>  change the behavior of the client after the client is constructed with the following exceptions:</p>
+
+<ul>
+  <li>Log level, which must take effect immediately across all client libraries.</li>
+  <li>Tracing on or off, which must take effect immediately across all client libraries.</li>
+</ul>
+
+<h5 id="rust-client-api-version">Service Versions</h5>
+
+<p><a href="#rust-client-api-version-latest" name="rust-client-api-version-latest" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  call the latest supported service API version by default. Typically this will be the API version from which the client library was generated.</p>
+
+<p><a href="#rust-client-api-version-override" name="rust-client-api-version-override" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  allow the consumer to explicitly set a service API version when instantiating the service client.</p>
+
+<h5 id="rust-client-mocking">Mocking</h5>
+
+<p><a href="#rust-client-mocking-trait-name" name="rust-client-mocking-trait-name" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  define a trait named after the client name + “Methods” e.g., <code class="language-plaintext highlighter-rouge">SecretClientMethods</code>.</p>
+
+<p><a href="#rust-client-mocking-trait-methods" name="rust-client-mocking-trait-methods" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  implement all methods of the client methods trait on the client which have the body <code class="language-plaintext highlighter-rouge">unimplemented!()</code> or <code class="language-plaintext highlighter-rouge">std::future::ready(unimplemented!())</code> for async methods e.g.,</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">pub</span> <span class="k">trait</span> <span class="n">SecretClientMethods</span> <span class="p">{</span>
+    <span class="k">fn</span> <span class="nf">endpoint</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="o">&amp;</span><span class="n">Url</span> <span class="p">{</span>
+        <span class="nd">unimplemented!</span><span class="p">()</span>
+    <span class="p">}</span>
+
+    <span class="k">async</span> <span class="k">fn</span> <span class="nf">set_secret</span><span class="p">(</span>
+        <span class="o">&amp;</span><span class="k">self</span><span class="p">,</span>
+        <span class="n">_name</span><span class="p">:</span> <span class="k">impl</span> <span class="nb">Into</span><span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;</span><span class="p">,</span>
+        <span class="n">_version</span><span class="p">:</span> <span class="k">impl</span> <span class="nb">Into</span><span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;</span><span class="p">,</span>
+        <span class="n">_options</span><span class="p">:</span> <span class="nb">Option</span><span class="o">&lt;</span><span class="n">SetSecretOptions</span><span class="o">&gt;</span><span class="p">,</span>
+        <span class="n">context</span><span class="p">:</span> <span class="nb">Option</span><span class="o">&lt;&amp;</span><span class="n">Context</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="p">)</span> <span class="k">-&gt;</span> <span class="nn">azure_core</span><span class="p">::</span><span class="nb">Result</span><span class="o">&lt;</span><span class="n">Response</span><span class="o">&gt;</span> <span class="p">{</span>
+        <span class="nn">std</span><span class="p">::</span><span class="nn">future</span><span class="p">::</span><span class="nf">ready</span><span class="p">(</span><span class="nd">unimplemented!</span><span class="p">())</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">pub</span> <span class="k">struct</span> <span class="n">SecretClient</span> <span class="p">{</span>
+    <span class="c1">// ...</span>
+<span class="p">}</span>
+
+<span class="k">impl</span> <span class="n">SecretClient</span> <span class="p">{</span>
+    <span class="c1">// pub fn new(..) -&gt; Result&lt;Self&gt;</span>
+<span class="p">}</span>
+
+<span class="k">impl</span> <span class="n">SecretClientMethods</span> <span class="k">for</span> <span class="n">SecretClient</span> <span class="p">{</span>
+    <span class="k">fn</span> <span class="nf">endpoint</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="o">&amp;</span><span class="n">Url</span> <span class="p">{</span>
+        <span class="nd">todo!</span><span class="p">()</span>
+    <span class="p">}</span>
+
+    <span class="k">async</span> <span class="k">fn</span> <span class="nf">set_secret</span><span class="p">(</span>
+        <span class="o">&amp;</span><span class="k">self</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">:</span> <span class="k">impl</span> <span class="nb">Into</span><span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;</span><span class="p">,</span>
+        <span class="n">version</span><span class="p">:</span> <span class="k">impl</span> <span class="nb">Into</span><span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;</span><span class="p">,</span>
+        <span class="n">options</span><span class="p">:</span> <span class="nb">Option</span><span class="o">&lt;</span><span class="n">SetSecretOptions</span><span class="o">&gt;</span><span class="p">,</span>
+        <span class="n">context</span><span class="p">:</span> <span class="nb">Option</span><span class="o">&lt;&amp;</span><span class="n">Context</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="p">)</span> <span class="k">-&gt;</span> <span class="nn">azure_core</span><span class="p">::</span><span class="nb">Result</span><span class="o">&lt;</span><span class="n">Response</span><span class="o">&gt;</span> <span class="p">{</span>
+        <span class="nd">todo!</span><span class="p">()</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h4 id="rust-client-methods">Service Methods</h4>
+
+<p><em>Service methods</em> are the methods on the client that invoke operations on the service and will follow the form:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">async</span> <span class="k">fn</span> <span class="nf">method_name</span><span class="p">(</span>
+    <span class="o">&amp;</span><span class="k">self</span><span class="p">,</span>
+    <span class="n">mandatory_param1</span><span class="p">:</span> <span class="k">impl</span> <span class="nb">Into</span><span class="o">&lt;</span><span class="n">P1</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="n">mandatory_param2</span><span class="p">:</span> <span class="k">impl</span> <span class="nb">Into</span><span class="o">&lt;</span><span class="n">P2</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="n">content</span><span class="p">:</span> <span class="n">RequestContent</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">,</span> <span class="c1">// elided if no body is defined</span>
+    <span class="n">options</span><span class="p">:</span> <span class="nb">Option</span><span class="o">&lt;</span><span class="n">MethodNameOptions</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="n">context</span><span class="p">:</span> <span class="nb">Option</span><span class="o">&lt;&amp;</span><span class="n">Context</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="p">)</span> <span class="k">-&gt;</span> <span class="nn">azure_core</span><span class="p">::</span><span class="nb">Result</span><span class="o">&lt;</span><span class="n">Response</span><span class="o">&gt;</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h5 id="rust-client-methods-async">Sync and Async</h5>
+
+<p>The Rust SDK is designed for asynchronous API calls. Customers who need synchronous calls may use something like <a href="https://docs.rs/futures/latest/futures/executor/fn.block_on.html"><code class="language-plaintext highlighter-rouge">futures::executor::block_on</code></a>
+to wait synchronously on a <code class="language-plaintext highlighter-rouge">Future</code>.</p>
+
+<p><a href="#rust-client-methods-async-api" name="rust-client-methods-async-api" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  provide an asynchronous programming model for service methods.</p>
+
+<p><a href="#rust-client-methods-async-nosync" name="rust-client-methods-async-nosync" class="requirement" role="img" aria-label="DO NOT">⛔️</a> <strong>DO NOT</strong>  provide a synchronous programming model for service methods.</p>
+
+<h5 id="rust-client-methods-naming">Naming</h5>
+
+<p><a href="#rust-client-methods-naming-case" name="rust-client-methods-naming-case" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  use snake_case method names converted from likely either camelCase or PascalCase declared in the service specification e.g., <code class="language-plaintext highlighter-rouge">getResource</code> would be declared as <code class="language-plaintext highlighter-rouge">get_resource</code>.</p>
+
+<p><a href="#rust-client-methods-naming-list" name="rust-client-methods-naming-list" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  use the <code class="language-plaintext highlighter-rouge">list_</code> prefix for service methods that return one or more pages containing a list of resources e.g., <code class="language-plaintext highlighter-rouge">list_properties_of_secrets()</code>.</p>
+
+<p><a href="#rust-client-methods-naming-conversion-prefix" name="rust-client-methods-naming-conversion-prefix" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  use the following prefixes in the described scenarios:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Prefix</th>
+      <th>Scenario</th>
+      <th>Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>(none)</td>
+      <td>field getter</td>
+      <td><code class="language-plaintext highlighter-rouge">field_name(&amp;self) -&gt; FieldType</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">with_</code></td>
+      <td>field setter returning <code class="language-plaintext highlighter-rouge">Self</code> - typically used in builders</td>
+      <td><code class="language-plaintext highlighter-rouge">with_field_name(&amp;mut self, value: FieldType) -&gt; &amp;mut Self</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">set_</code></td>
+      <td>field setter returning nothing or anything else</td>
+      <td><code class="language-plaintext highlighter-rouge">set_field_name(&amp;mut self, value: FieldType)</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h5 id="rust-client-methods-options">Operation Options</h5>
+
+<p><a href="#rust-client-methods-options-separate" name="rust-client-methods-options-separate" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  separate the <code class="language-plaintext highlighter-rouge">Context</code> containing client method options from service method options. See <a href="#rust-client-methods">example</a> above.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">azure_core::Pipeline</code> is constructed when the service client constructed, and because the clients must be immutable the pipeline cannot be altered directly.
+Any data passed to client methods to alter the pipeline e.g., retry policy options, must be passed to pipeline policies via the <code class="language-plaintext highlighter-rouge">Context</code>.</p>
+
+<p><a href="#rust-client-methods-options-context" name="rust-client-methods-options-context" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  pass pipeline policy options in the <code class="language-plaintext highlighter-rouge">Context</code> passed to each pipeline policy.</p>
+
+<p><a href="#rust-client-methods-options-pipeline" name="rust-client-methods-options-pipeline" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  clone the <code class="language-plaintext highlighter-rouge">azure_core::Pipeline</code> if the list of pipeline policies is altered by a client method e.g., a custom pipeline policy is added per-call.</p>
+
+<p><a href="#rust-client-methods-options-api-version" name="rust-client-methods-options-api-version" class="requirement" role="img" aria-label="YOU MAY">✔️</a> <strong>YOU MAY</strong>  allow the caller to change the API version e.g., <code class="language-plaintext highlighter-rouge">api-version</code> when calling the endpoint.</p>
+
+<h5 id="rust-client-methods-return">Return Types</h5>
+
+<p><a href="#rust-client-methods-return-pageable" name="rust-client-methods-return-pageable" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  return an <code class="language-plaintext highlighter-rouge">azure_core::Result&lt;azure_core::Pager&lt;T&gt;&gt;</code> from an <code class="language-plaintext highlighter-rouge">async fn</code> when the service returns a <a href="#rust-paging">pageable response</a>.</p>
+
+<p><a href="#rust-client-methods-return-lro" name="rust-client-methods-return-lro" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  return an <code class="language-plaintext highlighter-rouge">azure_core::Result&lt;azure_core::Poller&lt;T&gt;&gt;</code> from an <code class="language-plaintext highlighter-rouge">async fn</code> when the service implements the operation a <a href="#rust-lro">long-running operation</a>.</p>
+
+<p><a href="#rust-client-methods-return-result" name="rust-client-methods-return-result" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  return an <code class="language-plaintext highlighter-rouge">azure_core::Result&lt;azure_core::Response&lt;T&gt;&gt;</code> from an <code class="language-plaintext highlighter-rouge">async fn</code> for all other service responses.</p>
+
+<p><a href="#rust-client-methods-return-raw-response" name="rust-client-methods-return-raw-response" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  provide the status code, headers, and self-consuming async raw response stream from all return types e.g.,</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">impl</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">Response</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="k">pub</span> <span class="k">fn</span> <span class="nf">status</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="o">&amp;</span><span class="n">StatusCode</span> <span class="p">{</span>
+        <span class="nd">todo!</span><span class="p">()</span>
+    <span class="p">}</span>
+
+    <span class="k">pub</span> <span class="k">fn</span> <span class="nf">headers</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="o">&amp;</span><span class="n">Headers</span> <span class="p">{</span>
+        <span class="nd">todo!</span><span class="p">()</span>
+    <span class="p">}</span>
+
+    <span class="k">pub</span> <span class="k">async</span> <span class="k">fn</span> <span class="nf">into_content</span><span class="p">(</span><span class="k">self</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="n">ResponseContent</span> <span class="p">{</span>
+        <span class="nd">todo!</span><span class="p">()</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>This is equivalent to returning an <code class="language-plaintext highlighter-rouge">impl Future&lt;Output = azure_core::Result&lt;azure_core::Response&lt;T&gt;&gt;&gt;</code> from an <code class="language-plaintext highlighter-rouge">fn</code>.</p>
+
+<h5 id="rust-client-methods-cancellation">Cancellation</h5>
+
+<p>Cancelling an asynchronous method call in Rust is done by dropping the <code class="language-plaintext highlighter-rouge">Future</code>.</p>
+
+<p>The Rust <code class="language-plaintext highlighter-rouge">std</code> crate itself does not implement an async runtime, so different async runtimes must be chosen by the caller and may support cancellation different. <code class="language-plaintext highlighter-rouge">tokio</code> is common and should be the default, but not required.
+Various extensions also exist that the caller may use that may otherwise not work with passing in a cancellation token like in some other Azure SDK languages.</p>
+
+<h4 id="rust-parameters">Service Method Parameters</h4>
+
+<p><a href="#rust-parameters-self" name="rust-parameters-self" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  take a <code class="language-plaintext highlighter-rouge">&amp;self</code> as the first parameter. All service clients must be immutable</p>
+
+<p><a href="#rust-parameters-into" name="rust-parameters-into" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  declare parameter types as <code class="language-plaintext highlighter-rouge">impl Into&lt;T&gt;</code> where <code class="language-plaintext highlighter-rouge">T</code> is a common <code class="language-plaintext highlighter-rouge">std</code> type that implements <code class="language-plaintext highlighter-rouge">Into&lt;T&gt;</code> e.g., <code class="language-plaintext highlighter-rouge">String</code> when the parameter data will be owned.</p>
+
+<p>This will be most common when the data passed to a function will be stored in a struct e.g.:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">pub</span> <span class="k">struct</span> <span class="n">SecretClientOptions</span> <span class="p">{</span>
+    <span class="n">api_version</span><span class="p">:</span> <span class="nb">String</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">impl</span> <span class="n">SecretClientOptions</span> <span class="p">{</span>
+    <span class="k">pub</span> <span class="k">fn</span> <span class="nf">new</span><span class="p">(</span><span class="n">api_version</span><span class="p">:</span> <span class="k">impl</span> <span class="nb">Into</span><span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="k">Self</span> <span class="p">{</span>
+        <span class="k">Self</span> <span class="p">{</span>
+            <span class="n">api_version</span><span class="p">:</span> <span class="n">api_version</span><span class="nf">.into</span><span class="p">(),</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>This allows callers to pass a <code class="language-plaintext highlighter-rouge">String</code> or <code class="language-plaintext highlighter-rouge">str</code> e.g., <code class="language-plaintext highlighter-rouge">SecretClientOptions::new("7.4")</code>.</p>
+
+<p><a href="#rust-parameter-asref" name="rust-parameter-asref" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  declare parameter types as <code class="language-plaintext highlighter-rouge">impl AsRef&lt;T&gt;</code> where <code class="language-plaintext highlighter-rouge">T</code> is a common <code class="language-plaintext highlighter-rouge">std</code> reference type that implements <code class="language-plaintext highlighter-rouge">AsRef&lt;T&gt;</code> e.g., <code class="language-plaintext highlighter-rouge">str</code>, when the parameter data is merely borrowed.</p>
+
+<p>This is useful when the parameter data is temporary, such as allowing a <code class="language-plaintext highlighter-rouge">str</code> endpoint to be passed that will be parsed into an <code class="language-plaintext highlighter-rouge">azure_core::Url</code> e.g.:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">impl</span> <span class="n">SecretClient</span> <span class="p">{</span>
+    <span class="k">pub</span> <span class="k">fn</span> <span class="nf">new</span><span class="p">(</span><span class="n">endpoint</span><span class="p">:</span> <span class="k">impl</span> <span class="nb">AsRef</span><span class="o">&lt;</span><span class="nb">str</span><span class="o">&gt;</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Result</span><span class="o">&lt;</span><span class="k">Self</span><span class="o">&gt;</span> <span class="p">{</span>
+        <span class="k">let</span> <span class="n">endpoint</span> <span class="o">=</span> <span class="nn">azure_core</span><span class="p">::</span><span class="nn">Url</span><span class="p">::</span><span class="nf">parse</span><span class="p">(</span><span class="n">endpoint</span><span class="nf">.as_ref</span><span class="p">())</span><span class="o">?</span><span class="p">;</span>
+
+        <span class="nd">todo!</span><span class="p">()</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">endpoint</code> parameter is never saved so a reference is fine. This also allows callers to pass a <code class="language-plaintext highlighter-rouge">String</code> or <code class="language-plaintext highlighter-rouge">str</code> e.g., <code class="language-plaintext highlighter-rouge">SecretClient::new("https://myvault.vault.azure.net")</code>.</p>
+
+<p><a href="#rust-parameters-request-content" name="rust-parameters-request-content" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  declare a parameter named <code class="language-plaintext highlighter-rouge">content</code> of type <code class="language-plaintext highlighter-rouge">RequestContent&lt;T&gt;</code>, where <code class="language-plaintext highlighter-rouge">T</code> is the service-defined request model.</p>
+
+<p><a href="#rust-parameters-request-content-convert" name="rust-parameters-request-content-convert" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  support converting to a <code class="language-plaintext highlighter-rouge">RequestContent&lt;T&gt;</code> from a <code class="language-plaintext highlighter-rouge">T</code>, <code class="language-plaintext highlighter-rouge">Stream</code>, or <code class="language-plaintext highlighter-rouge">AsRef&lt;str&gt;</code>.</p>
+
+<p><a href="#rust-parameters-interior-mutability" name="rust-parameters-interior-mutability" class="requirement" role="img" aria-label="YOU MAY">✔️</a> <strong>YOU MAY</strong>  use interior mutability e.g., <code class="language-plaintext highlighter-rouge">std::sync::OnceLock</code> for single-resource caching e.g., a single key-specific <code class="language-plaintext highlighter-rouge">CryptographyClient</code> that attempts to download the public key material for subsequent public key operations.</p>
+
+<h5 id="rust-parameters-validation">Parameter Validation</h5>
+
+<p>The service client will have several methods that perform requests on the service. <em>Service parameters</em> are directly passed across the wire to an Azure service. <em>Client parameters</em> are not passed directly to the service, but used within the client library to fulfill the request. Examples of client parameters include values that are used to construct a URI or a file that needs to be uploaded to storage.</p>
+
+<p><a href="#rust-parameters-validation-client" name="rust-parameters-validation-client" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  validate client parameters.</p>
+
+<p><a href="#rust-parameters-validation-server" name="rust-parameters-validation-server" class="requirement" role="img" aria-label="DO NOT">⛔️</a> <strong>DO NOT</strong>  validate service parameters. This includes null checks, empty strings, and other common validating conditions. Let the service validate any request parameters.</p>
+
+<p><a href="#rust-parameters-validation-server-defaults" name="rust-parameters-validation-server-defaults" class="requirement" role="img" aria-label="DO NOT">⛔️</a> <strong>DO NOT</strong>  encode service parameter default values. These values may change from version to version and may cause unexpected results when calling older versions from a newer client. Let the service apply default parameter values.</p>
+
+<p><a href="#rust-parameters-validation-check-devex" name="rust-parameters-validation-check-devex" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  validate the developer experience when the service parameters are invalid to ensure appropriate error messages are generated by the service. If the developer experience is compromised due to service-side error messages, work with the service team to correct prior to release.</p>
+
+<h4 id="rust-paging">Methods Returning Collections (Paging)</h4>
+
+<p>Rust is a lower-level language but often provides higher-level, zero-cost abstractions such as iterators. Iterators are an idiomatic way to enumerate vectors or streams such as <code class="language-plaintext highlighter-rouge">futures::Stream</code>.</p>
+
+<p><a href="#rust-paging-pageable" name="rust-paging-pageable" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  return an <code class="language-plaintext highlighter-rouge">azure_core::Pager&lt;T&gt;</code> from pageable service client methods where <code class="language-plaintext highlighter-rouge">T</code> is model type being enumerated.</p>
+
+<p><a href="#rust-paging-pageable-stream" name="rust-paging-pageable-stream" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  implement <code class="language-plaintext highlighter-rouge">futures::Stream</code> for <code class="language-plaintext highlighter-rouge">azure_core::Pager&lt;T&gt;</code>. This defines a <code class="language-plaintext highlighter-rouge">poll_next()</code> method that returns an <code class="language-plaintext highlighter-rouge">Option&lt;T&gt;</code> that returns <code class="language-plaintext highlighter-rouge">None</code> when the consumer has reached the end of the result set. This will enumerate all items for all pages.</p>
+
+<p><a href="#rust-paging-pageable-page" name="rust-paging-pageable-page" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  implement an <code class="language-plaintext highlighter-rouge">to_page(&amp;self) -&gt; &amp;azure_core::Page&lt;T&gt;</code> for <code class="language-plaintext highlighter-rouge">azure_core::Pager&lt;T&gt;</code> that returns the current page of items.</p>
+
+<p><a href="#rust-paging-pageable-page-iter" name="rust-paging-pageable-page-iter" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  implement <code class="language-plaintext highlighter-rouge">IntoIterator</code> on <code class="language-plaintext highlighter-rouge">azure_core::Page&lt;T&gt;</code>. This allows customers to enumerate each page separately, and to enumerate each page of items therein.</p>
+
+<p><a href="#rust-paging-pageable-page-iter-size" name="rust-paging-pageable-page-iter-size" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  implement <code class="language-plaintext highlighter-rouge">Iterator::size_hint()</code> on the returned <code class="language-plaintext highlighter-rouge">IntoIterator</code> for <code class="language-plaintext highlighter-rouge">azure_core::Page&lt;T&gt;</code>.</p>
+
+<p><a href="#rust-paging-pageable-restart" name="rust-paging-pageable-restart" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  support reconstructing an <code class="language-plaintext highlighter-rouge">azure_core::Pager&lt;T&gt;</code> so that a caller can start paging from a previous state.</p>
+
+<h4 id="rust-lro">Methods Invoking Long-running Operations</h4>
+
+<p>Some service operations, known as <a href="https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md#long-running-operations--jobs"><em>Long-running Operations</em></a> or <em>LROs</em> take a long time to execute - up to hours or even days. Such operations do not return their result immediately but rather are started and their progressed polled until the operation reaches a terminal state including <code class="language-plaintext highlighter-rouge">Succeeded</code>, <code class="language-plaintext highlighter-rouge">Failed</code>, or <code class="language-plaintext highlighter-rouge">Canceled</code>.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">azure_core</code> crate exposes an abstract type called <code class="language-plaintext highlighter-rouge">azure_core::Poller&lt;T&gt;</code>, which represents LROs and supports operations for polling and waiting for status changes, and retrieving the final operation result. A service method invoking a long-running operation will return an <code class="language-plaintext highlighter-rouge">azure_core::Poller&lt;T&gt;</code> as described below.</p>
+
+<p><a href="#rust-lro-prefix" name="rust-lro-prefix" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  name all methods that start an LRO with the <code class="language-plaintext highlighter-rouge">begin_</code> prefix.</p>
+
+<p><a href="#rust-lro-stream" name="rust-lro-stream" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  implement <code class="language-plaintext highlighter-rouge">futures::Stream</code> for <code class="language-plaintext highlighter-rouge">azure_core::Poller&lt;T&gt;</code>. This defines a <code class="language-plaintext highlighter-rouge">poll_next()</code> method that returns an <code class="language-plaintext highlighter-rouge">Option&lt;T&gt;</code> that returns <code class="language-plaintext highlighter-rouge">None</code> when the polling has terminated.</p>
+
+<p><a href="#rust-lro-restart" name="rust-lro-restart" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  support reconstructing an <code class="language-plaintext highlighter-rouge">azure_core::Poller&lt;T&gt;</code> so that a caller can start polling from a previous state.</p>
+
+<h5 id="rust-etag">Conditional Request Methods</h5>
+
+<p><a href="#rust-etag-options" name="rust-etag-options" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  define ETag-related options e.g., <code class="language-plaintext highlighter-rouge">if_match</code>, <code class="language-plaintext highlighter-rouge">if_none_match</code>, etc., in the service method options e.g.:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">#[derive(Clone,</span> <span class="nd">Debug)]</span>
+<span class="k">pub</span> <span class="k">struct</span> <span class="n">SetSecretOptions</span> <span class="p">{</span>
+    <span class="n">enabled</span><span class="p">:</span> <span class="nb">Option</span><span class="o">&lt;</span><span class="nb">bool</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="n">if_match</span><span class="p">:</span> <span class="nb">Option</span><span class="o">&lt;</span><span class="nn">azure_core</span><span class="p">::</span><span class="n">ETag</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h5 id="rust-subclients">Hierarchical Clients</h5>
+
+<p><a href="#rust-subclients-return" name="rust-subclients-return" class="requirement" role="img" aria-label="YOU MAY">✔️</a> <strong>YOU MAY</strong>  return clients from other clients e.g., a <code class="language-plaintext highlighter-rouge">DatabaseClient</code> from a <code class="language-plaintext highlighter-rouge">CosmosClient</code>.</p>
+
+<p><a href="#rust-subclients-suffix" name="rust-subclients-suffix" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  name all client methods returning a client with the <code class="language-plaintext highlighter-rouge">_client</code> suffix e.g., <code class="language-plaintext highlighter-rouge">CosmosClient::database_client()</code>.</p>
+
+<p><a href="#rust-subclients-noasync" name="rust-subclients-noasync" class="requirement" role="img" aria-label="DO NOT">⛔️</a> <strong>DO NOT</strong>  define client methods returning a client as asynchronous.</p>
+
+<p><a href="#rust-subclients-pipeline" name="rust-subclients-pipeline" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  clone the parent client <code class="language-plaintext highlighter-rouge">azure_core::Pipeline</code> so that lifetime parameters and guarantees are not required.</p>
+
+<h3 id="supporting-types">Supporting Types</h3>
+
+<p>In addition to service client types, Azure SDK APIs provide and use other supporting types as well.</p>
+
+<h4 id="rust-model-types">Model Types</h4>
+
+<p>This section describes guidelines for the design <em>model types</em> and all their transitive closure of public dependencies (i.e. the <em>model graph</em>). A model type is a representation of a REST service’s resource.</p>
+
+<p><a href="#rust-model-types-derive" name="rust-model-types-derive" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  derive or implement <code class="language-plaintext highlighter-rouge">Clone</code> and <code class="language-plaintext highlighter-rouge">Default</code> for all model structs.</p>
+
+<p><a href="#rust-model-types-serde" name="rust-model-types-serde" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  derive or implement <code class="language-plaintext highlighter-rouge">serde::Serialize</code> and/or <code class="language-plaintext highlighter-rouge">serde::Deserialize</code> as appropriate i.e., if the model is input (serializable), output (deserializable), or both.</p>
+
+<p><a href="#rust-model-types-public" name="rust-model-types-public" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  define all fields as <code class="language-plaintext highlighter-rouge">pub</code>.</p>
+
+<p><a href="#rust-model-types-optional" name="rust-model-types-optional" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  define all fields using <code class="language-plaintext highlighter-rouge">Option&lt;T&gt;</code>.</p>
+
+<p>Though uncommon, service definitions do not always match the service implementation when it comes to required fields. Upon the recommendation of the Breaking Change Reviewers, the specification is often changed to reflect the service if the service has already been deployed.</p>
+
+<p><a href="#rust-model-types-serde-optional" name="rust-model-types-serde-optional" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  attribute fields with <code class="language-plaintext highlighter-rouge">#[serde(skip_serializing_if = "Option::is_none")]</code> unless an explicit <code class="language-plaintext highlighter-rouge">null</code> must be serialized.</p>
+
+<p><a href="#rust-model-types-non-exhaustive" name="rust-model-types-non-exhaustive" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  attribute model structs with <code class="language-plaintext highlighter-rouge">#[non_exhaustive]</code>.</p>
+
+<p>This forces all downstream crates, for example, to use the <code class="language-plaintext highlighter-rouge">..</code> operator to match any remaining fields that may be added in the future for pattern binding:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// struct Example {</span>
+<span class="c1">//     pub foo: Option&lt;String&gt;,</span>
+<span class="c1">//     pub bar: Option&lt;i32&gt;,</span>
+<span class="c1">// }</span>
+
+<span class="k">let</span> <span class="p">{</span> <span class="n">foo</span><span class="p">,</span> <span class="n">bar</span><span class="p">,</span> <span class="o">..</span> <span class="p">}</span> <span class="o">=</span> <span class="n">client</span><span class="nf">.method</span><span class="p">()</span><span class="k">.await</span><span class="o">?</span><span class="nf">.try_into</span><span class="p">()</span><span class="o">?</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>See <a href="https://github.com/rust-lang/rfcs/blob/master/text/2008-non-exhaustive.md">RFC 2008</a> for more information.</p>
+
+<h5 id="rust-model-names">Model Type Naming</h5>
+
+<p><a href="#rust-model-names-type" name="rust-model-names-type" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  define models using the names from TypeSpec unless those names conflict with keywords or common types from <code class="language-plaintext highlighter-rouge">std</code>, <code class="language-plaintext highlighter-rouge">futures</code>, or other common dependencies.</p>
+
+<p>If name collisions are likely and the TypeSpec cannot be changed, you can either use the <code class="language-plaintext highlighter-rouge">@clientName</code> TypeSpec decorator or update a client <code class="language-plaintext highlighter-rouge">.tsp</code> file.</p>
+
+<p><a href="#rust-model-names-fields" name="rust-model-names-fields" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  define model fields using “camelCase”.</p>
+
+<p>To facilitate this, attribute the model type:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">#[derive(serde::Serialize)]</span>
+<span class="nd">#[serde(rename_all</span> <span class="nd">=</span> <span class="s">"camelCase"</span><span class="nd">)]</span>
+<span class="k">pub</span> <span class="k">struct</span> <span class="n">Example</span> <span class="p">{</span>
+    <span class="k">pub</span> <span class="n">compound_name</span><span class="p">:</span> <span class="nb">String</span><span class="p">,</span> <span class="c1">// -&gt; "compoundName"</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><a href="#rust-model-names-rename" name="rust-model-names-rename" class="requirement" role="img" aria-label="DO NOT">⛔️</a> <strong>DO NOT</strong>  rename fields using the <code class="language-plaintext highlighter-rouge">#[serde]</code> attribute or by other means. All model changes must only be done in TypeSpec.</p>
+
+<h5 id="rust-builders">Builders</h5>
+
+<p>Builders are an idiomatic pattern in Rust, such as the <a href="https://docs.rust-embedded.org/book/static-guarantees/typestate-programming.html">typestate builder pattern</a> that can help guide developers into constructing a valid type variants.</p>
+
+<p><a href="#rust-builders-support" name="rust-builders-support" class="requirement" role="img" aria-label="YOU MAY">✔️</a> <strong>YOU MAY</strong>  implement builders for special cases e.g., URI builders.</p>
+
+<p><a href="#rust-builders-self" name="rust-builders-self" class="requirement" role="img" aria-label="YOU MAY">✔️</a> <strong>YOU MAY</strong>  borrow or consume <code class="language-plaintext highlighter-rouge">self</code> in <code class="language-plaintext highlighter-rouge">with_</code> setter methods.</p>
+
+<p><a href="#rust-builders-return" name="rust-builders-return" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  return an owned value from the final <code class="language-plaintext highlighter-rouge">build()</code> method.</p>
+
+<h4 id="rust-enums">Enumerations</h4>
+
+<p><a href="#rust-enums-names" name="rust-enums-names" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  implement all enumeration variations as PascalCase.</p>
+
+<p><a href="#rust-enums-derive" name="rust-enums-derive" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  derive or implement <code class="language-plaintext highlighter-rouge">Clone</code> and <code class="language-plaintext highlighter-rouge">Debug</code> for all enums.</p>
+
+<p><a href="#rust-enums-derive-copy" name="rust-enums-derive-copy" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  derive <code class="language-plaintext highlighter-rouge">Copy</code> for all fixed enums.</p>
+
+<p><a href="#rust-enums-serde" name="rust-enums-serde" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  derive or implement <code class="language-plaintext highlighter-rouge">serde::Serialize</code> and/or <code class="language-plaintext highlighter-rouge">serde::Deserialize</code> as appropriate i.e., if the enum is used in input (serializable), output (deserializable), or both.</p>
+
+<p><a href="#rust-enums-non-exhaustive" name="rust-enums-non-exhaustive" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  attribute all enums with <code class="language-plaintext highlighter-rouge">#[non_exhaustive]</code>.</p>
+
+<p>This forces all downstream crates, for example, to use the <code class="language-plaintext highlighter-rouge">_</code> match arm to match any remaining enums that may be added in the future for pattern binding:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// enum Example {</span>
+<span class="c1">//     Foo,</span>
+<span class="c1">//     Bar,</span>
+<span class="c1">// }</span>
+
+<span class="k">let</span> <span class="n">value</span> <span class="o">=</span> <span class="k">match</span> <span class="n">model</span><span class="py">.kind</span> <span class="p">{</span>
+    <span class="n">Example</span><span class="p">:</span><span class="n">Foo</span> <span class="k">=&gt;</span> <span class="nd">todo!</span><span class="p">(),</span>
+    <span class="nn">Example</span><span class="p">::</span><span class="n">Bar</span> <span class="k">=&gt;</span> <span class="nd">todo!</span><span class="p">(),</span>
+    <span class="n">_</span> <span class="k">=&gt;</span> <span class="nd">todo!</span><span class="p">(),</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p>This is necessary for both fixed enums and extensible enums since new variants may be added and matched during deserialization.</p>
+
+<p>See <a href="https://github.com/rust-lang/rfcs/blob/master/text/2008-non-exhaustive.md">RFC 2008</a> for more information.</p>
+
+<p><a href="#rust-enum-fixed" name="rust-enum-fixed" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  implement all fixed enumerations using only defined variants:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">#[derive(Clone,</span> <span class="nd">Copy,</span> <span class="nd">Debug,</span> <span class="nd">Deserialize,</span> <span class="nd">Serialize)]</span>
+<span class="nd">#[non_exhaustive]</span>
+<span class="k">pub</span> <span class="k">enum</span> <span class="n">FixedEnum</span> <span class="p">{</span>
+    <span class="nd">#[serde(rename</span> <span class="nd">=</span> <span class="s">"foo"</span><span class="nd">)]</span>
+    <span class="n">Foo</span><span class="p">,</span>
+    <span class="nd">#[serde(rename</span> <span class="nd">=</span> <span class="s">"bar"</span><span class="nd">)]</span>
+    <span class="n">Bar</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><a href="#rust-enum-extensible" name="rust-enum-extensible" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  implement all extensible enumerations - those which may take a variant that is not defined - using defined variants and an untagged <code class="language-plaintext highlighter-rouge">UnknownValue</code>:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">#[derive(Clone,</span> <span class="nd">Debug,</span> <span class="nd">Deserialize,</span> <span class="nd">Serialize)]</span>
+<span class="nd">#[non_exhaustive]</span>
+<span class="k">pub</span> <span class="k">enum</span> <span class="n">ExtensibleEnum</span> <span class="p">{</span>
+    <span class="nd">#[serde(rename</span> <span class="nd">=</span> <span class="s">"foo"</span><span class="nd">)]</span>
+    <span class="n">Foo</span><span class="p">,</span>
+    <span class="nd">#[serde(rename</span> <span class="nd">=</span> <span class="s">"bar"</span><span class="nd">)]</span>
+    <span class="n">Bar</span><span class="p">,</span>
+    <span class="nd">#[serde(untagged)]</span>
+    <span class="nf">UnknownValue</span><span class="p">(</span><span class="nb">String</span><span class="p">),</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><a href="#rust-enum-serialize" name="rust-enum-serialize" class="requirement" role="img" aria-label="YOU MAY">✔️</a> <strong>YOU MAY</strong>  implement <code class="language-plaintext highlighter-rouge">serde::Deserialize</code>, <code class="language-plaintext highlighter-rouge">serde::Serialize</code>, or both as appropriate depending on whether the enumeration is found only in responses, requests, or both, respectively.</p>
+
+<p><a href="#rust-enum-generated-attributes" name="rust-enum-generated-attributes" class="requirement" role="img" aria-label="YOU SHOULD">☑️</a> <strong>YOU SHOULD</strong>  define variant attribute <code class="language-plaintext highlighter-rouge">#[serde(rename = "name")]</code> for generated code for each variant.</p>
+
+<p><a href="#rust-enum-convenience-attributes" name="rust-enum-convenience-attributes" class="requirement" role="img" aria-label="YOU MAY">✔️</a> <strong>YOU MAY</strong>  use container attribute <code class="language-plaintext highlighter-rouge">#[serde(rename_all = "camelCase")]</code> for convenience layers, or whatever casing is appropriate.</p>
+
+<h4 id="rust-core-types">Using Azure Core Types</h4>
+
+<p>The <code class="language-plaintext highlighter-rouge">azure_core</code> package provides common functionality for client libraries. Documentation and usage examples can be found in the <a href="https://github.com/Azure/azure-sdk-for-rust/tree/main/sdk/core">Azure/azure-sdk-for-rust</a> repository.</p>
+
+<h3 id="rust-errors">Errors</h3>
+
+<p><a href="#rust-errors-core" name="rust-errors-core" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  return an <code class="language-plaintext highlighter-rouge">azure_core::Result&lt;T&gt;</code> which uses <code class="language-plaintext highlighter-rouge">azure_core::Error</code>.</p>
+
+<p><a href="#rust-errors-core-methods" name="rust-errors-core-methods" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  call appropriate methods on <code class="language-plaintext highlighter-rouge">azure_core::Error</code> to wrap or otherwise convert to an appropriate <code class="language-plaintext highlighter-rouge">azure_core::ErrorKind</code>.</p>
+
+<p><a href="#rust-errors-into" name="rust-errors-into" class="requirement" role="img" aria-label="YOU MAY">✔️</a> <strong>YOU MAY</strong>  implement <code class="language-plaintext highlighter-rouge">Into&lt;azure_core::Error&gt;</code> for any other error type returned by functions you call if not already defined to support the <code class="language-plaintext highlighter-rouge">?</code> operator.</p>
+
+<p>Since your crate will define neither <code class="language-plaintext highlighter-rouge">azure_core::Error</code> or likely the error being returned to you from another dependency, you will need to use the <a href="https://doc.rust-lang.org/rust-by-example/generics/new_types.html">newtype</a> idiom e.g.:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">#[derive(Debug)]</span>
+<span class="k">pub</span> <span class="k">struct</span> <span class="nf">Error</span><span class="p">(</span><span class="nn">dependency</span><span class="p">::</span><span class="n">Error</span><span class="p">);</span>
+
+<span class="k">impl</span> <span class="nn">std</span><span class="p">::</span><span class="nn">error</span><span class="p">::</span><span class="n">Error</span> <span class="k">for</span> <span class="n">Error</span> <span class="p">{</span>
+    <span class="k">fn</span> <span class="nf">source</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Option</span><span class="o">&lt;&amp;</span><span class="p">(</span><span class="k">dyn</span> <span class="n">Error</span> <span class="o">+</span> <span class="k">'static</span><span class="p">)</span><span class="o">&gt;</span> <span class="p">{</span>
+        <span class="k">self</span><span class="na">.0</span><span class="nf">.source</span><span class="p">()</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">impl</span> <span class="nn">std</span><span class="p">::</span><span class="nn">fmt</span><span class="p">::</span><span class="n">Display</span> <span class="k">for</span> <span class="n">Error</span> <span class="p">{</span>
+    <span class="k">fn</span> <span class="nf">fmt</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">,</span> <span class="n">f</span><span class="p">:</span> <span class="o">&amp;</span><span class="k">mut</span> <span class="nn">fmt</span><span class="p">::</span><span class="n">Formatter</span><span class="o">&lt;</span><span class="nv">'_</span><span class="o">&gt;</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nn">fmt</span><span class="p">::</span><span class="nb">Result</span> <span class="p">{</span>
+        <span class="k">self</span><span class="na">.0</span><span class="nf">.fmt</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">impl</span> <span class="nb">Into</span><span class="o">&lt;</span><span class="nn">azure_core</span><span class="p">::</span><span class="n">Error</span><span class="o">&gt;</span> <span class="k">for</span> <span class="n">Error</span> <span class="p">{</span>
+    <span class="k">fn</span> <span class="nf">into</span><span class="p">(</span><span class="k">self</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nn">azure_core</span><span class="p">::</span><span class="n">Error</span> <span class="p">{</span>
+        <span class="nn">azure_core</span><span class="p">::</span><span class="nn">Error</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="nn">azure_core</span><span class="p">::</span><span class="nn">ErrorKind</span><span class="p">::</span><span class="n">Other</span><span class="p">,</span> <span class="nn">Box</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="k">self</span><span class="p">))</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="rust-authentication">Authentication</h3>
+
+<p>Azure services use a variety of different authentication schemes to allow clients to access the service. Conceptually, there are two entities responsible in this process: a credential and an authentication policy. Credentials provide confidential authentication data. Authentication policies use the data provided by a credential to authenticate requests to the service.</p>
+
+<p><a href="#rust-authentication-all-supported-schemes" name="rust-authentication-all-supported-schemes" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  support all authentication schemes supported by the service and implemented in <code class="language-plaintext highlighter-rouge">azure_core</code> and <code class="language-plaintext highlighter-rouge">azure_identity</code>.</p>
+
+<p><a href="#rust-authentication-azure-core" name="rust-authentication-azure-core" class="requirement" role="img" aria-label="YOU SHOULD">☑️</a> <strong>YOU SHOULD</strong>  use only credentials and authentication policies defined in <code class="language-plaintext highlighter-rouge">azure_core</code>.</p>
+
+<p>Crates support different types of <a href="https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html">dependencies</a> e.g., <code class="language-plaintext highlighter-rouge">[dependencies]</code> for code linked into applications and <code class="language-plaintext highlighter-rouge">[dev-dependencies]</code> used for tests, examples, etc.</p>
+
+<p><a href="#rust-authentication-azure-identity-dependency" name="rust-authentication-azure-identity-dependency" class="requirement" role="img" aria-label="DO NOT">⛔️</a> <strong>DO NOT</strong>  take a dependency on <code class="language-plaintext highlighter-rouge">azure_identity</code>.</p>
+
+<p><a href="#rust-authentication-azure-identity-dev-dependency" name="rust-authentication-azure-identity-dev-dependency" class="requirement" role="img" aria-label="YOU MAY">✔️</a> <strong>YOU MAY</strong>  take a development dependency on <code class="language-plaintext highlighter-rouge">azure_identity</code> for tests and examples.</p>
+
+<p><a href="#rust-authentication-prefer-token-auth" name="rust-authentication-prefer-token-auth" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  provide credential types that can be used to fetch all data needed to authenticate a request to the service in a non-blocking atomic manner for each authentication scheme that does not have an implementation in <code class="language-plaintext highlighter-rouge">azure_core</code>.</p>
+
+<p><a href="#rust-authentication-constructors" name="rust-authentication-constructors" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  provide service client constructors or factories that accept any supported authentication credentials.</p>
+
+<p><a href="#rust-authentication-connection-strings" name="rust-authentication-connection-strings" class="requirement" role="img" aria-label="YOU SHOULD NOT">⚠️</a> <strong>YOU SHOULD NOT</strong>  support providing credential data via a connection string. Connection string interfaces should be provided <strong>ONLY IF</strong> the service provides a connection string to users via the Portal or other tooling. Use a <code class="language-plaintext highlighter-rouge">with_connection_string()</code> function to construct a client in that case e.g.:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">impl</span> <span class="n">ExampleClient</span> <span class="p">{</span>
+    <span class="k">pub</span> <span class="k">fn</span> <span class="nf">with_connection_string</span><span class="p">(</span><span class="n">connection_string</span><span class="p">:</span> <span class="k">impl</span> <span class="nb">Into</span><span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">options</span><span class="p">:</span> <span class="nb">Option</span><span class="o">&lt;</span><span class="n">ExampleClientOptions</span><span class="o">&gt;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nd">todo!</span><span class="p">()</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>When implementing authentication, don’t open up the consumer to security holes like PII (personally identifiable information) leakage or credential leakage. Credentials are generally issued with a time limit and must be refreshed periodically to ensure that the service connection continues to function as expected. Ensure your client library follows all current security recommendations and consider an independent security review of the client library to ensure you’re not introducing potential security problems for the consumer.</p>
+
+<p><a href="#rust-authentication-persistence" name="rust-authentication-persistence" class="requirement" role="img" aria-label="DO NOT">⛔️</a> <strong>DO NOT</strong>  persist, cache, or reuse security credentials. Security credentials should be considered short lived to cover both security concerns and credential refresh situations.</p>
+
+<p>If your service implements a non-standard credential system - one not supported by <code class="language-plaintext highlighter-rouge">azure_core</code> - then you need to implement an authentication policy for the HTTP pipeline that can authenticate requests given the alternative credential types provided by the client library.</p>
+
+<p><a href="#rust-authentication-custom" name="rust-authentication-custom" class="requirement" role="img" aria-label="YOU MAY">✔️</a> <strong>YOU MAY</strong>  implement an authentication policy and credential in a client library crate if the authentication scheme is supported only by the service.</p>
+
+<p><a href="#rust-authentication-erase" name="rust-authentication-erase" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  securely free and zero authentication tokens and other credential data as soon as they are no longer needed.</p>
+
+<h3 id="rust-namespace-naming">Namespaces</h3>
+
+<p><a href="#rust-namespace-naming-typespec" name="rust-namespace-naming-typespec" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  use namespaces as defined by TypeSpecs for the service using all lowercase characters and underscores:</p>
+
+<pre><code class="language-typespec">namespace Azure.Security.KeyVault;
+// crate: azure_security_keyvault
+namespace Azure.Security.KeyVault.Secrets {
+    // module azure_security_keyvault::secrets
+}
+</code></pre>
+
+<p><a href="#rust-namespace-naming-internals" name="rust-namespace-naming-internals" class="requirement" role="img" aria-label="YOU SHOULD NOT">⚠️</a> <strong>YOU SHOULD NOT</strong>  export modules used only within the crate. You may use <code class="language-plaintext highlighter-rouge">pub(crate)</code> when declaring these modules to export public types within that module to other types and functions within the crate:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// lib.rs</span>
+<span class="k">pub</span><span class="p">(</span><span class="k">crate</span><span class="p">)</span> <span class="k">mod</span> <span class="n">helpers</span><span class="p">;</span>
+
+<span class="c1">// helpers.rs</span>
+<span class="k">pub</span> <span class="k">fn</span> <span class="nf">helper</span><span class="p">()</span> <span class="p">{}</span> <span class="c1">// not exported publicly</span>
+</code></pre></div></div>
+
+<h3 id="rust-mocking">Support for Mocking</h3>
+
+<p>In addition to <a href="#rust-client-mocking">mocking clients</a>:</p>
+
+<p><a href="#rust-mocking-model-fields" name="rust-mocking-model-fields" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  declare all model fields public.</p>
+
+<p><a href="#rust-mocking-helpers" name="rust-mocking-helpers" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  define a <code class="language-plaintext highlighter-rouge">from()</code> method for all helper types like pageables and LROs that allow callers to return those types from client mocks.</p>
+
+<h2 id="azure-sdk-library-design">Azure SDK Library Design</h2>
+
+<h3 id="rust-packaging">Packaging</h3>
+
+<p>Packages in Rust are called “crates”. Crate names follow the same <a href="/azure-sdk/general_design.html#namespaces">general guidance on namespaces</a> using underscores as a separator e.g., <code class="language-plaintext highlighter-rouge">azure_core</code>, <code class="language-plaintext highlighter-rouge">azure_security_keyvault</code>, etc.</p>
+
+<p><a href="#rust-packaging-prefix" name="rust-packaging-prefix" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  start the crate name with <code class="language-plaintext highlighter-rouge">azure_</code> for data plane crates or <code class="language-plaintext highlighter-rouge">azure_resourcemanager_</code> for control plane (ARM) crates.</p>
+
+<blockquote>
+  <p>TODO: Now that <a href="https://github.com/rust-lang/rfcs/pull/3243">RFC 3243</a> is merged, having already-reserved <code class="language-plaintext highlighter-rouge">azure_mgmt_*</code> crates matters less; however, we should revisit using “mgmt” if the RFC hasn’t been implemented by the time we need it.</p>
+</blockquote>
+
+<p><a href="#rust-packaging-name" name="rust-packaging-name" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  construct the crate name with all lowercase characters and underscores in the form <code class="language-plaintext highlighter-rouge">azure_&lt;group&gt;_&lt;service&gt;</code>. Uppercase characters and dashes are not allowed. For example, <code class="language-plaintext highlighter-rouge">azure_security_keyvault</code>.</p>
+
+<p>Rust does support dashes in crate names, but it may create confusion with customers to reference a crate like <code class="language-plaintext highlighter-rouge">azure-core</code> then import a module like <code class="language-plaintext highlighter-rouge">azure_core</code>. Many older crates do this, but the trend has been to use underscores in both cases to avoid confusion.</p>
+
+<p><a href="#rust-packaging-registration" name="rust-packaging-registration" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  register the chosen crate name with the <a href="https://github.com/azure/azure-sdk/issues">Architecture Board</a>. Open an issue to request the crate name. See the <a href="/azure-sdk/registered_namespaces.html">registered package list</a> for a list of the currently registered packages.</p>
+
+<p><a href="#rust-packaging-group" name="rust-packaging-group" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  package different endpoints within a service that version together in a single crate but under separate modules as needed.</p>
+
+<p>Using Key Vault as an example and comparing with other languages like <a href="/azure-sdk/dotnet_introduction.html">.NET</a>:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">Azure.Security.KeyVault.Secrets</code> -&gt; <code class="language-plaintext highlighter-rouge">azure_security_keyvault::secrets</code></li>
+  <li><code class="language-plaintext highlighter-rouge">Azure.Security.KeyVault.Keys</code> -&gt; <code class="language-plaintext highlighter-rouge">azure_security_keyvault::keys</code></li>
+  <li><code class="language-plaintext highlighter-rouge">Azure.Security.KeyVault.Certificates</code> -&gt; <code class="language-plaintext highlighter-rouge">azure_security_keyvault::certificates</code></li>
+</ul>
+
+<p>This makes efficient use of generated client code for each services’ TypeSpec or OpenAPI specification in a statically-compiled language like Rust.</p>
+
+<p><a href="#rust-packaging-independent" name="rust-packaging-independent" class="requirement" role="img" aria-label="DO NOT">⛔️</a> <strong>DO NOT</strong>  package multiple service specifications that version independently within the same crate.</p>
+
+<h4 id="directory-structure">Directory Structure</h4>
+
+<p><a href="#directory-structure-root" name="directory-structure-root" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  place all crates’ source under the <code class="language-plaintext highlighter-rouge">sdk/</code> root directory using an appropriate service directory name e.g., <code class="language-plaintext highlighter-rouge">sdk/keyvault</code>. The service directory name will often match what is in the <a href="https://github.com/Azure/azure-rest-api-specs">Azure/azure-rest-api-specs</a> repository and will most often be the same across Azure SDK languages.</p>
+
+<p><a href="#directory-structure-crate" name="directory-structure-crate" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  put all crate source within the service directory e.g., <code class="language-plaintext highlighter-rouge">sdk/keyvault/Cargo.toml</code>.</p>
+
+<p>If you have cause to release separate crates for a single service, please discuss first with the <a href="https://github.com/azure/azure-sdk/issues">Architecture Board</a>.</p>
+
+<p><a href="#directory-structure-lib" name="directory-structure-lib" class="requirement" role="img" aria-label="YOU SHOULD">☑️</a> <strong>YOU SHOULD</strong>  only export public APIs from the crate <code class="language-plaintext highlighter-rouge">lib.rs</code> and define all other types in suitable <a href="https://doc.rust-lang.org/reference/items/modules.html">modules</a>:</p>
+
+<ul>
+  <li>Single-file modules should be declared in a file next to their parent module.</li>
+  <li>Multi-file modules should be declared in a directory next to their parent module with a <code class="language-plaintext highlighter-rouge">mod.rs</code> file.</li>
+</ul>
+
+<p>For example:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>src/
+  policies/
+    client_id.rs
+    mod.rs
+    retry.rs
+    transport.rs
+  error.rs
+  lib.rs
+Cargo.lock
+Cargo.toml
+</code></pre></div></div>
+
+<h4 id="common-libraries">Common Libraries</h4>
+
+<p><a href="#rust-common-macros-review" name="rust-common-macros-review" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  review new macros with your language architect(s).</p>
+
+<p><a href="#rust-common-macros-core" name="rust-common-macros-core" class="requirement" role="img" aria-label="YOU MAY">✔️</a> <strong>YOU MAY</strong>  use common procedural macros from <code class="language-plaintext highlighter-rouge">azure_core</code>.</p>
+
+<h3 id="rust-versioning">Versioning</h3>
+
+<h4 id="client-versions">Client Versions</h4>
+
+<p><a href="#rust-versioning-backwards-compatibility" name="rust-versioning-backwards-compatibility" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  be 100% backwards compatible with older versions of the same package.</p>
+
+<p><a href="#rust-versioning-major-version" name="rust-versioning-major-version" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  increase the major semantic version number if an API breaking change is required.</p>
+
+<p>See <a href="https://semver.org">https://semver.org</a> for more information.</p>
+
+<p><a href="#rust-versioning-breaking-change-review" name="rust-versioning-breaking-change-review" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  discuss breaking changes with the language architect before making changes.</p>
+
+<p>Note there are different types of breaking changes:</p>
+
+<ol>
+  <li>The service introduced breaking changes that the client library must reflect in code. Approval may still be required, but should not burden code owner(s).</li>
+  <li>The client library introduced breaking changes for good reason.</li>
+</ol>
+
+<p>Breaking changes introduced by the client library should happen rarely, if ever. Register your intent to make client breaking changes with the <a href="https://github.com/azure/azure-sdk/issues">Architecture Board</a>.</p>
+
+<h5 id="rust-package-versions">Package Version Numbers</h5>
+
+<p>Consistent version number scheme allows consumers to determine what to expect from a new version of the library.</p>
+
+<p><a href="#rust-package-versions-semver" name="rust-package-versions-semver" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  use <em>MAJOR</em>.<em>MINOR</em>.<em>PATCH</em> format for the version of the crate.</p>
+
+<p>Use <em>-beta._N</em> suffix for beta package versions. For example, <em>1.0.0-beta.2</em>.</p>
+
+<p>See <a href="https://semver.org">https://semver.org</a> for more information.</p>
+
+<p><a href="#rust-package-versions-change-on-release" name="rust-package-versions-change-on-release" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  change the version number of the client library when <strong>ANYTHING</strong> changes in the client library.</p>
+
+<p><a href="#rust-package-versions-patching" name="rust-package-versions-patching" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  increment the patch version when fixing a bug.</p>
+
+<p><a href="#rust-package-versions-features-in-patch" name="rust-package-versions-features-in-patch" class="requirement" role="img" aria-label="DO NOT">⛔️</a> <strong>DO NOT</strong>  include new APIs in a patch release.</p>
+
+<p><a href="#rust-package-versions-add-feature" name="rust-package-versions-add-feature" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  increment the major or minor version when adding support for a service API version.</p>
+
+<p><a href="#rust-package-versions-add-api" name="rust-package-versions-add-api" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  increment the major or minor version when adding a new method to the public API.</p>
+
+<p><a href="#rust-package-versions-major-changes" name="rust-package-versions-major-changes" class="requirement" role="img" aria-label="YOU SHOULD">☑️</a> <strong>YOU SHOULD</strong>  increment the major version when making large feature changes.</p>
+
+<h3 id="rust-dependencies">Dependencies</h3>
+
+<p>Dependencies bring in many considerations that are often easily avoided by avoiding the dependency.</p>
+
+<ul>
+  <li><strong>Versioning</strong> - Many programming languages do not allow a consumer to load multiple versions of the same package. So, if we have an client library that requires v3 of package Foo and the consumer wants to use v5 of package Foo, then the consumer cannot build their application. This means that client libraries should not have dependencies by default.</li>
+  <li><strong>Size</strong> - Consumer applications must be able to deploy as fast as possible into the cloud and move in various ways across networks. Removing additional code (like dependencies) improves deployment performance.</li>
+  <li><strong>Licensing</strong> - You must be conscious of the licensing restrictions of a dependency and often provide proper attribution and notices when using them.</li>
+  <li><strong>Compatibility</strong> - Often times you do not control a dependency and it may choose to evolve in a direction that is incompatible with your original use.</li>
+  <li><strong>Security</strong> - If a security vulnerability is discovered in a dependency, it may be difficult or time consuming to get the vulnerability corrected if Microsoft does not control the dependencies code base.</li>
+</ul>
+
+<p><a href="#rust-dependencies-centralized" name="rust-dependencies-centralized" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  declare all dependencies in the repository root <code class="language-plaintext highlighter-rouge">Cargo.toml</code> workspace in the <code class="language-plaintext highlighter-rouge">[dependencies]</code> section regardless of which type of dependency crates will inherit, e.g.:</p>
+
+<div class="language-toml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">[workspace.dependencies]</span>
+<span class="nn">azure_core</span> <span class="o">=</span> <span class="p">{</span> <span class="py">version</span> <span class="p">=</span> <span class="s">"0.1.0"</span><span class="p">,</span> <span class="py">path</span> <span class="p">=</span> <span class="s">"sdk/core"</span> <span class="p">}</span>
+<span class="py">futures</span> <span class="p">=</span> <span class="s">"0.3.30"</span>
+<span class="nn">tokio</span> <span class="o">=</span> <span class="p">{</span> <span class="py">version</span> <span class="p">=</span> <span class="s">"1.36.0"</span><span class="p">,</span> <span class="py">features</span> <span class="p">=</span> <span class="p">[</span><span class="s">"macros"</span><span class="p">,</span> <span class="s">"rt-multi-thread"</span><span class="p">]</span> <span class="p">}</span>
+</code></pre></div></div>
+
+<p><a href="#rust-dependencies-inherit" name="rust-dependencies-inherit" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  inherit all dependencies from the workspace in individual creates’ <code class="language-plaintext highlighter-rouge">Cargo.toml</code> files e.g.:</p>
+
+<div class="language-toml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">[dependencies]</span>
+<span class="nn">azure_core</span> <span class="o">=</span> <span class="p">{</span> <span class="py">workspace</span> <span class="p">=</span> <span class="kc">true</span> <span class="p">}</span>
+<span class="nn">futures</span> <span class="o">=</span> <span class="p">{</span> <span class="py">workspace</span> <span class="p">=</span> <span class="kc">true</span> <span class="p">}</span>
+
+<span class="nn">[dev-dependencies]</span>
+<span class="nn">tokio</span> <span class="o">=</span> <span class="p">{</span> <span class="py">workspace</span> <span class="p">=</span> <span class="kc">true</span> <span class="p">}</span>
+</code></pre></div></div>
+
+<p><a href="#rust-dependencies-features" name="rust-dependencies-features" class="requirement" role="img" aria-label="YOU MAY">✔️</a> <strong>YOU MAY</strong>  override the features required for a crate.</p>
+
+<h3 id="rust-linting">Code Lints</h3>
+
+<p><a href="#rust-linting-centralized" name="rust-linting-centralized" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  centralized general linting rules, whether allowed or denied, into the root workspace <code class="language-plaintext highlighter-rouge">Cargo.toml</code> e.g.:</p>
+
+<div class="language-toml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">[workspace.lints.rust]</span>
+<span class="py">dead_code</span> <span class="p">=</span> <span class="s">"allow"</span>
+
+<span class="nn">[workspace.lints.clippy]</span>
+</code></pre></div></div>
+
+<p><a href="#rust-linting-inherit" name="rust-linting-inherit" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  inherit linting rules from the workspace in each member crate e.g., :</p>
+
+<div class="language-toml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">[lints]</span>
+<span class="py">workspace</span> <span class="p">=</span> <span class="kc">true</span>
+</code></pre></div></div>
+
+<p><a href="#rust-linting-source" name="rust-linting-source" class="requirement" role="img" aria-label="YOU MAY">✔️</a> <strong>YOU MAY</strong>  define source-specific lint rules in <code class="language-plaintext highlighter-rouge">.rs</code> source files if they can’t be mitigated.</p>
+
+<p><a href="#rust-linting-crate" name="rust-linting-crate" class="requirement" role="img" aria-label="DO NOT">⛔️</a> <strong>DO NOT</strong>  define crate-specific lint rules in <code class="language-plaintext highlighter-rouge">Cargo.toml</code> files since these will apply to all source and should not be so pervasive.</p>
+
+<h3 id="rust-documentation">Documentation Comments</h3>
+
+<p>Documentation comments in Rust not only support markdown, but can contain examples that are optionally runnable as tests when executing <code class="language-plaintext highlighter-rouge">cargo test</code>. Read <a href="https://doc.rust-lang.org/rustdoc/index.html">the rustdoc book</a> for more information,
+especially about <a href="https://doc.rust-lang.org/rustdoc/write-documentation/documentation-tests.html">tests in doc comments</a>.</p>
+
+<p><a href="#rust-documentation-api" name="rust-documentation-api" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  document all public APIs prior to General Availability (GA). This includes functions, structs, methods, fields, and traits, e.g.:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cd">/// A secret stored in Key Vault.</span>
+<span class="k">pub</span> <span class="k">struct</span> <span class="n">Secret</span> <span class="p">{</span>
+    <span class="cd">/// The name of the secret.</span>
+    <span class="k">pub</span> <span class="n">name</span><span class="p">:</span> <span class="nb">String</span><span class="p">,</span>
+
+    <span class="c1">// ...</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><a href="#rust-documentation-readme" name="rust-documentation-readme" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  include the crate <code class="language-plaintext highlighter-rouge">README.md</code> in the root <code class="language-plaintext highlighter-rouge">lib.rs</code> to provide an overview of the crate in rendered documentation e.g.:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// near the top of lib.rs:</span>
+<span class="nd">#![doc</span> <span class="nd">=</span> <span class="nd">include_str</span><span class="err">!</span><span class="nd">(</span><span class="s">"../README.md"</span><span class="nd">)]</span>
+</code></pre></div></div>
+
+<p>This will impact line numbers, so you should only export APIs publicly from <code class="language-plaintext highlighter-rouge">lib.rs</code>.</p>
+
+<p><a href="#rust-documentation-parameters" name="rust-documentation-parameters" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  document all parameters. Prior to <a href="https://rust-lang.github.io/rfcs/1574-more-api-documentation-conventions.html#using-markdown">conventional doc comment markdown headers</a>, declare an <code class="language-plaintext highlighter-rouge">Arguments</code> heading as needed (not needed for <code class="language-plaintext highlighter-rouge">&amp;self</code>):</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cd">/// Sets a secret and returns more information about the secret from the service.</span>
+<span class="cd">///</span>
+<span class="cd">/// # Arguments</span>
+<span class="cd">///</span>
+<span class="cd">/// * `name` - The name of the secret.</span>
+<span class="cd">/// * `value` - The value of the secret.</span>
+<span class="cd">/// * `options` - Optional properties of the secret.</span>
+<span class="cd">/// * `context` - Optional context to pass to the client.</span>
+<span class="k">async</span> <span class="k">fn</span> <span class="nf">set_secret</span><span class="p">(</span>
+    <span class="o">&amp;</span><span class="k">self</span><span class="p">,</span>
+    <span class="n">name</span><span class="p">:</span> <span class="k">impl</span> <span class="nb">Into</span><span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="n">value</span><span class="p">:</span> <span class="k">impl</span> <span class="nb">Into</span><span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="n">options</span><span class="p">:</span> <span class="nb">Option</span><span class="o">&lt;</span><span class="n">SetSecretOptions</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="n">context</span><span class="p">:</span> <span class="nb">Option</span><span class="o">&lt;&amp;</span><span class="n">Context</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Result</span><span class="o">&lt;</span><span class="n">Response</span><span class="o">&gt;</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>See <a href="https://doc.rust-lang.org/rust-by-example/meta/doc.html">Rust by Example: Documentation</a> for more information.</p>
+
+<p><a href="#rust-documentation-tests" name="rust-documentation-tests" class="requirement" role="img" aria-label="YOU SHOULD">☑️</a> <strong>YOU SHOULD</strong>  use testable examples in documentation which improve test coverage and show callers runnable examples.</p>
+
+<p><a href="#rust-documentation-expect" name="rust-documentation-expect" class="requirement" role="img" aria-label="YOU MAY">✔️</a> <strong>YOU MAY</strong>  use <code class="language-plaintext highlighter-rouge">expect(&amp;str)</code> to unwrap a value or panic with an explanation useful to consumers only in doc comments.</p>
+
+<h2 id="rust-repository">Repository Guidelines</h2>
+
+<p><a href="#rust-repository-repository" name="rust-repository-repository" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  locate all source code and READMEs in the [Azure/azure-sdk-for-rust] GitHub repository.</p>
+
+<p><a href="#rust-repository-engsys" name="rust-repository-engsys" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  follow Azure SDK engineering systems guidelines for working in the [Azure/azure-sdk-for-rust] GitHub repository.</p>
+
+<p><a href="#rust-repository-cargo-lock" name="rust-repository-cargo-lock" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  commit <code class="language-plaintext highlighter-rouge">Cargo.lock</code> to the repository.</p>
+
+<h3 id="rust-repo-docs">Documentation Style</h3>
+
+<p>There are several documentation deliverables that must be included in or as a companion to your client library. Beyond complete and helpful API documentation within the code itself (doc comments), you need a great README and other supporting documentation.</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">README.md</code> - Resides in the root of your library’s directory within the SDK repository; includes package installation and client library usage information.</li>
+  <li><code class="language-plaintext highlighter-rouge">API reference</code> - Generated from the doc comments in your code; published on <a href="https://learn.microsoft.com">https://learn.microsoft.com</a> and <a href="https://docs.rs">https://docs.rs</a>.</li>
+  <li><code class="language-plaintext highlighter-rouge">Code snippets</code> - Short code examples that demonstrate single (atomic) operations for the champion scenarios you’ve identified for your library; included in your README, doc comments, and Quickstart.</li>
+  <li><code class="language-plaintext highlighter-rouge">Quickstart</code> - Article on <a href="https://learn.microsoft.com">https://learn.microsoft.com</a> that is similar to but expands on the README content; typically written by your service’s content developer.</li>
+  <li><code class="language-plaintext highlighter-rouge">Conceptual</code> - Long-form documentation like Quickstarts, Tutorials, How-to guides, and other content on docs.microsoft.com; typically written by your service’s content developer.</li>
+</ul>
+
+<p><a href="#rust-repo-docs-contentdev" name="rust-repo-docs-contentdev" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  include your service’s content developer in the <a href="https://github.com/azure/azure-sdk/issues">Architecture Board</a> review for your library. To find the content developer you should work with, check with your team’s Program Manager.</p>
+
+<p><a href="#rust-repo-docs-contributors-guide" name="rust-repo-docs-contributors-guide" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  follow the <a href="https://review.docs.microsoft.com/help/contribute-ref/contribute-ref-how-to-document-sdk">Azure SDK Contributors Guide</a>. (MICROSOFT INTERNAL)</p>
+
+<p><a href="#rust-repo-docs-style-guide" name="rust-repo-docs-style-guide" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  adhere to the specifications set forth in the Microsoft style guides when you write public-facing documentation. This applies to both long-form documentation like a README and the doc comments in your code. (MICROSOFT INTERNAL)</p>
+
+<ul>
+  <li><a href="https://styleguides.azurewebsites.net/StyleGuide/Read?id=2700">Microsoft Writing Style Guide</a></li>
+  <li><a href="https://styleguides.azurewebsites.net/Styleguide/Read?id=2696">Microsoft Cloud Style Guide</a></li>
+</ul>
+
+<p><a href="#rust-repo-docs-to-silence" name="rust-repo-docs-to-silence" class="requirement" role="img" aria-label="YOU SHOULD">☑️</a> <strong>YOU SHOULD</strong>  attempt to document your library into silence. Preempt developers’ usage questions and minimize GitHub issues by clearly explaining your API in the doc comments. Include information on service limits and errors they might hit, and how to avoid and recover from those errors.</p>
+
+<p>As you write your code, <em>document it so you never hear about it again.</em> The less questions you have to answer about your client library, the more time you have to build new features for your service.</p>
+
+<h4 id="rust-doc-samples">Code Snippets</h4>
+
+<p><a href="#rust-doc-samples-runnable" name="rust-doc-samples-runnable" class="requirement" role="img" aria-label="YOU SHOULD">☑️</a> <strong>YOU SHOULD</strong>  include <a href="https://doc.rust-lang.org/rustdoc/write-documentation/documentation-tests.html">runnable examples in documentation</a> for client methods or convenience layers that may require additional explanation specific to those members.</p>
+
+<p><a href="#rust-doc-samples-no-run" name="rust-doc-samples-no-run" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  add <code class="language-plaintext highlighter-rouge">no_run</code> to the code fence for documentation examples if that code requirements external resources.</p>
+
+<p><a href="#rust-doc-samples-unwrap" name="rust-doc-samples-unwrap" class="requirement" role="img" aria-label="YOU SHOULD">☑️</a> <strong>YOU SHOULD</strong>  use <code class="language-plaintext highlighter-rouge">unwrap()</code> or <code class="language-plaintext highlighter-rouge">expect(&amp;str)</code> in examples and not the <a href="https://doc.rust-lang.org/reference/expressions/operator-expr.html#the-question-mark-operator">question mark operator <code class="language-plaintext highlighter-rouge">?</code></a>, which requires additional setup.</p>
+
+<p><a href="#rust-doc-samples-main" name="rust-doc-samples-main" class="requirement" role="img" aria-label="YOU SHOULD NOT">⚠️</a> <strong>YOU SHOULD NOT</strong>  include the <code class="language-plaintext highlighter-rouge">main</code> function in the signature, if even necessary e.g., for showing async examples.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cd">/// ``` no_run</span>
+<span class="cd">/// # async fn main() {</span>
+<span class="cd">///     let client = SecretClient::new("https://myvault.vault.azure.net", Arc::new(DefaultAzureCredential::default()), None).unwrap();</span>
+<span class="cd">///     let secret = client.set_secret("name", "value", None, None).await.unwrap();</span>
+<span class="cd">///     println!("{secret:?}");</span>
+<span class="cd">/// # }</span>
+<span class="cd">/// ```</span>
+</code></pre></div></div>
+
+<p><a href="#rust-doc-samples-no-run" name="rust-doc-samples-no-run" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  attribute code fences with <code class="language-plaintext highlighter-rouge">no_run</code> if the code cannot or should not run when running <code class="language-plaintext highlighter-rouge">cargo test</code>. There are additional <a href="https://doc.rust-lang.org/rustdoc/write-documentation/documentation-tests.html#attributes">documentation test attributes</a> that may be of interest.</p>
+
+<h4 id="rust-engsys">Build System Integration</h4>
+
+<p><a href="#rust-engsys-stable" name="rust-engsys-stable" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  test all crates impacted by a Pull Request (PR) using the minimum supported Rust version (MSRV) from the <code class="language-plaintext highlighter-rouge">stable</code> channel i.e., <code class="language-plaintext highlighter-rouge">azure_core</code>’s <code class="language-plaintext highlighter-rouge">rust-version</code> in its <code class="language-plaintext highlighter-rouge">Cargo.toml</code>.</p>
+
+<p><a href="#rust-engsys-nightly" name="rust-engsys-nightly" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  test all crates impacted by a PR using the latest nightly toolchain.</p>
+
+<p><a href="#rust-engsys-async" name="rust-engsys-async" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  test <code class="language-plaintext highlighter-rouge">azure_core</code> and any other crates that implement async functions separate from <code class="language-plaintext highlighter-rouge">azure_core::Pipeline</code> using <a href="https://tokio.rs"><code class="language-plaintext highlighter-rouge">tokio</code></a> and <a href="https://github.com/bytedance/monoio"><code class="language-plaintext highlighter-rouge">monoio</code></a> in both single- and multi-threaded configurations. These tests do not necessarily have to run for every PR e.g., they may run nightly or weekly.</p>
+
+<p><a href="#rust-engsys-partner-policies" name="rust-engsys-partner-policies" class="requirement" role="img" aria-label="YOU SHOULD">☑️</a> <strong>YOU SHOULD</strong>  test some partner <code class="language-plaintext highlighter-rouge">Pipeline</code> policies in nightly or weekly runs.</p>
+
+<h4 id="rust-repo-formatting">Formatting</h4>
+
+<p><a href="#rust-repo-formatting-rustfmt" name="rust-repo-formatting-rustfmt" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  format all source using <code class="language-plaintext highlighter-rouge">rustfmt</code>. <code class="language-plaintext highlighter-rouge">.vscode/settings.json</code> will do this automatically for Visual Studio Code.</p>
+
+<p><a href="#rust-repo-formatting-engsys" name="rust-repo-formatting-engsys" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  check that all source is formatted in build pipelines.</p>
+
+<p>This prevents noisy subsequent pull requests if another maintainer formats source, which is always recommended. All source should be formatted the same based on <code class="language-plaintext highlighter-rouge">rustfmt</code> defaults and any repo overrides that may be set.</p>
+
+<h3 id="rust-repository-readme">README</h3>
+
+<p><a href="#rust-repository-readme-file" name="rust-repository-readme-file" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  have a <code class="language-plaintext highlighter-rouge">README.md</code> file in the component root folder.</p>
+
+<p>An example of a good <code class="language-plaintext highlighter-rouge">README.md</code> file can be found <a href="https://github.com/Azure/azure-sdk-for-rust/blob/main/sdk/core/README.md">here</a>.</p>
+
+<p><a href="#rust-repository-readme-consumer" name="rust-repository-readme-consumer" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  optimize the <code class="language-plaintext highlighter-rouge">README.md</code> for the consumer of the client library.</p>
+
+<p>The contributor guide (<code class="language-plaintext highlighter-rouge">CONTRIBUTING.md</code>) should be a separate file.</p>
+
+<h3 id="rust-repo-samples">Samples</h3>
+
+<p><a href="#rust-repo-samples-examples" name="rust-repo-samples-examples" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  include runnable examples using <code class="language-plaintext highlighter-rouge">azure_identity::DefaultAzureCredential</code> and library-specific environment variables e.g., <code class="language-plaintext highlighter-rouge">AZURE_KEYVAULT_URL</code> in crates’ <code class="language-plaintext highlighter-rouge">examples/</code> directory.</p>
+
+<p><a href="#rust-repo-samples-unique" name="rust-repo-samples-unique" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  use unique example file names throughout the workspace.</p>
+
+<p>The example file names are compiled into executes with the same name as the source file; thus, they must have unique names throughout the workspace.
+To facilitate this, preface your example name with the client name - converting PascalCase type name to snake_case - or, if still ambiguous, the service directory or crate name e.g., <code class="language-plaintext highlighter-rouge">secret_client_set_secret.rs</code> or <code class="language-plaintext highlighter-rouge">keyvault_secret_client_set_secret.rs</code>.</p>
+
+<p>See Cargo’s <a href="https://doc.rust-lang.org/cargo/guide/project-layout.html">project layout</a> for more information about conventional directories.</p>
+
+<!-- Links -->
+
+<!-- General Rust Language links should start with "rust-lang-" -->
+
+<!-- Links within site -->
+
+
+        
+            <div class="tags">
+                
+            </div>
+        
+            
+
+        </div>
+    </div>
+</div>
+                </div>
+                <!-- /.row -->
+
+            </div>
+            <!-- /.container -->
+        </div>
+        <!-- /#main -->
+    </div>
+    
+    <!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-62780441-46"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-62780441-46');
+</script>
+
+<!-- OLD SCRIPT
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-62780441-46','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+-->
+
+    
+    
+    <!-- the app_insights gets auto inserted from the config file -->
+<!-- For other configuration elements, see https://docs.microsoft.com/azure/azure-monitor/app/javascript#snippet-based-setup -->
+
+<script type="text/javascript">
+var sdkInstance="appInsightsSDK";window[sdkInstance]="appInsights";var aiName=window[sdkInstance],aisdk=window[aiName]||function(n){var o={config:n,initialize:!0},t=document,e=window,i="script";setTimeout(function(){var e=t.createElement(i);e.src=n.url||"https://az416426.vo.msecnd.net/scripts/b/ai.2.min.js",t.getElementsByTagName(i)[0].parentNode.appendChild(e)});try{o.cookie=t.cookie}catch(e){}function a(n){o[n]=function(){var e=arguments;o.queue.push(function(){o[n].apply(o,e)})}}o.queue=[],o.version=2;for(var s=["Event","PageView","Exception","Trace","DependencyData","Metric","PageViewPerformance"];s.length;)a("track"+s.pop());var r="Track",c=r+"Page";a("start"+c),a("stop"+c);var u=r+"Event";if(a("start"+u),a("stop"+u),a("addTelemetryInitializer"),a("setAuthenticatedUserContext"),a("clearAuthenticatedUserContext"),a("flush"),o.SeverityLevel={Verbose:0,Information:1,Warning:2,Error:3,Critical:4},!(!0===n.disableExceptionTracking||n.extensionConfig&&n.extensionConfig.ApplicationInsightsAnalytics&&!0===n.extensionConfig.ApplicationInsightsAnalytics.disableExceptionTracking)){a("_"+(s="onerror"));var p=e[s];e[s]=function(e,n,t,i,a){var r=p&&p(e,n,t,i,a);return!0!==r&&o["_"+s]({message:e,url:n,lineNumber:t,columnNumber:i,error:a}),r},n.autoExceptionInstrumented=!0}return o}(
+{
+    instrumentationKey:"5e03f19a-f5b4-4620-97d5-35707cec7fcb",
+    autoTrackPageVisitTime:true,
+    isCookieUseDisabled:true
+}
+);(window[aiName]=aisdk).queue&&0===aisdk.queue.length&&aisdk.trackPageView({});
+</script>
+
+    
+</body>
+<hr class="shaded"/>
+<footer>
+    <div class="container-fluid">
+        <div class="row footer">
+            <div class="col-lg-6 text-left pb-1">
+           &copy;2024 Microsoft Azure. All rights reserved. 
+ Site last generated: May 30, 2024
+            </div>
+            <div class="col-lg-6 text-right">
+                <p><img src="/azure-sdk/images/company_logo.png" width="100px" alt="Microsoft logo"/></p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+</html>

@@ -1,0 +1,1853 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="keywords" content=" ">
+<title> | Azure SDKs</title>
+<link rel="stylesheet" href="/azure-sdk/css/syntax.css" />
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/azure-sdk/css/modern-business.css" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="/azure-sdk/css/boxshadowproperties.css" />
+<link rel="stylesheet" href="/azure-sdk/css/theme-azure.css" />
+<link rel="stylesheet" href="/azure-sdk/css/customstyles.css" />
+<link rel="stylesheet" href="/azure-sdk/css/normalize.css">
+<link rel="stylesheet" href="/azure-sdk/css/tipuesearch.css">
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="/azure-sdk/js/jquery.navgoco.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.2.0/anchor.min.js"></script>
+<script src="/azure-sdk/js/toc.js"></script>
+<script src="/azure-sdk/js/customscripts.js"></script>
+
+<link rel="shortcut icon" href="/azure-sdk/images/azure-sdk-glyph.svg"/>
+<link rel="alternate" type="application/rss+xml" title="Azure SDKs" href="/azure-sdk/feed.xml" />
+
+    <script>
+        $(document).ready(function () {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function (e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function (e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+
+        });
+
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function () {
+            $("#tg-sb-link").click(function () {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+    <!-- Due to the page header height, all anchors uses top padding to offset the top possion and appear below the main header.
+        If one requirement icon is just below another, the padding of the icon overlaps the one on top of it and block the clicking surface.
+        The script below finds all requirements icons and adds z-index decrementally to place any previous icon on top of the next ones.
+        The script runs after the page is completelly load (all content is downloaded).
+      -->
+    <script>
+        $(window).bind("load", function () {
+            let requeriments = $('.requirement');
+            requeriments.each(function (index, element) {
+                $(element).css("z-index", requeriments.length - index);
+            });
+        });
+    </script>
+
+</head>
+
+<body>
+    <!-- Navigation -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/azure-sdk/releases/latest/index.html"/>
+                <span class="projectTitle"><img style="margin-top: -8px;" class="d-inline-block align-top" src="/azure-sdk/images/azure-sdk-glyph.svg" width="35" height="35" alt=""/> Azure SDKs</span>
+            </a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <!-- toggle sidebar button -->
+                <!-- <li><a id="tg-sb-link" href="#"><i id="tg-sb-icon" class="fa fa-toggle-on"></i> Nav</a></li> -->
+                <!-- entries without drop-downs appear here -->
+
+
+
+
+
+                
+                
+                
+                <li><a href="https://aka.ms/azsdk/blog" rel="noopener">Blog</a></li>
+                
+                
+                
+                <li><a href="/azure-sdk/releases/latest/">Releases</a></li>
+                
+                
+                
+                <!-- entries with drop-downs appear here -->
+                <!-- conditional logic to control which topnav appears for the audience defined in the configuration file.-->
+                
+                
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Guidelines<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        
+                        
+                        <li><a href="/azure-sdk/general_introduction.html" rel="noopener">General Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/dotnet_introduction.html" rel="noopener">.NET Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/java_introduction.html" rel="noopener">Java Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/python_design.html" rel="noopener">Python Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/typescript_introduction.html" rel="noopener">TypeScript Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/android_design.html" rel="noopener">Android Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/ios_design.html" rel="noopener">iOS Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/clang_design.html" rel="noopener">C Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/cpp_introduction.html" rel="noopener">C++ Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/golang_introduction.html" rel="noopener">Go Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/rust_introduction.html" rel="noopener">Rust Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/policies_adoption.html" rel="noopener">GitHub Repos</a></li>
+                        
+                        <li><a href="/azure-sdk/policies_reviewprocess.html" rel="noopener">Policies</a></li>
+                        
+                        
+                    </ul>
+                </li>
+                
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">API References<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        
+                        
+                        
+                        <li><a href="https://aka.ms/net-docs" rel="noopener">.NET</a></li>
+                        
+                        
+                        
+                        <li><a href="https://aka.ms/java-docs" rel="noopener">Java</a></li>
+                        
+                        
+                        
+                        <li><a href="https://aka.ms/python-docs" rel="noopener">Python</a></li>
+                        
+                        
+                        
+                        <li><a href="https://aka.ms/js-docs" rel="noopener">TypeScript</a></li>
+                        
+                        
+                        
+                    </ul>
+                </li>
+                
+                
+                
+                <li>
+                    
+                        <a style="font-size: 1.666em !important" class="fa fa-github fa-2x" title="GitHub Link" href="https://github.com/azure/azure-sdk"></a>
+                    
+                </li>
+                <li>
+                    <a style="font-size: 1.666em !important" class="fa fa-twitter fa-2x" title="Twitter Link" href="https://twitter.com/AzureSDK"></a>
+                </li>
+            </ul>
+        </div>
+        </div>
+        <!-- /.container -->
+</nav>
+
+    <!-- Page Content -->
+    <div class="container-fluid" style="margin-top: 60px; min-height: calc(100vh - 50px);">
+        <div id="main">
+            <!-- Content Row -->
+            <div class="row">
+                
+                
+                <!-- Sidebar Column -->
+                <div class="col-md-2 col-xs-12" id="tg-sb-sidebar">
+                    
+
+<div id="mysidebar" class="nav">
+
+  <script src="/azure-sdk/js/tipuesearch_content.js"></script>
+  <script src="/azure-sdk/js/tipuesearch_set.js"></script>
+  <script src="/azure-sdk/js/tipuesearch.min.js"></script>
+
+<p>
+<form action="/azure-sdk/search.html" >
+    <div class=" tipue_search_left"><img src="/azure-sdk/images/search.png" alt="Search Icon" class="tipue_search_icon"></div>
+    <input type="text" class="form-control tipue_search_right" name="q" id="tipue_search_input" pattern=".{3,}" title="At least 3 characters" required placeholder="Search website">
+</form>
+</p>
+<div style="clear: both;"></div>
+  <ol>
+    <li class="sidebarTitle"> </li>
+    
+      
+        
+        <li>
+        
+          
+          <a title="General Guidelines" href="#">General Guidelines</a>
+          
+          <ul>
+            
+              
+                <li><a title="Introduction" href="/azure-sdk/general_introduction.html">Introduction</a></li>
+              
+              
+            
+              
+                <li><a title="Terminology" href="/azure-sdk/general_terminology.html">Terminology</a></li>
+              
+              
+            
+              
+                <li><a title="API Design" href="/azure-sdk/general_design.html">API Design</a></li>
+              
+              
+            
+              
+                <li><a title="Implementation" href="/azure-sdk/general_implementation.html">Implementation</a></li>
+              
+              
+            
+              
+                <li><a title="Documentation" href="/azure-sdk/general_documentation.html">Documentation</a></li>
+              
+              
+            
+              
+                <li><a title="Azure Core" href="/azure-sdk/general_azurecore.html">Azure Core</a></li>
+              
+              
+            
+              
+                <li><a title="Contribution Guidelines" href="/azure-sdk/policies_opensource.html">Contribution Guidelines</a></li>
+              
+              
+            
+          </ul>
+        </li>
+      
+        
+        <li>
+        
+          
+          <a title=".NET Guidelines" href="#">.NET Guidelines</a>
+          
+          <ul>
+            
+              
+                <li><a title="Design" href="/azure-sdk/dotnet_introduction.html">Design</a></li>
+              
+              
+            
+              
+                <li><a title="Implementation" href="/azure-sdk/dotnet_implementation.html">Implementation</a></li>
+              
+              
+                <li class="subfolders">
+                  <a title="API Documentation" href="#">API Documentation</a>
+                  <ul>
+                    
+                      
+                        <li><a title="Microsoft.Azure.Cosmos" href="https://docs.microsoft.com/dotnet/api/microsoft.azure.cosmos" target="_blank" rel="noopener">Microsoft.Azure.Cosmos</a></li>
+                      
+                    
+                      
+                        <li><a title="Azure.Messaging.EventHubs" href="https://azure.github.io/azure-sdk-for-net/eventhubs.html#azuremessagingeventhubs" target="_blank" rel="noopener">Azure.Messaging.EventHubs</a></li>
+                      
+                    
+                      
+                        <li><a title="Azure.Security.KeyVault.Keys" href="https://azure.github.io/azure-sdk-for-net/keyvault.html#azuresecuritykeyvaultkeys" target="_blank" rel="noopener">Azure.Security.KeyVault.Keys</a></li>
+                      
+                    
+                      
+                        <li><a title="Azure.Security.KeyVault.Secrets" href="https://azure.github.io/azure-sdk-for-net/keyvault.html#azuresecuritykeyvaultsecrets" target="_blank" rel="noopener">Azure.Security.KeyVault.Secrets</a></li>
+                      
+                    
+                      
+                        <li><a title="Azure.Storage.Blobs" href="https://azure.github.io/azure-sdk-for-net/storage.html#azurestorageblobs" target="_blank" rel="noopener">Azure.Storage.Blobs</a></li>
+                      
+                    
+                      
+                        <li><a title="Azure.Storage.Files.Shares" href="https://azure.github.io/azure-sdk-for-net/storage.html#azurestoragefilesshares" target="_blank" rel="noopener">Azure.Storage.Files.Shares</a></li>
+                      
+                    
+                      
+                        <li><a title="Azure.Storage.Queues" href="https://azure.github.io/azure-sdk-for-net/storage.html#azurestoragequeues" target="_blank" rel="noopener">Azure.Storage.Queues</a></li>
+                      
+                    
+                  </ul>
+                </li>
+              
+            
+          </ul>
+        </li>
+      
+        
+        <li>
+        
+          
+          <a title="Java Guidelines" href="#">Java Guidelines</a>
+          
+          <ul>
+            
+              
+                <li><a title="Design" href="/azure-sdk/java_introduction.html">Design</a></li>
+              
+              
+            
+              
+                <li><a title="Implementation" href="/azure-sdk/java_implementation.html">Implementation</a></li>
+              
+              
+            
+              
+                <li><a title="Spring Guidelines" href="/azure-sdk/java_spring.html">Spring Guidelines</a></li>
+              
+              
+                <li class="subfolders">
+                  <a title="API Documentation" href="#">API Documentation</a>
+                  <ul>
+                    
+                      
+                        <li><a title="azure-data-appconfiguration" href="https://azure.github.io/azure-sdk-for-java/appconfiguration.html#azure-data-appconfiguration" target="_blank" rel="noopener">azure-data-appconfiguration</a></li>
+                      
+                    
+                      
+                        <li><a title="azure-cosmos" href="https://azure.github.io/azure-sdk-for-java/cosmosdb.html#azure-cosmos" target="_blank" rel="noopener">azure-cosmos</a></li>
+                      
+                    
+                      
+                        <li><a title="azure-messaging-eventhubs" href="https://azure.github.io/azure-sdk-for-java/eventhubs.html#azure-messaging-eventhubs" target="_blank" rel="noopener">azure-messaging-eventhubs</a></li>
+                      
+                    
+                      
+                        <li><a title="azure-keyvault-keys" href="https://azure.github.io/azure-sdk-for-java/keyvault.html#azure-security-keyvault-keys" target="_blank" rel="noopener">azure-keyvault-keys</a></li>
+                      
+                    
+                      
+                        <li><a title="azure-keyvault-secrets" href="https://azure.github.io/azure-sdk-for-java/keyvault.html#azure-security-keyvault-secrets" target="_blank" rel="noopener">azure-keyvault-secrets</a></li>
+                      
+                    
+                      
+                        <li><a title="azure-storage-blob" href="https://azure.github.io/azure-sdk-for-java/storage.html#azure-storage-blob" target="_blank" rel="noopener">azure-storage-blob</a></li>
+                      
+                    
+                      
+                        <li><a title="azure-storage-file-share" href="https://azure.github.io/azure-sdk-for-java/storage.html#azure-storage-file-share" target="_blank" rel="noopener">azure-storage-file-share</a></li>
+                      
+                    
+                      
+                        <li><a title="azure-storage-queue" href="https://azure.github.io/azure-sdk-for-java/storage.html#azure-storage-queue" target="_blank" rel="noopener">azure-storage-queue</a></li>
+                      
+                    
+                  </ul>
+                </li>
+              
+            
+          </ul>
+        </li>
+      
+        
+        <li>
+        
+          
+          <a title="Python Guidelines" href="#">Python Guidelines</a>
+          
+          <ul>
+            
+              
+                <li><a title="Design" href="/azure-sdk/python_design.html">Design</a></li>
+              
+              
+            
+              
+                <li><a title="Implementation" href="/azure-sdk/python_implementation.html">Implementation</a></li>
+              
+              
+            
+              
+                <li><a title="Documentation" href="/azure-sdk/python_documentation.html">Documentation</a></li>
+              
+              
+                <li class="subfolders">
+                  <a title="API Documentation" href="#">API Documentation</a>
+                  <ul>
+                    
+                      
+                        <li><a title="azure-cosmos" href="https://azure.github.io/azure-sdk-for-python/cosmosdb.html#azure-cosmos" target="_blank" rel="noopener">azure-cosmos</a></li>
+                      
+                    
+                      
+                        <li><a title="azure-eventhub" href="https://azure.github.io/azure-sdk-for-python/eventhubs.html#azure-eventhub" target="_blank" rel="noopener">azure-eventhub</a></li>
+                      
+                    
+                      
+                        <li><a title="azure-keyvault-keys" href="https://azure.github.io/azure-sdk-for-python/keyvault.html#azure-keyvault-keys" target="_blank" rel="noopener">azure-keyvault-keys</a></li>
+                      
+                    
+                      
+                        <li><a title="azure-keyvault-secrets" href="https://azure.github.io/azure-sdk-for-python/keyvault.html#azure-keyvault-secrets" target="_blank" rel="noopener">azure-keyvault-secrets</a></li>
+                      
+                    
+                      
+                        <li><a title="azure-storage-blob" href="https://azure.github.io/azure-sdk-for-python/storage.html#azure-storage-blob" target="_blank" rel="noopener">azure-storage-blob</a></li>
+                      
+                    
+                      
+                        <li><a title="azure-storage-file-share" href="https://azure.github.io/azure-sdk-for-python/storage.html#azure-storage-file-share" target="_blank" rel="noopener">azure-storage-file-share</a></li>
+                      
+                    
+                      
+                        <li><a title="azure-storage-queue" href="https://azure.github.io/azure-sdk-for-python/storage.html#azure-storage-queue" target="_blank" rel="noopener">azure-storage-queue</a></li>
+                      
+                    
+                  </ul>
+                </li>
+              
+            
+          </ul>
+        </li>
+      
+        
+        <li>
+        
+          
+          <a title="TypeScript Guidelines" href="#">TypeScript Guidelines</a>
+          
+          <ul>
+            
+              
+                <li><a title="Introduction" href="/azure-sdk/typescript_introduction.html">Introduction</a></li>
+              
+              
+            
+              
+                <li><a title="API Design" href="/azure-sdk/typescript_design.html">API Design</a></li>
+              
+              
+            
+              
+                <li><a title="Implementation" href="/azure-sdk/typescript_implementation.html">Implementation</a></li>
+              
+              
+            
+              
+                <li><a title="Documentation" href="/azure-sdk/typescript_documentation.html">Documentation</a></li>
+              
+              
+                <li class="subfolders">
+                  <a title="API Documentation" href="#">API Documentation</a>
+                  <ul>
+                    
+                      
+                        <li><a title="@azure/cosmos" href="https://azure.github.io/azure-cosmos-js/" target="_blank" rel="noopener">@azure/cosmos</a></li>
+                      
+                    
+                      
+                        <li><a title="@azure/event-hubs" href="https://azure.github.io/azure-sdk-for-js/eventhubs.html#azure-event-hubs" target="_blank" rel="noopener">@azure/event-hubs</a></li>
+                      
+                    
+                      
+                        <li><a title="@azure/keyvault-keys" href="https://azure.github.io/azure-sdk-for-js/keyvault.html#azure-keyvault-keys" target="_blank" rel="noopener">@azure/keyvault-keys</a></li>
+                      
+                    
+                      
+                        <li><a title="@azure/keyvault-secrets" href="https://azure.github.io/azure-sdk-for-js/keyvault.html#azure-keyvault-secrets" target="_blank" rel="noopener">@azure/keyvault-secrets</a></li>
+                      
+                    
+                      
+                        <li><a title="@azure/storage-blob" href="https://azure.github.io/azure-sdk-for-js/storage.html#azure-storage-blob" target="_blank" rel="noopener">@azure/storage-blob</a></li>
+                      
+                    
+                      
+                        <li><a title="@azure/storage-file-share" href="https://azure.github.io/azure-sdk-for-js/storage.html#azure-storage-file-share" target="_blank" rel="noopener">@azure/storage-file-share</a></li>
+                      
+                    
+                      
+                        <li><a title="@azure/storage-queue" href="https://azure.github.io/azure-sdk-for-js/storage.html#azure-storage-queue" target="_blank" rel="noopener">@azure/storage-queue</a></li>
+                      
+                    
+                  </ul>
+                </li>
+              
+            
+          </ul>
+        </li>
+      
+        
+        <li>
+        
+          
+          <a title="Android Guidelines" href="#">Android Guidelines</a>
+          
+          <ul>
+            
+              
+                <li><a title="Design" href="/azure-sdk/android_design.html">Design</a></li>
+              
+              
+            
+              
+                <li><a title="Implementation" href="/azure-sdk/android_implementation.html">Implementation</a></li>
+              
+              
+            
+          </ul>
+        </li>
+      
+        
+        <li>
+        
+          
+          <a title="iOS Guidelines" href="#">iOS Guidelines</a>
+          
+          <ul>
+            
+              
+                <li><a title="Design" href="/azure-sdk/ios_design.html">Design</a></li>
+              
+              
+            
+              
+                <li><a title="Implementation" href="/azure-sdk/ios_implementation.html">Implementation</a></li>
+              
+              
+            
+          </ul>
+        </li>
+      
+        
+        <li>
+        
+          
+          <a title="C Guidelines" href="#">C Guidelines</a>
+          
+          <ul>
+            
+              
+                <li><a title="Design" href="/azure-sdk/clang_design.html">Design</a></li>
+              
+              
+            
+              
+                <li><a title="Implementation" href="/azure-sdk/clang_implementation.html">Implementation</a></li>
+              
+              
+                <li class="subfolders">
+                  <a title="API Documentation" href="#">API Documentation</a>
+                  <ul>
+                    
+                      
+                        <li><a title="az_iot" href="https://azuresdkdocs.blob.core.windows.net/$web/c/az_iot/latest/index.html" target="_blank" rel="noopener">az_iot</a></li>
+                      
+                    
+                  </ul>
+                </li>
+              
+            
+          </ul>
+        </li>
+      
+        
+        <li>
+        
+          
+          <a title="C++ Guidelines" href="#">C++ Guidelines</a>
+          
+          <ul>
+            
+              
+                <li><a title="Design" href="/azure-sdk/cpp_introduction.html">Design</a></li>
+              
+              
+            
+              
+                <li><a title="Implementation" href="/azure-sdk/cpp_implementation.html">Implementation</a></li>
+              
+              
+                <li class="subfolders">
+                  <a title="API Documentation" href="#">API Documentation</a>
+                  <ul>
+                    
+                      
+                        <li><a title="azure-storage-blob" href="https://azure.github.io/azure-sdk-for-cpp/storage.html#azure-storage-blob" target="_blank" rel="noopener">azure-storage-blob</a></li>
+                      
+                    
+                      
+                        <li><a title="azure-storage-file-datalake" href="https://azure.github.io/azure-sdk-for-cpp/storage.html#azure-storage-file-datalake" target="_blank" rel="noopener">azure-storage-file-datalake</a></li>
+                      
+                    
+                      
+                        <li><a title="azure-storage-file-share" href="https://azure.github.io/azure-sdk-for-cpp/storage.html#azure-storage-file-shares" target="_blank" rel="noopener">azure-storage-file-share</a></li>
+                      
+                    
+                  </ul>
+                </li>
+              
+            
+          </ul>
+        </li>
+      
+        
+        <li>
+        
+          
+          <a title="Go Guidelines" href="#">Go Guidelines</a>
+          
+          <ul>
+            
+              
+                <li><a title="Design" href="/azure-sdk/golang_introduction.html">Design</a></li>
+              
+              
+            
+              
+                <li><a title="Implementation" href="/azure-sdk/golang_implementation.html">Implementation</a></li>
+              
+              
+            
+          </ul>
+        </li>
+      
+        
+        <li>
+        
+          
+          <a title="Rust Guidelines" href="#">Rust Guidelines</a>
+          
+          <ul>
+            
+              
+                <li><a title="Design" href="/azure-sdk/rust_introduction.html">Design</a></li>
+              
+              
+            
+              
+                <li><a title="Implementation" href="/azure-sdk/rust_implementation.html">Implementation</a></li>
+              
+              
+            
+          </ul>
+        </li>
+      
+        
+        <li>
+        
+          
+          <a title="GitHub Repos" href="#">GitHub Repos</a>
+          
+          <ul>
+            
+              
+                <li><a title="Guidelines Contributions" href="/azure-sdk/policies_adoption.html">Guidelines Contributions</a></li>
+              
+              
+            
+              
+                <li><a title="Repository structure" href="/azure-sdk/policies_repostructure.html">Repository structure</a></li>
+              
+              
+            
+              
+                <li><a title="Repository branching" href="/azure-sdk/policies_repobranching.html">Repository branching</a></li>
+              
+              
+            
+              
+                <li><a title="Pipelines" href="/azure-sdk/policies_pipelines.html">Pipelines</a></li>
+              
+              
+            
+          </ul>
+        </li>
+      
+        
+        <li>
+        
+          
+          <a title="Policies" href="#">Policies</a>
+          
+          <ul>
+            
+              
+                <li><a title="Review Process" href="/azure-sdk/policies_reviewprocess.html">Review Process</a></li>
+              
+              
+            
+              
+                <li><a title="Releases" href="/azure-sdk/policies_releases.html">Releases</a></li>
+              
+              
+            
+              
+                <li><a title="Release notes" href="/azure-sdk/policies_releasenotes.html">Release notes</a></li>
+              
+              
+            
+              
+                <li><a title="Support" href="/azure-sdk/policies_support.html">Support</a></li>
+              
+              
+            
+          </ul>
+        </li>
+      
+    
+  </ol>
+</div>
+
+<script>$("li.active").parents('li').toggleClass("active");</script>
+
+                </div>
+                
+                
+
+                <!-- Content Column -->
+                <div class="col-md-10 col-xs-12" id="tg-sb-content">
+                    <div class="row">
+    
+    <div class="col-md-2 col-xs-12 content-right pull-right">
+        
+<!-- this handles the automatic toc. use ## for subheads to auto-generate the on-page minitoc. if you use html tags, you must supply an ID for the heading element in order for it to appear in the minitoc. -->
+<script>
+$( document ).ready(function() {
+  // Handler for .ready() called.
+
+$('#toc').toc({ minimumHeaders: 0, listType: 'ul', showSpeed: 0, headers: 'h2,h3,h4' });
+
+/* this offset helps account for the space taken up by the floating toolbar. */
+$('#toc').on('click', 'a', function() {
+  var target = $(this.getAttribute('href'))
+    , scroll_target = target.offset().top
+
+  $(window).scrollTop(scroll_target - 60);
+  return false
+})
+  
+});
+</script>
+
+<div id="toc"></div>
+
+    </div>
+    
+
+    <div class="col-md-10  col-xs-12 content-center pull-left">
+        <div class="post-header">
+        <h1 class="post-title-main"></h1>
+        </div>
+        
+        
+        
+        <div class="post-content">
+            
+        
+            
+        
+            
+<p>title: Azure SDK for Java (October 2020)
+layout: post
+tags: java azure
+sidebar: releases_sidebar
+repository: azure/azure-sdk-for-java
+—</p>
+
+<p>The Azure SDK team is pleased to announce our October 2020 client library releases.</p>
+
+<h4 id="ga">GA</h4>
+
+<ul>
+  <li>Management Library - AppService</li>
+  <li>Management Library - Authorization</li>
+  <li>Management Library - Compute</li>
+  <li>Management Library - Container Service</li>
+  <li>Management Library - CosmosDB</li>
+  <li>Management Library - DNS</li>
+  <li>Management Library - Insight (Monitor)</li>
+  <li>Management Library - Key Vault</li>
+  <li>Management Library - Managed Identity</li>
+  <li>Management Library - Network</li>
+  <li>Management Library - Resources</li>
+  <li>Management Library - Storage</li>
+</ul>
+
+<h4 id="updates">Updates</h4>
+
+<ul>
+  <li>Azure App Configuration</li>
+  <li>Azure Core</li>
+  <li>Azure Core Http Netty</li>
+  <li>Azure Core Http OkHttp</li>
+  <li>Azure Core Amqp</li>
+  <li>Azure Event Hubs</li>
+  <li>Azure Identity</li>
+  <li>Azure Key Vault Certificates</li>
+  <li>Azure Key Vault Keys</li>
+  <li>Azure Key Vault Secrets</li>
+  <li>Azure Search Documents</li>
+  <li>Form Recognizer</li>
+</ul>
+
+<h4 id="beta">Beta</h4>
+
+<ul>
+  <li>Azure Storage</li>
+  <li>Azure Core Experimental</li>
+  <li>Azure Core Serializer Apache Avro</li>
+  <li>Azure Communication Administration</li>
+  <li>Azure Communication Chat</li>
+  <li>Azure Communication Common</li>
+  <li>Azure Communication Sms</li>
+  <li>Azure Digitial Twins</li>
+  <li>Azure Identity</li>
+  <li>Azure Key Vault Administration</li>
+  <li>Azure Key Vault Certificates</li>
+  <li>Azure Key Vault Keys</li>
+  <li>Azure Key Vault Secrets</li>
+  <li>Event Grid</li>
+  <li>Management Library - CDN</li>
+  <li>Management Library - Container Instance</li>
+  <li>Management Library - Container Registry</li>
+  <li>Management Library - Event Hubs</li>
+  <li>Management Library - Private DNS</li>
+  <li>Management Library - Redis</li>
+  <li>Management Library - Service Bus</li>
+  <li>Management Library - Spring Cloud</li>
+  <li>Management Library - SQL</li>
+  <li>Management Library - Traffic Manager</li>
+  <li>Azure Metrics Advisor</li>
+  <li>Azure Search Documents</li>
+  <li>Azure Service Bus</li>
+  <li>Azure Storage Blob Batch</li>
+  <li>Azure Storage Blob Blob</li>
+  <li>Azure Storage Blob Cryptography</li>
+  <li>Azure Storage Blob Changefeed</li>
+  <li>Azure Storage File Datalake</li>
+  <li>Azure Storage File Share</li>
+  <li>Azure Storage Queue</li>
+  <li>Azure Tables</li>
+  <li>Azure Text Analytics</li>
+  <li>Opentelemetry exporter Azure monitor</li>
+  <li>Azure Spring Boot</li>
+</ul>
+
+<h2 id="installation-instructions">Installation Instructions</h2>
+
+<p>To use the GA and beta libraries, refer to the Maven dependency information below, which may be copied into your projects Maven <code class="language-plaintext highlighter-rouge">pom.xml</code> file as appropriate. If you are using a different build tool, refer to its documentation on how to specify dependencies.</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-ai-textanalytics<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>5.1.0-beta.2<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-ai-metricsadvisor<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>1.0.0-beta.1<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-ai-formrecognizer<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>3.0.2<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-communication-administration<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>1.0.0-beta.2<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-communication-chat<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>1.0.0-beta.2<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-communication-common<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>1.0.0-beta.2<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-communication-sms<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>1.0.0-beta.2<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-core<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>1.9.0<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-core-amqp<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>1.6.0<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-core-experimental<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>1.0.0-beta.6<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-core-experimental<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>1.0.0-beta.7<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-core-experimental<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>1.0.0-beta.5<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-core-http-netty<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>1.6.2<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-core-http-okhttp<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>1.3.2<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-core-serializer-avro-apache<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>1.0.0-beta.4<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-core-serializer-json-jackson<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>1.0.2<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-core-test<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>1.5.0<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-core-serializer-json-gson<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>1.0.2<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-data-appconfiguration<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>1.1.6<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-data-tables<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>12.0.0-beta.2<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-digitaltwins-core<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>1.0.0-beta.3<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-identity<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>1.2.0-beta.2<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-messaging-eventgrid<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>2.0.0-beta.3<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-messaging-eventhubs<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>5.3.0<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-messaging-eventhubs-checkpointstore-blob<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>1.3.0<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-search-documents<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>11.2.0-beta.2<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-search-documents<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>11.1.1<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-security-keyvault-administration<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>4.0.0-beta.2<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-security-keyvault-certificates<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>4.2.0-beta.2<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-security-keyvault-keys<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>4.3.0-beta.2<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-security-keyvault-secrets<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>4.3.0-beta.2<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-storage-blob<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>12.9.0-beta.1<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-storage-blob<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>12.9.0-beta.2<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-storage-blob-batch<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>12.7.0-beta.1<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-storage-blob-changefeed<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>12.0.0-beta.3<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-storage-blob-cryptography<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>12.9.0-beta.1<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-storage-common<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>12.9.0-beta.1<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-storage-common<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>12.9.0-beta.2<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-storage-file-datalake<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>12.3.0-beta.1<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-storage-file-share<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>12.7.0-beta.1<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-storage-queue<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>12.7.0-beta.1<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-storage-internal-avro<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>12.0.1-beta.2<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-storage-internal-avro<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>12.0.1-beta.1<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-storage-queue<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>12.7.0-beta.1<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>opentelemetry-exporters-azuremonitor<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>1.0.0-beta.1<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure.resourcemanager<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-resourcemanager-resources<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>2.0.0<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure.resourcemanager<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-resourcemanager-storage<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>2.0.0<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure.resourcemanager<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-resourcemanager-keyvault<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>2.0.0<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure.resourcemanager<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-resourcemanager-authorization<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>2.0.0<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure.resourcemanager<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-resourcemanager-msi<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>2.0.0<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure.resourcemanager<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-resourcemanager-network<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>2.0.0<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure.resourcemanager<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-resourcemanager-compute<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>2.0.0<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure.resourcemanager<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-resourcemanager-cosmos<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>2.0.0<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure.resourcemanager<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-resourcemanager-dns<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>2.0.0<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure.resourcemanager<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-resourcemanager-appservice<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>2.0.0<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure.resourcemanager<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-resourcemanager-containerservice<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>2.0.0<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure.resourcemanager<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-resourcemanager-monitor<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>2.0.0<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure.resourcemanager<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-resourcemanager-containerinstance<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>2.0.0-beta.5<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure.resourcemanager<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-resourcemanager-containerregistry<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>2.0.0-beta.5<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure.resourcemanager<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-resourcemanager-cdn<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>2.0.0-beta.5<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure.resourcemanager<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-resourcemanager-eventhubs<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>2.0.0-beta.5<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure.resourcemanager<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-resourcemanager-privatedns<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>2.0.0-beta.5<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure.resourcemanager<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-resourcemanager-redis<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>2.0.0-beta.5<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure.resourcemanager<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-resourcemanager-servicebus<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>2.0.0-beta.5<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure.resourcemanager<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-resourcemanager-appplatform<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>2.0.0-beta.5<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure.resourcemanager<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-resourcemanager-sql<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>2.0.0-beta.5<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure.resourcemanager<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-resourcemanager-trafficmanager<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>2.0.0-beta.5<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre></div></div>
+
+<p>If you are using multiple management libraries in your project and want to import all libraries altogether, you can also choose to use the following wrapper package</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c">&lt;!-- This package contains all currently available management libraries that are stable--&gt;</span>
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure.resourcemanager<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-resourcemanager<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>2.0.0<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="c">&lt;!-- This package contains both stable and preview management libraries --&gt;</span>
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.azure.resourcemanager<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-resourcemanager<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>2.0.0-beta.5<span class="nt">&lt;/version&gt;</span>
+</code></pre></div></div>
+
+<p>To use Azure Spring Boot starters, refer to the Maven dependency information below, which may be copied into your projects Maven <code class="language-plaintext highlighter-rouge">pom.xml</code> file as appropriate.</p>
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.microsoft.azure<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>azure-servicebus-jms-spring-boot-starter<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>2.3.6-beta.1<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre></div></div>
+<h2 id="feedback">Feedback</h2>
+
+<p>If you have a bug or feature request for one of the libraries, please post an issue to <a href="https://github.com/azure/azure-sdk-for-java/issues">GitHub</a>.</p>
+
+<h2 id="changelog">Changelog</h2>
+
+<p>Detailed changelogs are linked from the <a href="#quick-links">Quick Links</a> below. Here are some of the highlights:</p>
+
+<h3 id="azure-ai-textanalytics-510-beta2-changelog">Azure Ai Textanalytics 5.1.0-beta.2 <a href="https://github.com/Azure/azure-sdk-for-java/blob/main/sdk/textanalytics/azure-ai-textanalytics/CHANGELOG.md#510-beta2-2020-10-06">Changelog</a></h3>
+<h4 id="breaking-changes">Breaking changes</h4>
+<ul>
+  <li>Removed property <code class="language-plaintext highlighter-rouge">length</code> from <code class="language-plaintext highlighter-rouge">CategorizedEntity</code>, <code class="language-plaintext highlighter-rouge">SentenceSentiment</code>, <code class="language-plaintext highlighter-rouge">LinkedEntityMatch</code>, <code class="language-plaintext highlighter-rouge">AspectSentiment</code>,
+<code class="language-plaintext highlighter-rouge">OpinionSentiment</code>, and <code class="language-plaintext highlighter-rouge">PiiEntity</code> because the length information can be accessed from the text property itself
+ using the string’s length property.</li>
+</ul>
+
+<h3 id="azure-ai-metrics-advisor-100-beta1-changelog">Azure Ai Metrics advisor 1.0.0-beta.1 <a href="https://github.com/Azure/azure-sdk-for-java/blob/main/sdk/metricsadvisor/azure-ai-metricsadvisor/CHANGELOG.md#100-beta1-2020-10-07">Changelog</a></h3>
+
+<h4 id="new-features">New Features:</h4>
+<ul>
+  <li>Initial preview release of Metrics advisor.</li>
+  <li>Two client design:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">MetricsAdvisorAdministrationClient</code> to perform creation, updation and deletion of Metrics Advisor resources.</li>
+      <li><code class="language-plaintext highlighter-rouge">MetricsAdvisorClient</code> helps with querying API’s to helps with listing incidents, listing root causes of incidents
+  and adding feedback to tune your model.</li>
+    </ul>
+  </li>
+  <li>Authentication with API key supported using <code class="language-plaintext highlighter-rouge">MetricsAdvisorKeyCredential("&lt;subscription_key&gt;", "&lt;api_key&gt;")</code>.</li>
+  <li>Reactive streams support using <a href="https://projectreactor.io/">Project Reactor</a>.</li>
+</ul>
+
+<h3 id="azure-core-test-150-changelog">Azure Core Test 1.5.0 <a href="https://github.com/Azure/azure-sdk-for-java/blob/main/sdk/core/azure-core-test/CHANGELOG.md#150-2020-10-01">Changelog</a></h3>
+
+<h4 id="new-features-1">New Features</h4>
+
+<ul>
+  <li>Enhanced playback recording to use test class name plus test name to identify records.</li>
+</ul>
+
+<h3 id="azure-core-190-changelog">Azure Core 1.9.0 <a href="https://github.com/Azure/azure-sdk-for-java/blob/main/sdk/core/azure-core/CHANGELOG.md#190-2020-10-01">Changelog</a></h3>
+
+<h4 id="new-features-2">New Features</h4>
+
+<ul>
+  <li>Added <code class="language-plaintext highlighter-rouge">ServiceClientProtocal</code> to allow the client to indicate which networking protocol it will use.</li>
+  <li>Added <code class="language-plaintext highlighter-rouge">HttpPipelinePosition</code> which allows <code class="language-plaintext highlighter-rouge">HttpPipelinePolicy</code>s to indicate their position when used in a client builder.</li>
+  <li>Added default interface method <code class="language-plaintext highlighter-rouge">HttpPipelinePolicy.getPipelinePosition</code> that returns <code class="language-plaintext highlighter-rouge">HttpPipelinePosition.PER_RETRY</code>.</li>
+</ul>
+
+<h4 id="bug-fixes">Bug Fixes</h4>
+
+<ul>
+  <li>Fixed a bug where calling <code class="language-plaintext highlighter-rouge">UrlBuilder.parse</code> could result in an exception. <a href="https://github.com/Azure/azure-sdk-for-java/issues/15013">#15013</a></li>
+  <li>Changed <code class="language-plaintext highlighter-rouge">ContinuablePagedIterable</code> implementation to use a custom iterable to prevent additional, unrequested pages from being retrieved. <a href="https://github.com/Azure/azure-sdk-for-java/issues/15575">#15575</a></li>
+</ul>
+
+<h3 id="azure-core-amqp-160-changelog">Azure Core Amqp 1.6.0 <a href="https://github.com/Azure/azure-sdk-for-java/blob/azure-core-amqp_1.6.0/sdk/core/azure-core-amqp/CHANGELOG.md#160-2020-10-12">Changelog</a></h3>
+
+<h4 id="new-features-3">New Features</h4>
+<ul>
+  <li>Added peer certificate verification options when connecting to an AMQP endpoint.</li>
+</ul>
+
+<h4 id="breaking-changes-1">Breaking Changes</h4>
+<ul>
+  <li>Removed <code class="language-plaintext highlighter-rouge">BinaryData</code> type which was used for <code class="language-plaintext highlighter-rouge">AmqpAnnotatedMessage</code>.</li>
+</ul>
+
+<h3 id="azure-core-experimental-100-beta6-changelog">Azure Core Experimental 1.0.0-beta.6 <a href="https://github.com/Azure/azure-sdk-for-java/blob/main/sdk/core/azure-core-experimental/CHANGELOG.md#100-beta6-2020-10-06">Changelog</a></h3>
+
+<h4 id="new-features-4">New Features</h4>
+<ul>
+  <li>Added <code class="language-plaintext highlighter-rouge">BinaryData</code> abstraction to represent binary data and supports serialization through <code class="language-plaintext highlighter-rouge">ObjectSerializer</code>.</li>
+</ul>
+
+<h3 id="azure-core-experimental-100-beta7-changelog">Azure Core Experimental 1.0.0-beta.7 <a href="https://github.com/Azure/azure-sdk-for-java/blob/main/sdk/core/azure-core-experimental/CHANGELOG.md#100-beta7-2020-10-08">Changelog</a></h3>
+
+<h4 id="new-features-5">New Features</h4>
+<ul>
+  <li>Added APIs to <code class="language-plaintext highlighter-rouge">JsonPatchDocument</code> which accept pre-serialized JSON.</li>
+</ul>
+
+<h3 id="azure-core-experimental-100-beta5-changelog">Azure Core Experimental 1.0.0-beta.5 <a href="https://github.com/Azure/azure-sdk-for-java/blob/main/sdk/core/azure-core-experimental/CHANGELOG.md#100-beta5-2020-10-01">Changelog</a></h3>
+
+<h4 id="new-features-6">New Features</h4>
+<ul>
+  <li>Added <code class="language-plaintext highlighter-rouge">JsonPatchDocument</code> to support JSON Patch functionality.</li>
+</ul>
+
+<h3 id="azure-data-tables-1200-beta2-changelog">Azure Data Tables 12.0.0-beta.2 <a href="https://github.com/Azure/azure-sdk-for-java/blob/main/sdk/tables/azure-data-tables/CHANGELOG.md#1200-beta2-2020-10-06">Changelog</a></h3>
+
+<h4 id="new-features-7">New Features</h4>
+
+<ul>
+  <li>Developers can now subclass <code class="language-plaintext highlighter-rouge">TableEntity</code> and decorate the subclass with properties, rather than adding properties
+manually by calling <code class="language-plaintext highlighter-rouge">addProperty()</code>.</li>
+  <li>The <code class="language-plaintext highlighter-rouge">getEntity</code> methods have gained the <code class="language-plaintext highlighter-rouge">select</code> query option to allow for more efficient existence checks for a table
+entity.</li>
+</ul>
+
+<h4 id="breaking-changes-2">Breaking Changes</h4>
+
+<ul>
+  <li>The non-functional <code class="language-plaintext highlighter-rouge">TableClient.listEntities(options, timeout)</code> method was removed.</li>
+</ul>
+
+<h4 id="bug-fixes-1">Bug Fixes</h4>
+
+<ul>
+  <li>TableClientBuilder’s constructor is now a public API.</li>
+  <li>The <code class="language-plaintext highlighter-rouge">TableClient.updateEntity(entity)</code> method was mistakenly performing an upsert operation rather than an update.</li>
+  <li>The <code class="language-plaintext highlighter-rouge">TableAsyncClient.updateEntity(entity)</code> method always returned an empty result.</li>
+</ul>
+
+<h3 id="azure-digitaltwins-core-100-beta3-changelog">Azure Digitaltwins Core 1.0.0-beta.3 <a href="https://github.com/Azure/azure-sdk-for-java/blob/main/sdk/digitaltwins/azure-digitaltwins-core/CHANGELOG.md#100-beta3-2020-10-01">Changelog</a></h3>
+
+<h4 id="bug-fixes-2">Bug Fixes</h4>
+<ul>
+  <li>Fixed issue with pagination APIs that support max-item-count where the item count was not respected from the second page forward.</li>
+</ul>
+
+<h3 id="azure-identity-120-beta2-changelog">Azure Identity 1.2.0-beta.2 <a href="https://github.com/Azure/azure-sdk-for-java/blob/main/sdk/identity/azure-identity/CHANGELOG.md#120-beta2-2020-10-06">Changelog</a></h3>
+
+<h4 id="new-features-8">New Features</h4>
+<ul>
+  <li>Added the methods <code class="language-plaintext highlighter-rouge">pfxCertificate(InputStream certificate, String clientCertificatePassword)</code> and <code class="language-plaintext highlighter-rouge">pemCertificate(InputStream certificate)</code> in <code class="language-plaintext highlighter-rouge">ClientCertificateCredentialBuilder</code>.</li>
+  <li>Added <code class="language-plaintext highlighter-rouge">includeX5c(boolean)</code> method in <code class="language-plaintext highlighter-rouge">ClientCertificateCredentialBuilder</code> to enable subject name / issuer based authentication.</li>
+  <li>Added a default <code class="language-plaintext highlighter-rouge">challengeConsumer</code> in <code class="language-plaintext highlighter-rouge">DeviceCodeCredentialBuilder</code> which prints the device code information to console. The <code class="language-plaintext highlighter-rouge">challengeConsumer</code> configuration is no longer required in <code class="language-plaintext highlighter-rouge">DeviceCodeCredentialBuilder</code>.</li>
+</ul>
+
+<h3 id="azure-eventhubs-530-changelog">Azure EventHubs 5.3.0 <a href="https://github.com/Azure/azure-sdk-for-java/blob/main/sdk/eventhubs/azure-messaging-eventhubs/CHANGELOG.md#530-2020-10-12">Changelog</a></h3>
+<h4 id="new-features-9">New Features</h4>
+<ul>
+  <li>Add <code class="language-plaintext highlighter-rouge">clientOptions</code> to <code class="language-plaintext highlighter-rouge">EventHubClientBuilder</code> to support for setting user’s application id in the user-agent property
+of the amqp connection.</li>
+</ul>
+
+<h3 id="azure-search-documents-1120-beta2-changelog">Azure Search Documents 11.2.0-beta.2 <a href="https://github.com/Azure/azure-sdk-for-java/blob/main/sdk/search/azure-search-documents/CHANGELOG.md#1120-beta2-2020-10-06">Changelog</a></h3>
+
+<h4 id="new-features-10">New Features</h4>
+
+<ul>
+  <li>Added <code class="language-plaintext highlighter-rouge">SearchFilter</code> to help aid creation of OData filter expressions.</li>
+  <li>Added required parameter <code class="language-plaintext highlighter-rouge">documentKeyRetriever</code> to <code class="language-plaintext highlighter-rouge">SearchIndexingBufferedSender</code> to better correlate response documents to sent documents.</li>
+  <li>Added <code class="language-plaintext highlighter-rouge">ClientOptions</code> to all builders to support setting <code class="language-plaintext highlighter-rouge">applicationId</code> in <code class="language-plaintext highlighter-rouge">User-Agent</code> string and headers that need to be applied to each request.</li>
+  <li>Added support for <code class="language-plaintext highlighter-rouge">HttpPipelinePosition</code> in client builders to determine when an <code class="language-plaintext highlighter-rouge">HttpPipelinePolicy</code> will be invoked.</li>
+</ul>
+
+<h4 id="breaking-changes-3">Breaking Changes</h4>
+
+<ul>
+  <li>Made <code class="language-plaintext highlighter-rouge">SearchIdexingBufferedSender</code> generic typed.</li>
+  <li>Removed <code class="language-plaintext highlighter-rouge">IndexingHooks</code> in favor of individual callbacks.</li>
+  <li>Removed the ability to configure <code class="language-plaintext highlighter-rouge">batchSize</code> on buffered sender and changed the default to 500 instead of 1000.</li>
+  <li>Removed <code class="language-plaintext highlighter-rouge">SearchBatchClientBuilder</code> for options bag <code class="language-plaintext highlighter-rouge">SearchIndexingBufferedSenderOptions</code>.</li>
+  <li>Renamed <code class="language-plaintext highlighter-rouge">SearchBatchClient</code> and <code class="language-plaintext highlighter-rouge">SearchBatchAsyncClient</code> to <code class="language-plaintext highlighter-rouge">SearchIndexingBufferedSender</code> and <code class="language-plaintext highlighter-rouge">SearchIndexingBufferedAsyncSender</code>.</li>
+  <li>Renamed <code class="language-plaintext highlighter-rouge">getSearchBatchClient</code> to <code class="language-plaintext highlighter-rouge">getSearchIndexingBufferedSender</code> in <code class="language-plaintext highlighter-rouge">SearchClient</code>.</li>
+  <li>Renamed <code class="language-plaintext highlighter-rouge">onActionRemoved</code> to <code class="language-plaintext highlighter-rouge">onActionSent</code>.</li>
+</ul>
+
+<h3 id="azure-security-keyvault-administration-400-beta2-changelog">Azure Security Keyvault Administration 4.0.0-beta.2 <a href="https://github.com/Azure/azure-sdk-for-java/blob/main/sdk/keyvault/azure-security-keyvault-administration/CHANGELOG.md#400-beta2-2020-10-09">Changelog</a></h3>
+
+<h4 id="new-features-11">New Features</h4>
+<ul>
+  <li>Added the new public APIs <code class="language-plaintext highlighter-rouge">getBackupOperation</code> and <code class="language-plaintext highlighter-rouge">getRestoreOperation</code> for querying the status of long-running operations in <code class="language-plaintext highlighter-rouge">KeyVaultBackupClient</code> and <code class="language-plaintext highlighter-rouge">KeyVaultBackupAsyncClient</code>.</li>
+  <li>Added API overloads that allow for passing specific polling intervals for long-running operations:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">KeyVaultBackupAsyncClient</code>
+        <ul>
+          <li><code class="language-plaintext highlighter-rouge">beginBackup(String, String, Duration)</code></li>
+          <li><code class="language-plaintext highlighter-rouge">beginRestore(String, String, String, Duration)</code></li>
+          <li><code class="language-plaintext highlighter-rouge">beginSelectiveRestore(String, String, String, String, Duration)</code></li>
+        </ul>
+      </li>
+      <li><code class="language-plaintext highlighter-rouge">KeyVaultBackupClient</code>
+        <ul>
+          <li><code class="language-plaintext highlighter-rouge">beginBackup(String, String, Duration)</code></li>
+          <li><code class="language-plaintext highlighter-rouge">beginRestore(String, String, String, Duration)</code></li>
+          <li><code class="language-plaintext highlighter-rouge">beginSelectiveRestore(String, String, String, String, Duration)</code></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Added support for <code class="language-plaintext highlighter-rouge">com.azure.core.util.ClientOptions</code> in client builders.</li>
+</ul>
+
+<h3 id="azure-security-keyvault-certificates-420-beta2-changelog">Azure Security Keyvault Certificates 4.2.0-beta.2 <a href="https://github.com/Azure/azure-sdk-for-java/blob/main/sdk/keyvault/azure-security-keyvault-certificates/CHANGELOG.md#420-beta2-2020-10-09">Changelog</a></h3>
+
+<h4 id="new-features-12">New Features</h4>
+<ul>
+  <li>Added <code class="language-plaintext highlighter-rouge">KeyVaultCertificateIdentifier</code>.</li>
+  <li>Added API overloads that allow for passing specific polling intervals for long-running operations:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">CertificateAsyncClient</code>
+        <ul>
+          <li><code class="language-plaintext highlighter-rouge">beginCreateCertificate(String, CertificatePolicy, Boolean, Map&lt;String, String&gt;, Duration)</code></li>
+          <li><code class="language-plaintext highlighter-rouge">getCertificateOperation(String, Duration)</code></li>
+          <li><code class="language-plaintext highlighter-rouge">beginDeleteCertificate(String, Duration)</code></li>
+          <li><code class="language-plaintext highlighter-rouge">beginRecoverDeletedCertificate(String, Duration)</code></li>
+        </ul>
+      </li>
+      <li><code class="language-plaintext highlighter-rouge">CertificateClient</code>
+        <ul>
+          <li><code class="language-plaintext highlighter-rouge">beginCreateCertificate(String, CertificatePolicy, Boolean, Map&lt;String, String&gt;, Duration)</code></li>
+          <li><code class="language-plaintext highlighter-rouge">getCertificateOperation(String, Duration)</code></li>
+          <li><code class="language-plaintext highlighter-rouge">beginDeleteCertificate(String, Duration)</code></li>
+          <li><code class="language-plaintext highlighter-rouge">beginRecoverDeletedCertificate(String, Duration)</code></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Added support for <code class="language-plaintext highlighter-rouge">com.azure.core.util.ClientOptions</code> in client builders.</li>
+</ul>
+
+<h3 id="azure-security-keyvault-keys-430-beta2-changelog">Azure Security Keyvault Keys 4.3.0-beta.2 <a href="https://github.com/Azure/azure-sdk-for-java/blob/main/sdk/keyvault/azure-security-keyvault-keys/CHANGELOG.md#430-beta2-2020-10-09">Changelog</a></h3>
+
+<h4 id="new-features-13">New Features</h4>
+<ul>
+  <li>Added <code class="language-plaintext highlighter-rouge">KeyVaultKeyIdentifier</code>.</li>
+  <li>Added API overloads that allow for passing specific polling intervals for long-running operations:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">KeyAsyncClient</code>
+        <ul>
+          <li><code class="language-plaintext highlighter-rouge">beginDeleteKey(String, Duration)</code></li>
+          <li><code class="language-plaintext highlighter-rouge">beginRecoverDeletedKey(String, Duration)</code></li>
+        </ul>
+      </li>
+      <li><code class="language-plaintext highlighter-rouge">KeyClient</code>
+        <ul>
+          <li><code class="language-plaintext highlighter-rouge">beginDeleteKey(String, Duration)</code></li>
+          <li><code class="language-plaintext highlighter-rouge">beginRecoverDeletedKey(String, Duration)</code></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Added support for <code class="language-plaintext highlighter-rouge">com.azure.core.util.ClientOptions</code> in client builders.</li>
+</ul>
+
+<h4 id="bug-fixes-3">Bug Fixes</h4>
+<ul>
+  <li>Fixed an issue that prevented the <code class="language-plaintext highlighter-rouge">tags</code> and <code class="language-plaintext highlighter-rouge">managed</code> members of <code class="language-plaintext highlighter-rouge">KeyProperties</code> from getting populated when retrieving a single key using <code class="language-plaintext highlighter-rouge">KeyClient</code>, <code class="language-plaintext highlighter-rouge">KeyAsyncClient</code>, <code class="language-plaintext highlighter-rouge">CryptographyClient</code> and <code class="language-plaintext highlighter-rouge">CryptographyAsyncClient</code>.</li>
+</ul>
+
+<h3 id="azure-security-keyvault-secrets-430-beta2-changelog">Azure Security Keyvault Secrets 4.3.0-beta.2 <a href="https://github.com/Azure/azure-sdk-for-java/blob/main/sdk/keyvault/azure-security-keyvault-secrets/CHANGELOG.md#430-beta2-2020-10-09">Changelog</a></h3>
+
+<h4 id="new-features-14">New Features</h4>
+<ul>
+  <li>Added <code class="language-plaintext highlighter-rouge">KeyVaultSecretIdentifier</code>.</li>
+  <li>Added API overloads that allow for passing specific polling intervals for long-running operations:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">SecretAsyncClient</code>
+        <ul>
+          <li><code class="language-plaintext highlighter-rouge">beginDeleteSecret(String, Duration)</code></li>
+          <li><code class="language-plaintext highlighter-rouge">beginRecoverDeletedSecret(String, Duration)</code></li>
+        </ul>
+      </li>
+      <li><code class="language-plaintext highlighter-rouge">SecretClient</code>
+        <ul>
+          <li><code class="language-plaintext highlighter-rouge">beginDeleteSecret(String, Duration)</code></li>
+          <li><code class="language-plaintext highlighter-rouge">beginRecoverDeletedSecret(String, Duration)</code></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Added support for <code class="language-plaintext highlighter-rouge">com.azure.core.util.ClientOptions</code> in client builders.</li>
+</ul>
+
+<h3 id="azure-storage-blob-1290-beta1-changelog">Azure Storage Blob 12.9.0-beta.1 <a href="https://github.com/Azure/azure-sdk-for-java/blob/main/sdk/storage/azure-storage-blob/CHANGELOG.md#1290-beta1-2020-10-01">Changelog</a></h3>
+<h4 id="new-features-15">New Features</h4>
+<ul>
+  <li>Added support for the 2020-02-10 service version.</li>
+  <li>Added support to specify Arrow Output Serialization when querying a blob.</li>
+  <li>Added support to undelete a container.</li>
+  <li>Added support to set BlobParallelUploadOptions.computeMd5 so the service can perform an md5 verification.</li>
+  <li>Added support to specify block size when using BlobInputStream.</li>
+</ul>
+
+<h4 id="bug-fixes-4">Bug Fixes</h4>
+<ul>
+  <li>Fixed a bug where users could not download more than 5000MB of data in one shot in the downloadToFile API.</li>
+  <li>Fixed a bug where the TokenCredential scope would be incorrect for custom URLs.</li>
+  <li>Fixed a bug where Default Azure Credential would not work with Azurite.</li>
+  <li>Fixed a bug where a custom application id in HttpLogOptions would not be added to the User Agent String.</li>
+  <li>Fixed a bug where BlockBlobOutputStream would not handle certain errors.</li>
+</ul>
+
+<h3 id="azure-storage-blob-1290-beta2-changelog">Azure Storage Blob 12.9.0-beta.2 <a href="https://github.com/Azure/azure-sdk-for-java/blob/main/sdk/storage/azure-storage-blob/CHANGELOG.md#1290-beta2-2020-10-08">Changelog</a></h3>
+<h4 id="new-features-16">New Features</h4>
+<ul>
+  <li>Added support to specify whether or not a pipeline policy should be added per call or per retry.</li>
+</ul>
+
+<h3 id="azure-storage-blob-cryptography-1290-beta1-changelog">Azure Storage Blob Cryptography 12.9.0-beta.1 <a href="https://github.com/Azure/azure-sdk-for-java/blob/main/sdk/storage/azure-storage-blob-cryptography/CHANGELOG.md#1290-beta1-2020-10-01">Changelog</a></h3>
+<h4 id="new-features-17">New Features</h4>
+<ul>
+  <li>Added support to set BlobParallelUploadOptions.computeMd5 so the service can perform an md5 verification.</li>
+  <li>Added support to specify ‘requiresEncryption’ on the EncryptedBlobClientBuilder to specify whether or not to enforce that the blob is encrypted on download.</li>
+</ul>
+
+<h4 id="bug-fixes-5">Bug Fixes</h4>
+<ul>
+  <li>Fixed a bug where the TokenCredential scope would be incorrect for custom URLs.</li>
+  <li>Fixed a bug where a custom application id in HttpLogOptions would not be added to the User Agent String.</li>
+</ul>
+
+<h3 id="azure-storage-file-datalake-1230-beta1-changelog">Azure Storage File Datalake 12.3.0-beta.1 <a href="https://github.com/Azure/azure-sdk-for-java/blob/main/sdk/storage/azure-storage-file-datalake/CHANGELOG.md#1230-beta1-2020-10-01">Changelog</a></h3>
+<h4 id="new-features-18">New Features</h4>
+<ul>
+  <li>Added support for the 2020-02-10 service version.</li>
+  <li>Added support for setting, modifying, and removing ACLs recursively.</li>
+  <li>Added support to schedule file expiration.</li>
+  <li>Added support to specify Arrow Output Serialization when querying a file.</li>
+  <li>Added support to generate directory SAS and added support to specify additional user ids and correlation ids for user delegation SAS.</li>
+  <li>Added support to upload data to a file from an InputStream.</li>
+  <li>Added support to specify permissions and umask when uploading a file.</li>
+</ul>
+
+<h4 id="bug-fixes-6">Bug Fixes</h4>
+
+<ul>
+  <li>Fixed a bug where users could not download more than 5000MB of data in one shot in the readToFile API.</li>
+  <li>Fixed a bug where the TokenCredential scope would be incorrect for custom URLs.</li>
+  <li>Fixed a bug where an empty string would be sent with the x-ms-properties header when metadata was null or empty.</li>
+  <li>Fixed a bug where a custom application id in HttpLogOptions would not be added to the User Agent String.</li>
+</ul>
+
+<h3 id="azure-storage-file-share-1270-beta1-changelog">Azure Storage File Share 12.7.0-beta.1 <a href="https://github.com/Azure/azure-sdk-for-java/blob/main/sdk/storage/azure-storage-file-share/CHANGELOG.md#1270-beta1-2020-10-01">Changelog</a></h3>
+<h4 id="new-features-19">New Features</h4>
+<ul>
+  <li>Added support for the 2020-02-10 service version.</li>
+  <li>Added support to getFileRanges on a previous snapshot by adding the getFileRangesDiff API.</li>
+  <li>Added support to set whether or not smb multichannel is enabled.</li>
+  <li>Added support to lease shares and snapshot shares.</li>
+  <li>Added support to specify a lease id for share operations.</li>
+</ul>
+
+<h4 id="bug-fixes-7">Bug Fixes</h4>
+<ul>
+  <li>Fixed a bug where getProperties on a file client would throw a HttpResponseException instead of ShareStorageException.</li>
+  <li>Fixed a bug where snapshot would be appended to a share snapshot instead of sharesnapshot.</li>
+  <li>Fixed a bug that would cause auth failures when building a client by passing an endpoint which had a sas token with protocol set to https,http</li>
+  <li>Fixed a bug where a custom application id in HttpLogOptions would not be added to the User Agent String.</li>
+</ul>
+
+<h3 id="azure-storage-queue-1270-beta1-changelog">Azure Storage Queue 12.7.0-beta.1 <a href="https://github.com/Azure/azure-sdk-for-java/blob/main/sdk/storage/azure-storage-queue/CHANGELOG.md#1270-beta1-2020-10-01">Changelog</a></h3>
+<h4 id="new-features-20">New Features</h4>
+<ul>
+  <li>Added support for the 2020-02-10 service version.</li>
+</ul>
+
+<h4 id="bug-fixes-8">Bug Fixes</h4>
+<ul>
+  <li>Fixed a bug where the TokenCredential scope would be incorrect for custom URLs.</li>
+  <li>Fixed a bug where Default Azure Credential would not work with Azurite.</li>
+  <li>Fixed a bug that would cause message text to be erased when only updating the visibility timeout</li>
+  <li>Fixed a bug that would cause auth failures when building a client by passing an endpoint which had a sas token with protocol set to https,http</li>
+  <li>Fixed a bug where a custom application id in HttpLogOptions would not be added to the User Agent String.</li>
+</ul>
+
+<h3 id="opentelemetry-exporters-azuremonitor-100-beta1-changelog">Opentelemetry Exporters Azuremonitor 1.0.0-beta.1 <a href="https://github.com/Azure/azure-sdk-for-java/blob/opentelemetry-exporters-azuremonitor_1.0.0-beta.1/sdk/monitor/opentelemetry-exporters-azuremonitor/CHANGELOG.md">Changelog</a></h3>
+
+<h4 id="new-features-21">New Features</h4>
+<ul>
+  <li>
+    <p>Initial release. Please see the README and wiki for information on the new design.</p>
+  </li>
+  <li>
+    <p>Major changes only!</p>
+  </li>
+</ul>
+
+<h3 id="azure-storage-blob-changelog">Azure Storage Blob <a href="https://github.com/Azure/azure-sdk-for-java/blob/main/sdk/storage/azure-storage-blob/CHANGELOG.md">Changelog</a></h3>
+
+<h4 id="new-features-22">New Features</h4>
+<ul>
+  <li>Added support to undelete a container.</li>
+  <li>Added support to specify Arrow Output Serialization when querying a blob.</li>
+  <li>Added support to set <code class="language-plaintext highlighter-rouge">BlobParallelUploadOptions.computeMd5</code> so the service can perform an md5 verification.</li>
+  <li>Added support to specify block size when using <code class="language-plaintext highlighter-rouge">BlobInputStream</code></li>
+</ul>
+
+<h4 id="key-bug-fixes">Key Bug Fixes</h4>
+<ul>
+  <li>Fixed bug where users could not download more than 5000MB of data in one shot in the <code class="language-plaintext highlighter-rouge">downloadToFile</code> API.</li>
+  <li>Fixed but where the TokenCredential scope would be incorrect for custom URLs.</li>
+  <li>Fixed a bug where Default Azure Credential would not work with Azurite.</li>
+  <li>Fixed a bug where a custom application ID in <code class="language-plaintext highlighter-rouge">HttpLogOptions</code> would not be added to the User Agent String.</li>
+  <li>Fixed a bug where <code class="language-plaintext highlighter-rouge">BlockBlobOutputStream</code> would not handle certain errors.</li>
+</ul>
+
+<h3 id="azure-storage-file-datalake-changelog">Azure Storage File DataLake <a href="https://github.com/Azure/azure-sdk-for-java/blob/main/sdk/storage/azure-storage-file-datalake/CHANGELOG.md">Changelog</a></h3>
+
+<h4 id="new-features-23">New Features</h4>
+<ul>
+  <li>Added support for setting, modifying, and removing ACLs recursively.</li>
+  <li>Added support to schedule file expiration.</li>
+  <li>Added support to specify Arrow Output Serialization when querying a file.</li>
+  <li>Added support to generate directory SAS and added support to specify additional user ids and correlation ids for user delegation SAS.</li>
+  <li>Added support to upload data to a file from an InputStream.</li>
+  <li>Added support to specify permissions and umask when uploading a file.</li>
+</ul>
+
+<h4 id="key-bug-fixes-1">Key Bug Fixes</h4>
+<ul>
+  <li>Fixed a bug where users could not download more than 5000MB of data in one shot in the <code class="language-plaintext highlighter-rouge">readToFile</code> API.</li>
+  <li>Fixed a bug where the TokenCredential scope would be incorrect for custom URLs.</li>
+  <li>Fixed a bug where an empty string would be sent with the x-ms-properties header when metadata was null or empty.</li>
+  <li>Fixed a bug where a custom application id in HttpLogOptions would not be added to the User Agent String.</li>
+</ul>
+
+<h3 id="azure-storage-file-share-changelog">Azure Storage File Share <a href="https://github.com/Azure/azure-sdk-for-java/blob/main/sdk/storage/azure-storage-file-share/CHANGELOG.md">Changelog</a></h3>
+
+<h4 id="new-features-24">New Features</h4>
+<ul>
+  <li>Added support for the 2020-02-10 service version.</li>
+  <li>Added support to getFileRanges on a previous snapshot by adding the <code class="language-plaintext highlighter-rouge">getFileRangesDiff</code> API.</li>
+  <li>Added support to set whether or not SMB multichannel is enabled.</li>
+  <li>Added support to lease shares and snapshot shares.</li>
+  <li>Added support to specify a lease id for share operations.</li>
+</ul>
+
+<h4 id="key-bug-fixes-2">Key Bug Fixes</h4>
+<ul>
+  <li>Fixed a bug where getProperties on a file client would throw a HttpResponseException instead of ShareStorageException.</li>
+  <li>Fixed a bug where snapshot would be appended to a share snapshot instead of sharesnapshot.</li>
+  <li>Fixed a bug that would cause authentication failures when building a client by passing an endpoint which had a SAS token with protocol set to https,http</li>
+  <li>Fixed a bug where a custom application ID in HttpLogOptions would not be added to the User Agent String.</li>
+</ul>
+
+<h3 id="azure-spring-boot-changelog">Azure Spring Boot (<a href="https://github.com/Azure/azure-sdk-for-java/blob/feature/spring-jms-servicebus/sdk/spring/azure-spring-boot/CHANGELOG.md#236-beta1-2020-10-14">Changelog</a>)</h3>
+
+<h4 id="new-features-25">New Features</h4>
+<ul>
+  <li>upgrade jms underlying library with azure-servicebus-jms.</li>
+</ul>
+
+<h3 id="management-libraries">Management Libraries</h3>
+
+<p>We are excited to announce the GA releases of management libraries that follow the <a href="https://azure.github.io/azure-sdk/java/guidelines/">Azure SDK Design Guidelines for Java</a>. In addition, more management libraries are now in Public Preview to provide better Azure service coverage. These new libraries provide a higher-level, object-oriented API for managing Azure resources, that is optimized for ease of use, succinctness and consistency. You can find the list of new packages <a href="https://azure.github.io/azure-sdk/releases/latest/java.html">on this page</a>. Detailed documentation and code samples for these new libraries can be <a href="https://aka.ms/azsdk/java/mgmt">found here</a></p>
+
+<p>These new packages share the same groupId <code class="language-plaintext highlighter-rouge">com.azures.resourcemanager</code> and artifactId share the same prefix of <code class="language-plaintext highlighter-rouge">azure-resourcemanager</code></p>
+
+<p>More details of recent management library release annoucements as well as future roadmap can be found at <a href="https://aka.ms/azsdk/blog/octmgmtga">this blog post</a></p>
+
+<h2 id="need-help">Need help</h2>
+
+<ul>
+  <li>For reference documentation visit the <a href="https://azure.github.io/azure-sdk-for-java/">Azure SDK for Java documentation</a>.</li>
+  <li>For tutorials, samples, quick starts and other documentation, visit <a href="https://docs.microsoft.com/java/azure/">Azure for Java Developers</a>.</li>
+  <li>For build reports on code quality, test coverage, etc, visit <a href="https://azuresdkartifacts.blob.core.windows.net/azure-sdk-for-java/index.html">Azure Java SDK</a>.</li>
+  <li>File an issue via <a href="https://github.com/Azure/azure-sdk-for-java/issues/new/choose">Github Issues</a>.</li>
+  <li>Check <a href="https://stackoverflow.com/questions/tagged/azure-java-sdk">previous questions</a> or ask new ones on StackOverflow using <code class="language-plaintext highlighter-rouge">azure-java-sdk</code> tag.</li>
+</ul>
+
+<h2 id="latest-releases">Latest Releases</h2>
+
+<p>View all the latest versions of Java packages <a href="/azure-sdk/releases/latest/java.html">here</a>.</p>
+
+
+        
+            <div class="tags">
+                
+            </div>
+        
+            
+
+        </div>
+    </div>
+</div>
+                </div>
+                <!-- /.row -->
+
+            </div>
+            <!-- /.container -->
+        </div>
+        <!-- /#main -->
+    </div>
+    
+    <!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-62780441-46"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-62780441-46');
+</script>
+
+<!-- OLD SCRIPT
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-62780441-46','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+-->
+
+    
+    
+    <!-- the app_insights gets auto inserted from the config file -->
+<!-- For other configuration elements, see https://docs.microsoft.com/azure/azure-monitor/app/javascript#snippet-based-setup -->
+
+<script type="text/javascript">
+var sdkInstance="appInsightsSDK";window[sdkInstance]="appInsights";var aiName=window[sdkInstance],aisdk=window[aiName]||function(n){var o={config:n,initialize:!0},t=document,e=window,i="script";setTimeout(function(){var e=t.createElement(i);e.src=n.url||"https://az416426.vo.msecnd.net/scripts/b/ai.2.min.js",t.getElementsByTagName(i)[0].parentNode.appendChild(e)});try{o.cookie=t.cookie}catch(e){}function a(n){o[n]=function(){var e=arguments;o.queue.push(function(){o[n].apply(o,e)})}}o.queue=[],o.version=2;for(var s=["Event","PageView","Exception","Trace","DependencyData","Metric","PageViewPerformance"];s.length;)a("track"+s.pop());var r="Track",c=r+"Page";a("start"+c),a("stop"+c);var u=r+"Event";if(a("start"+u),a("stop"+u),a("addTelemetryInitializer"),a("setAuthenticatedUserContext"),a("clearAuthenticatedUserContext"),a("flush"),o.SeverityLevel={Verbose:0,Information:1,Warning:2,Error:3,Critical:4},!(!0===n.disableExceptionTracking||n.extensionConfig&&n.extensionConfig.ApplicationInsightsAnalytics&&!0===n.extensionConfig.ApplicationInsightsAnalytics.disableExceptionTracking)){a("_"+(s="onerror"));var p=e[s];e[s]=function(e,n,t,i,a){var r=p&&p(e,n,t,i,a);return!0!==r&&o["_"+s]({message:e,url:n,lineNumber:t,columnNumber:i,error:a}),r},n.autoExceptionInstrumented=!0}return o}(
+{
+    instrumentationKey:"5e03f19a-f5b4-4620-97d5-35707cec7fcb",
+    autoTrackPageVisitTime:true,
+    isCookieUseDisabled:true
+}
+);(window[aiName]=aisdk).queue&&0===aisdk.queue.length&&aisdk.trackPageView({});
+</script>
+
+    
+</body>
+<hr class="shaded"/>
+<footer>
+    <div class="container-fluid">
+        <div class="row footer">
+            <div class="col-lg-6 text-left pb-1">
+           &copy;2024 Microsoft Azure. All rights reserved. 
+ Site last generated: May 30, 2024
+            </div>
+            <div class="col-lg-6 text-right">
+                <p><img src="/azure-sdk/images/company_logo.png" width="100px" alt="Microsoft logo"/></p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+</html>

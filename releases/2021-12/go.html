@@ -1,0 +1,1452 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="keywords" content="go,  ">
+<title>Azure SDK for Go (December 2021) | Azure SDKs</title>
+<link rel="stylesheet" href="/azure-sdk/css/syntax.css" />
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/azure-sdk/css/modern-business.css" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="/azure-sdk/css/boxshadowproperties.css" />
+<link rel="stylesheet" href="/azure-sdk/css/theme-azure.css" />
+<link rel="stylesheet" href="/azure-sdk/css/customstyles.css" />
+<link rel="stylesheet" href="/azure-sdk/css/normalize.css">
+<link rel="stylesheet" href="/azure-sdk/css/tipuesearch.css">
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="/azure-sdk/js/jquery.navgoco.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.2.0/anchor.min.js"></script>
+<script src="/azure-sdk/js/toc.js"></script>
+<script src="/azure-sdk/js/customscripts.js"></script>
+
+<link rel="shortcut icon" href="/azure-sdk/images/azure-sdk-glyph.svg"/>
+<link rel="alternate" type="application/rss+xml" title="Azure SDKs" href="/azure-sdk/feed.xml" />
+
+    <script>
+        $(document).ready(function () {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function (e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function (e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+
+        });
+
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function () {
+            $("#tg-sb-link").click(function () {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+    <!-- Due to the page header height, all anchors uses top padding to offset the top possion and appear below the main header.
+        If one requirement icon is just below another, the padding of the icon overlaps the one on top of it and block the clicking surface.
+        The script below finds all requirements icons and adds z-index decrementally to place any previous icon on top of the next ones.
+        The script runs after the page is completelly load (all content is downloaded).
+      -->
+    <script>
+        $(window).bind("load", function () {
+            let requeriments = $('.requirement');
+            requeriments.each(function (index, element) {
+                $(element).css("z-index", requeriments.length - index);
+            });
+        });
+    </script>
+
+</head>
+
+<body>
+    <!-- Navigation -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/azure-sdk/releases/latest/index.html"/>
+                <span class="projectTitle"><img style="margin-top: -8px;" class="d-inline-block align-top" src="/azure-sdk/images/azure-sdk-glyph.svg" width="35" height="35" alt=""/> Azure SDKs</span>
+            </a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <!-- toggle sidebar button -->
+                <!-- <li><a id="tg-sb-link" href="#"><i id="tg-sb-icon" class="fa fa-toggle-on"></i> Nav</a></li> -->
+                <!-- entries without drop-downs appear here -->
+
+
+
+
+
+                
+                
+                
+                <li><a href="https://aka.ms/azsdk/blog" rel="noopener">Blog</a></li>
+                
+                
+                
+                <li><a href="/azure-sdk/releases/latest/">Releases</a></li>
+                
+                
+                
+                <!-- entries with drop-downs appear here -->
+                <!-- conditional logic to control which topnav appears for the audience defined in the configuration file.-->
+                
+                
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Guidelines<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        
+                        
+                        <li><a href="/azure-sdk/general_introduction.html" rel="noopener">General Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/dotnet_introduction.html" rel="noopener">.NET Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/java_introduction.html" rel="noopener">Java Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/python_design.html" rel="noopener">Python Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/typescript_introduction.html" rel="noopener">TypeScript Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/android_design.html" rel="noopener">Android Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/ios_design.html" rel="noopener">iOS Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/clang_design.html" rel="noopener">C Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/cpp_introduction.html" rel="noopener">C++ Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/golang_introduction.html" rel="noopener">Go Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/rust_introduction.html" rel="noopener">Rust Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/policies_adoption.html" rel="noopener">GitHub Repos</a></li>
+                        
+                        <li><a href="/azure-sdk/policies_reviewprocess.html" rel="noopener">Policies</a></li>
+                        
+                        
+                    </ul>
+                </li>
+                
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">API References<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        
+                        
+                        
+                        <li><a href="https://aka.ms/net-docs" rel="noopener">.NET</a></li>
+                        
+                        
+                        
+                        <li><a href="https://aka.ms/java-docs" rel="noopener">Java</a></li>
+                        
+                        
+                        
+                        <li><a href="https://aka.ms/python-docs" rel="noopener">Python</a></li>
+                        
+                        
+                        
+                        <li><a href="https://aka.ms/js-docs" rel="noopener">TypeScript</a></li>
+                        
+                        
+                        
+                    </ul>
+                </li>
+                
+                
+                
+                <li>
+                    
+                        <a style="font-size: 1.666em !important" class="fa fa-github fa-2x" title="GitHub Link" href="https://github.com/Azure/azure-sdk-for-go"></a>
+                    
+                </li>
+                <li>
+                    <a style="font-size: 1.666em !important" class="fa fa-twitter fa-2x" title="Twitter Link" href="https://twitter.com/AzureSDK"></a>
+                </li>
+            </ul>
+        </div>
+        </div>
+        <!-- /.container -->
+</nav>
+
+    <!-- Page Content -->
+    <div class="container-fluid" style="margin-top: 60px; min-height: calc(100vh - 50px);">
+        <div id="main">
+            <!-- Content Row -->
+            <div class="row">
+                
+                
+                <!-- Sidebar Column -->
+                <div class="col-md-2 col-xs-12" id="tg-sb-sidebar">
+                    
+
+<div id="mysidebar" class="nav">
+
+  <script src="/azure-sdk/js/tipuesearch_content.js"></script>
+  <script src="/azure-sdk/js/tipuesearch_set.js"></script>
+  <script src="/azure-sdk/js/tipuesearch.min.js"></script>
+
+<p>
+<form action="/azure-sdk/search.html" >
+    <div class=" tipue_search_left"><img src="/azure-sdk/images/search.png" alt="Search Icon" class="tipue_search_icon"></div>
+    <input type="text" class="form-control tipue_search_right" name="q" id="tipue_search_input" pattern=".{3,}" title="At least 3 characters" required placeholder="Search website">
+</form>
+</p>
+<div style="clear: both;"></div>
+  <ol>
+    <li class="sidebarTitle"> </li>
+    
+      
+        
+        <li>
+        
+          
+          <a title="Latest" href="/azure-sdk/releases/latest/index.html">Latest</a>
+          
+          <ul>
+            
+              
+                <li><a title=".NET" href="/azure-sdk/releases/latest/dotnet.html">.NET</a></li>
+              
+              
+            
+              
+                <li><a title="Java" href="/azure-sdk/releases/latest/java.html">Java</a></li>
+              
+              
+            
+              
+                <li><a title="JavaScript/TypeScript" href="/azure-sdk/releases/latest/js.html">JavaScript/TypeScript</a></li>
+              
+              
+            
+              
+                <li><a title="Python" href="/azure-sdk/releases/latest/python.html">Python</a></li>
+              
+              
+            
+              
+                <li><a title="Go" href="/azure-sdk/releases/latest/go.html">Go</a></li>
+              
+              
+            
+              
+                <li><a title="C++" href="/azure-sdk/releases/latest/cpp.html">C++</a></li>
+              
+              
+            
+              
+                <li><a title="Embedded C" href="/azure-sdk/releases/latest/c.html">Embedded C</a></li>
+              
+              
+            
+              
+                <li><a title="Android" href="/azure-sdk/releases/latest/android.html">Android</a></li>
+              
+              
+            
+              
+                <li><a title="iOS" href="/azure-sdk/releases/latest/ios.html">iOS</a></li>
+              
+              
+            
+              
+                <li><a title="Specs" href="/azure-sdk/releases/latest/specs.html">Specs</a></li>
+              
+              
+            
+          </ul>
+        </li>
+      
+        
+        <li>
+        
+          
+          <a title="2024 Releases" href="#">2024 Releases</a>
+          
+          <ul>
+            
+              
+                <li><a title="May" href="/azure-sdk/releases/2024-05/index.html">May</a></li>
+              
+              
+            
+              
+                <li><a title="April" href="/azure-sdk/releases/2024-04/index.html">April</a></li>
+              
+              
+            
+              
+                <li><a title="March" href="/azure-sdk/releases/2024-03/index.html">March</a></li>
+              
+              
+            
+              
+                <li><a title="February" href="/azure-sdk/releases/2024-02/index.html">February</a></li>
+              
+              
+            
+              
+                <li><a title="January" href="/azure-sdk/releases/2024-01/index.html">January</a></li>
+              
+              
+            
+          </ul>
+        </li>
+      
+        
+        <li>
+        
+          
+          <a title="2023 Releases" href="#">2023 Releases</a>
+          
+          <ul>
+            
+              
+                <li><a title="December" href="/azure-sdk/releases/2023-12/index.html">December</a></li>
+              
+              
+            
+              
+                <li><a title="November" href="/azure-sdk/releases/2023-11/index.html">November</a></li>
+              
+              
+            
+              
+                <li><a title="October" href="/azure-sdk/releases/2023-10/index.html">October</a></li>
+              
+              
+            
+              
+                <li><a title="September" href="/azure-sdk/releases/2023-09/index.html">September</a></li>
+              
+              
+            
+              
+                <li><a title="August" href="/azure-sdk/releases/2023-08/index.html">August</a></li>
+              
+              
+            
+              
+                <li><a title="July" href="/azure-sdk/releases/2023-07/index.html">July</a></li>
+              
+              
+            
+              
+                <li><a title="June" href="/azure-sdk/releases/2023-06/index.html">June</a></li>
+              
+              
+            
+              
+                <li><a title="May" href="/azure-sdk/releases/2023-05/index.html">May</a></li>
+              
+              
+            
+              
+                <li><a title="April" href="/azure-sdk/releases/2023-04/index.html">April</a></li>
+              
+              
+            
+              
+                <li><a title="March" href="/azure-sdk/releases/2023-03/index.html">March</a></li>
+              
+              
+            
+              
+                <li><a title="February" href="/azure-sdk/releases/2023-02/index.html">February</a></li>
+              
+              
+            
+              
+                <li><a title="January" href="/azure-sdk/releases/2023-01/index.html">January</a></li>
+              
+              
+            
+          </ul>
+        </li>
+      
+        
+        <li>
+        
+          
+          <a title="2022 Releases" href="#">2022 Releases</a>
+          
+          <ul>
+            
+              
+                <li><a title="December" href="/azure-sdk/releases/2022-12/index.html">December</a></li>
+              
+              
+            
+              
+                <li><a title="November" href="/azure-sdk/releases/2022-11/index.html">November</a></li>
+              
+              
+            
+              
+                <li><a title="October" href="/azure-sdk/releases/2022-10/index.html">October</a></li>
+              
+              
+            
+              
+                <li><a title="September" href="/azure-sdk/releases/2022-09/index.html">September</a></li>
+              
+              
+            
+              
+                <li><a title="August" href="/azure-sdk/releases/2022-08/index.html">August</a></li>
+              
+              
+            
+              
+                <li><a title="July" href="/azure-sdk/releases/2022-07/index.html">July</a></li>
+              
+              
+            
+              
+                <li><a title="June" href="/azure-sdk/releases/2022-06/index.html">June</a></li>
+              
+              
+            
+              
+                <li><a title="May" href="/azure-sdk/releases/2022-05/index.html">May</a></li>
+              
+              
+            
+              
+                <li><a title="April" href="/azure-sdk/releases/2022-04/index.html">April</a></li>
+              
+              
+            
+              
+                <li><a title="March" href="/azure-sdk/releases/2022-03/index.html">March</a></li>
+              
+              
+            
+              
+                <li><a title="February" href="/azure-sdk/releases/2022-02/index.html">February</a></li>
+              
+              
+            
+              
+                <li><a title="January" href="/azure-sdk/releases/2022-01/index.html">January</a></li>
+              
+              
+            
+          </ul>
+        </li>
+      
+        
+        <li>
+        
+          
+          <a title="2021 Releases" href="#">2021 Releases</a>
+          
+          <ul>
+            
+              
+                <li><a title="December" href="/azure-sdk/releases/2021-12/index.html">December</a></li>
+              
+              
+            
+              
+                <li><a title="November" href="/azure-sdk/releases/2021-11/index.html">November</a></li>
+              
+              
+            
+              
+                <li><a title="October" href="/azure-sdk/releases/2021-10/index.html">October</a></li>
+              
+              
+            
+              
+                <li><a title="September" href="/azure-sdk/releases/2021-09/index.html">September</a></li>
+              
+              
+            
+              
+                <li><a title="August" href="/azure-sdk/releases/2021-08/index.html">August</a></li>
+              
+              
+            
+              
+                <li><a title="July" href="/azure-sdk/releases/2021-07/index.html">July</a></li>
+              
+              
+            
+              
+                <li><a title="June" href="/azure-sdk/releases/2021-06/index.html">June</a></li>
+              
+              
+            
+              
+                <li><a title="May" href="/azure-sdk/releases/2021-05/index.html">May</a></li>
+              
+              
+            
+              
+                <li><a title="April" href="/azure-sdk/releases/2021-04/index.html">April</a></li>
+              
+              
+            
+              
+                <li><a title="March" href="/azure-sdk/releases/2021-03/index.html">March</a></li>
+              
+              
+            
+              
+                <li><a title="February" href="/azure-sdk/releases/2021-02/index.html">February</a></li>
+              
+              
+            
+              
+                <li><a title="January" href="/azure-sdk/releases/2021-01/index.html">January</a></li>
+              
+              
+            
+          </ul>
+        </li>
+      
+        
+        <li>
+        
+          
+          <a title="2020 Releases" href="#">2020 Releases</a>
+          
+          <ul>
+            
+              
+                <li><a title="December" href="/azure-sdk/releases/2020-12/index.html">December</a></li>
+              
+              
+            
+              
+                <li><a title="November" href="/azure-sdk/releases/2020-11/index.html">November</a></li>
+              
+              
+            
+              
+                <li><a title="October" href="/azure-sdk/releases/2020-10/index.html">October</a></li>
+              
+              
+            
+              
+                <li><a title="September" href="/azure-sdk/releases/2020-09/index.html">September</a></li>
+              
+              
+            
+              
+                <li><a title="August" href="/azure-sdk/releases/2020-08/index.html">August</a></li>
+              
+              
+            
+              
+                <li><a title="July" href="/azure-sdk/releases/2020-07/index.html">July</a></li>
+              
+              
+            
+              
+                <li><a title="June" href="/azure-sdk/releases/2020-06/index.html">June</a></li>
+              
+              
+            
+              
+                <li><a title="May" href="/azure-sdk/releases/2020-05/index.html">May</a></li>
+              
+              
+            
+              
+                <li><a title="April" href="/azure-sdk/releases/2020-04/index.html">April</a></li>
+              
+              
+            
+              
+                <li><a title="March" href="/azure-sdk/releases/2020-03/index.html">March</a></li>
+              
+              
+            
+              
+                <li><a title="February" href="/azure-sdk/releases/2020-02/index.html">February</a></li>
+              
+              
+            
+              
+                <li><a title="January" href="/azure-sdk/releases/2020-01/index.html">January</a></li>
+              
+              
+            
+          </ul>
+        </li>
+      
+        
+        <li>
+        
+          
+          <a title="2019 Releases" href="#">2019 Releases</a>
+          
+          <ul>
+            
+              
+                <li><a title="December" href="/azure-sdk/releases/2019-12/index.html">December</a></li>
+              
+              
+            
+              
+                <li><a title="November" href="/azure-sdk/releases/2019-11/index.html">November</a></li>
+              
+              
+            
+              
+                <li><a title="October" href="/azure-sdk/releases/2019-10-11/index.html">October</a></li>
+              
+              
+            
+              
+                <li><a title="September" href="/azure-sdk/releases/2019-09-17/index.html">September</a></li>
+              
+              
+            
+              
+                <li><a title="August" href="/azure-sdk/releases/2019-08-06/index.html">August</a></li>
+              
+              
+            
+              
+                <li><a title="July" href="/azure-sdk/releases/2019-07-10/index.html">July</a></li>
+              
+              
+            
+          </ul>
+        </li>
+      
+        
+        <li>
+        
+          
+          <a title="Deprecated" href="/azure-sdk/releases/deprecated/index.html">Deprecated</a>
+          
+          <ul>
+            
+              
+                <li><a title=".NET" href="/azure-sdk/releases/deprecated/dotnet.html">.NET</a></li>
+              
+              
+            
+              
+                <li><a title="Java" href="/azure-sdk/releases/deprecated/java.html">Java</a></li>
+              
+              
+            
+              
+                <li><a title="JavaScript/TypeScript" href="/azure-sdk/releases/deprecated/js.html">JavaScript/TypeScript</a></li>
+              
+              
+            
+              
+                <li><a title="Python" href="/azure-sdk/releases/deprecated/python.html">Python</a></li>
+              
+              
+            
+              
+                <li><a title="Go" href="/azure-sdk/releases/deprecated/go.html">Go</a></li>
+              
+              
+            
+          </ul>
+        </li>
+      
+    
+  </ol>
+</div>
+
+<script>$("li.active").parents('li').toggleClass("active");</script>
+
+                </div>
+                
+                
+
+                <!-- Content Column -->
+                <div class="col-md-10 col-xs-12" id="tg-sb-content">
+                    <div class="row">
+    
+    <div class="col-md-2 col-xs-12 content-right pull-right">
+        
+<!-- this handles the automatic toc. use ## for subheads to auto-generate the on-page minitoc. if you use html tags, you must supply an ID for the heading element in order for it to appear in the minitoc. -->
+<script>
+$( document ).ready(function() {
+  // Handler for .ready() called.
+
+$('#toc').toc({ minimumHeaders: 0, listType: 'ul', showSpeed: 0, headers: 'h2,h3,h4' });
+
+/* this offset helps account for the space taken up by the floating toolbar. */
+$('#toc').on('click', 'a', function() {
+  var target = $(this.getAttribute('href'))
+    , scroll_target = target.offset().top
+
+  $(window).scrollTop(scroll_target - 60);
+  return false
+})
+  
+});
+</script>
+
+<div id="toc"></div>
+
+    </div>
+    
+    <div class="col-md-10  col-xs-12 content-center pull-left">
+        <article class="post" itemscope itemtype="https://schema.org/BlogPosting">
+
+            <header class="post-header">
+                <h1 class="post-title" itemprop="name headline">Azure SDK for Go (December 2021)</h1>
+                <p class="post-meta">
+                    <time datetime="" itemprop="datePublished"></time> 
+        <!--
+                    
+                    /
+                    
+                    
+                    
+                    
+                    
+        -->
+                </p>
+        
+        
+            </header>
+        
+            <div class="post-content" itemprop="articleBody">
+        
+                
+        
+                
+<p>The Azure SDK team is pleased to announce our December 2021 client library releases.</p>
+
+<p>89 packages released this month.</p>
+
+<h4 id="beta-packages-88">Beta Packages (88)</h4>
+
+<ul>
+  <li>
+    <p>Resource Management - Aad</p>
+  </li>
+  <li>
+    <p>Resource Management - Advisor</p>
+  </li>
+  <li>
+    <p>Resource Management - Analysisservices</p>
+  </li>
+  <li>
+    <p>Resource Management - Appconfiguration</p>
+  </li>
+  <li>
+    <p>Resource Management - Armcontainerservice</p>
+  </li>
+  <li>
+    <p>Resource Management - Attestation</p>
+  </li>
+  <li>
+    <p>Resource Management - Automanage</p>
+  </li>
+  <li>
+    <p>Resource Management - Azurearcdata</p>
+  </li>
+  <li>
+    <p>Resource Management - Azuredata</p>
+  </li>
+  <li>
+    <p>Resource Management - Azurestackhci</p>
+  </li>
+  <li>
+    <p>Resource Management - Baremetalinfrastructure</p>
+  </li>
+  <li>
+    <p>Resource Management - Batch</p>
+  </li>
+  <li>
+    <p>Resource Management - Billing</p>
+  </li>
+  <li>
+    <p>Resource Management - Blockchain</p>
+  </li>
+  <li>
+    <p>Resource Management - Blueprint</p>
+  </li>
+  <li>
+    <p>Resource Management - Botservice</p>
+  </li>
+  <li>
+    <p>Resource Management - Changeanalysis</p>
+  </li>
+  <li>
+    <p>Resource Management - Communication</p>
+  </li>
+  <li>
+    <p>Resource Management - Confidentialledger</p>
+  </li>
+  <li>
+    <p>Resource Management - Confluent</p>
+  </li>
+  <li>
+    <p>Resource Management - Containerinstance</p>
+  </li>
+  <li>
+    <p>Resource Management - Costmanagement</p>
+  </li>
+  <li>
+    <p>Resource Management - Customerlockbox</p>
+  </li>
+  <li>
+    <p>Resource Management - Databox</p>
+  </li>
+  <li>
+    <p>Resource Management - Databoxedge</p>
+  </li>
+  <li>
+    <p>Resource Management - Datacatalog</p>
+  </li>
+  <li>
+    <p>Resource Management - Datafactory</p>
+  </li>
+  <li>
+    <p>Resource Management - Dataprotection</p>
+  </li>
+  <li>
+    <p>Resource Management - Datashare</p>
+  </li>
+  <li>
+    <p>Resource Management - Deploymentmanager</p>
+  </li>
+  <li>
+    <p>Resource Management - Deploymentscripts</p>
+  </li>
+  <li>
+    <p>Resource Management - Desktopvirtualization</p>
+  </li>
+  <li>
+    <p>Resource Management - Deviceprovisioningservices</p>
+  </li>
+  <li>
+    <p>Resource Management - Deviceupdate</p>
+  </li>
+  <li>
+    <p>Resource Management - Devops</p>
+  </li>
+  <li>
+    <p>Resource Management - Devtestlabs</p>
+  </li>
+  <li>
+    <p>Resource Management - Digitaltwins</p>
+  </li>
+  <li>
+    <p>Resource Management - Dns</p>
+  </li>
+  <li>
+    <p>Resource Management - Domainservices</p>
+  </li>
+  <li>
+    <p>Resource Management - Edgeorder</p>
+  </li>
+  <li>
+    <p>Resource Management - Edgeorderpartner</p>
+  </li>
+  <li>
+    <p>Resource Management - Elastic</p>
+  </li>
+  <li>
+    <p>Resource Management - Extendedlocation</p>
+  </li>
+  <li>
+    <p>Resource Management - Features</p>
+  </li>
+  <li>
+    <p>Resource Management - Frontdoor</p>
+  </li>
+  <li>
+    <p>Resource Management - Guestconfiguration</p>
+  </li>
+  <li>
+    <p>Resource Management - Hanaonazure</p>
+  </li>
+  <li>
+    <p>Resource Management - Hardware Security Modules</p>
+  </li>
+  <li>
+    <p>Resource Management - Hdinsight</p>
+  </li>
+  <li>
+    <p>Resource Management - Healthbot</p>
+  </li>
+  <li>
+    <p>Resource Management - Healthcareapis</p>
+  </li>
+  <li>
+    <p>Resource Management - Hybrid Network</p>
+  </li>
+  <li>
+    <p>Resource Management - Hybridconnectivity</p>
+  </li>
+  <li>
+    <p>Resource Management - Hybriddatamanager</p>
+  </li>
+  <li>
+    <p>Resource Management - Hybridkubernetes</p>
+  </li>
+  <li>
+    <p>Resource Management - Iotcentral</p>
+  </li>
+  <li>
+    <p>Resource Management - Iotsecurity</p>
+  </li>
+  <li>
+    <p>Resource Management - Kubernetesconfiguration</p>
+  </li>
+  <li>
+    <p>Resource Management - Kusto</p>
+  </li>
+  <li>
+    <p>Resource Management - Labservices</p>
+  </li>
+  <li>
+    <p>Resource Management - Links</p>
+  </li>
+  <li>
+    <p>Resource Management - Loadtestservice</p>
+  </li>
+  <li>
+    <p>Resource Management - Locks</p>
+  </li>
+  <li>
+    <p>Resource Management - M365securityandcompliance</p>
+  </li>
+  <li>
+    <p>Resource Management - Maintenance</p>
+  </li>
+  <li>
+    <p>Resource Management - Managedapplications</p>
+  </li>
+  <li>
+    <p>Resource Management - Managedservices</p>
+  </li>
+  <li>
+    <p>Resource Management - Managementpartner</p>
+  </li>
+  <li>
+    <p>Resource Management - Maps</p>
+  </li>
+  <li>
+    <p>Resource Management - Mariadb</p>
+  </li>
+  <li>
+    <p>Resource Management - Marketplace</p>
+  </li>
+  <li>
+    <p>Resource Management - Marketplaceordering</p>
+  </li>
+  <li>
+    <p>Resource Management - Orbital</p>
+  </li>
+  <li>
+    <p>Resource Management - Policy</p>
+  </li>
+  <li>
+    <p>Resource Management - Portal</p>
+  </li>
+  <li>
+    <p>Resource Management - Redhatopenshift</p>
+  </li>
+  <li>
+    <p>Resource Management - Redisenterprise</p>
+  </li>
+  <li>
+    <p>Resource Management - Reservations</p>
+  </li>
+  <li>
+    <p>Resource Management - Resourcegraph</p>
+  </li>
+  <li>
+    <p>Resource Management - Securityinsight</p>
+  </li>
+  <li>
+    <p>Resource Management - Serialconsole</p>
+  </li>
+  <li>
+    <p>Resource Management - Servicefabricmesh</p>
+  </li>
+  <li>
+    <p>Resource Management - Servicelinker</p>
+  </li>
+  <li>
+    <p>Resource Management - Sqlvirtualmachine</p>
+  </li>
+  <li>
+    <p>Resource Management - Subscriptions</p>
+  </li>
+  <li>
+    <p>Resource Management - Templatespecs</p>
+  </li>
+  <li>
+    <p>Service Bus</p>
+  </li>
+  <li>
+    <p>azservicebus</p>
+  </li>
+</ul>
+
+<h2 id="release-highlights">Release highlights</h2>
+
+<h3 id="resource-management---aad-010-changelog">Resource Management - Aad 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/aad/armaad/v0.1.0/sdk/resourcemanager/aad/armaad/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---advisor-010-changelog">Resource Management - Advisor 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/advisor/armadvisor/v0.1.0/sdk/resourcemanager/advisor/armadvisor/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---analysisservices-010-changelog">Resource Management - Analysisservices 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/analysisservices/armanalysisservices/v0.1.0/sdk/resourcemanager/analysisservices/armanalysisservices/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---appconfiguration-010-changelog">Resource Management - Appconfiguration 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/appconfiguration/armappconfiguration/v0.1.0/sdk/resourcemanager/appconfiguration/armappconfiguration/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---armcontainerservice-021-changelog">Resource Management - Armcontainerservice 0.2.1 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/containerservice/armcontainerservice/v0.2.1/sdk/resourcemanager/containerservice/armcontainerservice/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---attestation-010-changelog">Resource Management - Attestation 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/attestation/armattestation/v0.1.0/sdk/resourcemanager/attestation/armattestation/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---automanage-010-changelog">Resource Management - Automanage 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/automanage/armautomanage/v0.1.0/sdk/resourcemanager/automanage/armautomanage/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---azurearcdata-010-changelog">Resource Management - Azurearcdata 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/azurearcdata/armazurearcdata/v0.1.0/sdk/resourcemanager/azurearcdata/armazurearcdata/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---azuredata-010-changelog">Resource Management - Azuredata 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/azuredata/armazuredata/v0.1.0/sdk/resourcemanager/azuredata/armazuredata/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---azurestackhci-010-changelog">Resource Management - Azurestackhci 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/azurestackhci/armazurestackhci/v0.1.0/sdk/resourcemanager/azurestackhci/armazurestackhci/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---baremetalinfrastructure-010-changelog">Resource Management - Baremetalinfrastructure 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/baremetalinfrastructure/armbaremetalinfrastructure/v0.1.0/sdk/resourcemanager/baremetalinfrastructure/armbaremetalinfrastructure/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---batch-010-changelog">Resource Management - Batch 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/batch/armbatch/v0.1.0/sdk/resourcemanager/batch/armbatch/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---billing-010-changelog">Resource Management - Billing 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/billing/armbilling/v0.1.0/sdk/resourcemanager/billing/armbilling/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---blockchain-010-changelog">Resource Management - Blockchain 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/blockchain/armblockchain/v0.1.0/sdk/resourcemanager/blockchain/armblockchain/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---blueprint-010-changelog">Resource Management - Blueprint 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/blueprint/armblueprint/v0.1.0/sdk/resourcemanager/blueprint/armblueprint/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---botservice-010-changelog">Resource Management - Botservice 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/botservice/armbotservice/v0.1.0/sdk/resourcemanager/botservice/armbotservice/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---changeanalysis-010-changelog">Resource Management - Changeanalysis 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/changeanalysis/armchangeanalysis/v0.1.0/sdk/resourcemanager/changeanalysis/armchangeanalysis/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---communication-010-changelog">Resource Management - Communication 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/communication/armcommunication/v0.1.0/sdk/resourcemanager/communication/armcommunication/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---confidentialledger-010-changelog">Resource Management - Confidentialledger 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/confidentialledger/armconfidentialledger/v0.1.0/sdk/resourcemanager/confidentialledger/armconfidentialledger/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---confluent-010-changelog">Resource Management - Confluent 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/confluent/armconfluent/v0.1.0/sdk/resourcemanager/confluent/armconfluent/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---containerinstance-010-changelog">Resource Management - Containerinstance 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/containerinstance/armcontainerinstance/v0.1.0/sdk/resourcemanager/containerinstance/armcontainerinstance/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---costmanagement-010-changelog">Resource Management - Costmanagement 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/costmanagement/armcostmanagement/v0.1.0/sdk/resourcemanager/costmanagement/armcostmanagement/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---customerlockbox-010-changelog">Resource Management - Customerlockbox 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/customerlockbox/armcustomerlockbox/v0.1.0/sdk/resourcemanager/customerlockbox/armcustomerlockbox/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---databox-010-changelog">Resource Management - Databox 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/databox/armdatabox/v0.1.0/sdk/resourcemanager/databox/armdatabox/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---databoxedge-010-changelog">Resource Management - Databoxedge 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/databoxedge/armdataboxedge/v0.1.0/sdk/resourcemanager/databoxedge/armdataboxedge/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---datacatalog-010-changelog">Resource Management - Datacatalog 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/datacatalog/armdatacatalog/v0.1.0/sdk/resourcemanager/datacatalog/armdatacatalog/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---datafactory-010-changelog">Resource Management - Datafactory 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/datafactory/armdatafactory/v0.1.0/sdk/resourcemanager/datafactory/armdatafactory/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---dataprotection-010-changelog">Resource Management - Dataprotection 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/dataprotection/armdataprotection/v0.1.0/sdk/resourcemanager/dataprotection/armdataprotection/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---datashare-010-changelog">Resource Management - Datashare 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/datashare/armdatashare/v0.1.0/sdk/resourcemanager/datashare/armdatashare/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---deploymentmanager-010-changelog">Resource Management - Deploymentmanager 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/deploymentmanager/armdeploymentmanager/v0.1.0/sdk/resourcemanager/deploymentmanager/armdeploymentmanager/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---deploymentscripts-010-changelog">Resource Management - Deploymentscripts 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/resources/armdeploymentscripts/v0.1.0/sdk/resourcemanager/resources/armdeploymentscripts/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---desktopvirtualization-010-changelog">Resource Management - Desktopvirtualization 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/desktopvirtualization/armdesktopvirtualization/v0.1.0/sdk/resourcemanager/desktopvirtualization/armdesktopvirtualization/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---deviceprovisioningservices-010-changelog">Resource Management - Deviceprovisioningservices 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/deviceprovisioningservices/armdeviceprovisioningservices/v0.1.0/sdk/resourcemanager/deviceprovisioningservices/armdeviceprovisioningservices/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---deviceupdate-010-changelog">Resource Management - Deviceupdate 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/deviceupdate/armdeviceupdate/v0.1.0/sdk/resourcemanager/deviceupdate/armdeviceupdate/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---devops-010-changelog">Resource Management - Devops 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/devops/armdevops/v0.1.0/sdk/resourcemanager/devops/armdevops/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---devtestlabs-010-changelog">Resource Management - Devtestlabs 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/devtestlabs/armdevtestlabs/v0.1.0/sdk/resourcemanager/devtestlabs/armdevtestlabs/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---digitaltwins-010-changelog">Resource Management - Digitaltwins 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/digitaltwins/armdigitaltwins/v0.1.0/sdk/resourcemanager/digitaltwins/armdigitaltwins/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---dns-010-changelog">Resource Management - Dns 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/dns/armdns/v0.1.0/sdk/resourcemanager/dns/armdns/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---domainservices-010-changelog">Resource Management - Domainservices 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/domainservices/armdomainservices/v0.1.0/sdk/resourcemanager/domainservices/armdomainservices/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---edgeorder-010-changelog">Resource Management - Edgeorder 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/edgeorder/armedgeorder/v0.1.0/sdk/resourcemanager/edgeorder/armedgeorder/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---edgeorderpartner-010-changelog">Resource Management - Edgeorderpartner 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/edgeorderpartner/armedgeorderpartner/v0.1.0/sdk/resourcemanager/edgeorderpartner/armedgeorderpartner/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---elastic-010-changelog">Resource Management - Elastic 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/elastic/armelastic/v0.1.0/sdk/resourcemanager/elastic/armelastic/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---extendedlocation-010-changelog">Resource Management - Extendedlocation 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/extendedlocation/armextendedlocation/v0.1.0/sdk/resourcemanager/extendedlocation/armextendedlocation/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---features-010-changelog">Resource Management - Features 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/resources/armfeatures/v0.1.0/sdk/resourcemanager/resources/armfeatures/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---frontdoor-010-changelog">Resource Management - Frontdoor 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/frontdoor/armfrontdoor/v0.1.0/sdk/resourcemanager/frontdoor/armfrontdoor/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---guestconfiguration-010-changelog">Resource Management - Guestconfiguration 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/guestconfiguration/armguestconfiguration/v0.1.0/sdk/resourcemanager/guestconfiguration/armguestconfiguration/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---hanaonazure-010-changelog">Resource Management - Hanaonazure 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/hanaonazure/armhanaonazure/v0.1.0/sdk/resourcemanager/hanaonazure/armhanaonazure/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---hardware-security-modules-010-changelog">Resource Management - Hardware Security Modules 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/hardwaresecuritymodules/armhardwaresecuritymodules/v0.1.0/sdk/resourcemanager/hardwaresecuritymodules/armhardwaresecuritymodules/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---hdinsight-010-changelog">Resource Management - Hdinsight 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/hdinsight/armhdinsight/v0.1.0/sdk/resourcemanager/hdinsight/armhdinsight/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---healthbot-010-changelog">Resource Management - Healthbot 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/healthbot/armhealthbot/v0.1.0/sdk/resourcemanager/healthbot/armhealthbot/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---healthcareapis-010-changelog">Resource Management - Healthcareapis 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/healthcareapis/armhealthcareapis/v0.1.0/sdk/resourcemanager/healthcareapis/armhealthcareapis/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---hybrid-network-010-changelog">Resource Management - Hybrid Network 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/hybridnetwork/armhybridnetwork/v0.1.0/sdk/resourcemanager/hybridnetwork/armhybridnetwork/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---hybridconnectivity-010-changelog">Resource Management - Hybridconnectivity 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/hybridconnectivity/armhybridconnectivity/v0.1.0/sdk/resourcemanager/hybridconnectivity/armhybridconnectivity/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---hybriddatamanager-010-changelog">Resource Management - Hybriddatamanager 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/hybriddatamanager/armhybriddatamanager/v0.1.0/sdk/resourcemanager/hybriddatamanager/armhybriddatamanager/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---hybridkubernetes-010-changelog">Resource Management - Hybridkubernetes 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/hybridkubernetes/armhybridkubernetes/v0.1.0/sdk/resourcemanager/hybridkubernetes/armhybridkubernetes/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---iotcentral-010-changelog">Resource Management - Iotcentral 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/iotcentral/armiotcentral/v0.1.0/sdk/resourcemanager/iotcentral/armiotcentral/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---iotsecurity-010-changelog">Resource Management - Iotsecurity 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/iotsecurity/armiotsecurity/v0.1.0/sdk/resourcemanager/iotsecurity/armiotsecurity/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---kubernetesconfiguration-010-changelog">Resource Management - Kubernetesconfiguration 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/kubernetesconfiguration/armkubernetesconfiguration/v0.1.0/sdk/resourcemanager/kubernetesconfiguration/armkubernetesconfiguration/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---kusto-010-changelog">Resource Management - Kusto 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/kusto/armkusto/v0.1.0/sdk/resourcemanager/kusto/armkusto/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---labservices-010-changelog">Resource Management - Labservices 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/labservices/armlabservices/v0.1.0/sdk/resourcemanager/labservices/armlabservices/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---links-010-changelog">Resource Management - Links 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/resources/armlinks/v0.1.0/sdk/resourcemanager/resources/armlinks/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---loadtestservice-010-changelog">Resource Management - Loadtestservice 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/loadtestservice/armloadtestservice/v0.1.0/sdk/resourcemanager/loadtestservice/armloadtestservice/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---locks-010-changelog">Resource Management - Locks 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/resources/armlocks/v0.1.0/sdk/resourcemanager/resources/armlocks/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---m365securityandcompliance-010-changelog">Resource Management - M365securityandcompliance 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/m365securityandcompliance/armm365securityandcompliance/v0.1.0/sdk/resourcemanager/m365securityandcompliance/armm365securityandcompliance/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---maintenance-010-changelog">Resource Management - Maintenance 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/maintenance/armmaintenance/v0.1.0/sdk/resourcemanager/maintenance/armmaintenance/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---managedapplications-010-changelog">Resource Management - Managedapplications 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/resources/armmanagedapplications/v0.1.0/sdk/resourcemanager/resources/armmanagedapplications/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---managedservices-010-changelog">Resource Management - Managedservices 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/managedservices/armmanagedservices/v0.1.0/sdk/resourcemanager/managedservices/armmanagedservices/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---managementpartner-010-changelog">Resource Management - Managementpartner 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/managementpartner/armmanagementpartner/v0.1.0/sdk/resourcemanager/managementpartner/armmanagementpartner/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---maps-010-changelog">Resource Management - Maps 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/maps/armmaps/v0.1.0/sdk/resourcemanager/maps/armmaps/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---mariadb-010-changelog">Resource Management - Mariadb 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/mariadb/armmariadb/v0.1.0/sdk/resourcemanager/mariadb/armmariadb/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---marketplace-010-changelog">Resource Management - Marketplace 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/marketplace/armmarketplace/v0.1.0/sdk/resourcemanager/marketplace/armmarketplace/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---marketplaceordering-010-changelog">Resource Management - Marketplaceordering 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/marketplaceordering/armmarketplaceordering/v0.1.0/sdk/resourcemanager/marketplaceordering/armmarketplaceordering/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---orbital-010-changelog">Resource Management - Orbital 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/orbital/armorbital/v0.1.0/sdk/resourcemanager/orbital/armorbital/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---policy-010-changelog">Resource Management - Policy 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/resources/armpolicy/v0.1.0/sdk/resourcemanager/resources/armpolicy/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---portal-010-changelog">Resource Management - Portal 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/portal/armportal/v0.1.0/sdk/resourcemanager/portal/armportal/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---redhatopenshift-010-changelog">Resource Management - Redhatopenshift 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/redhatopenshift/armredhatopenshift/v0.1.0/sdk/resourcemanager/redhatopenshift/armredhatopenshift/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---redisenterprise-010-changelog">Resource Management - Redisenterprise 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/redisenterprise/armredisenterprise/v0.1.0/sdk/resourcemanager/redisenterprise/armredisenterprise/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---reservations-010-changelog">Resource Management - Reservations 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/reservations/armreservations/v0.1.0/sdk/resourcemanager/reservations/armreservations/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---resourcegraph-010-changelog">Resource Management - Resourcegraph 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/resourcegraph/armresourcegraph/v0.1.0/sdk/resourcemanager/resourcegraph/armresourcegraph/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---securityinsight-010-changelog">Resource Management - Securityinsight 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/securityinsight/armsecurityinsight/v0.1.0/sdk/resourcemanager/securityinsight/armsecurityinsight/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---serialconsole-010-changelog">Resource Management - Serialconsole 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/serialconsole/armserialconsole/v0.1.0/sdk/resourcemanager/serialconsole/armserialconsole/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---servicefabricmesh-010-changelog">Resource Management - Servicefabricmesh 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/servicefabricmesh/armservicefabricmesh/v0.1.0/sdk/resourcemanager/servicefabricmesh/armservicefabricmesh/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---servicelinker-010-changelog">Resource Management - Servicelinker 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/servicelinker/armservicelinker/v0.1.0/sdk/resourcemanager/servicelinker/armservicelinker/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---sqlvirtualmachine-010-changelog">Resource Management - Sqlvirtualmachine 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/sqlvirtualmachine/armsqlvirtualmachine/v0.1.0/sdk/resourcemanager/sqlvirtualmachine/armsqlvirtualmachine/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---subscriptions-010-changelog">Resource Management - Subscriptions 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/resources/armsubscriptions/v0.1.0/sdk/resourcemanager/resources/armsubscriptions/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---templatespecs-010-changelog">Resource Management - Templatespecs 0.1.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/resourcemanager/resources/armtemplatespecs/v0.1.0/sdk/resourcemanager/resources/armtemplatespecs/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="service-bus-032-changelog">Service Bus 0.3.2 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/messaging/azservicebus/v0.3.2/sdk/messaging/azservicebus/CHANGELOG.md">Changelog</a></h3>
+<h4 id="bugs-fixed">Bugs Fixed</h4>
+
+<ul>
+  <li>Session IDs can now be blank - prior to this release it would cause an error. PR#16530</li>
+  <li>Drain will no longer hang if there is a link failure. Thanks to @flexarts for reporting this issue: PR#16530</li>
+  <li>Attempting to settle messages received in ReceiveAndDelete mode would cause a panic. PR#16255</li>
+</ul>
+
+<h4 id="features-added">Features Added</h4>
+
+<ul>
+  <li>Enabling websocket support via <code class="language-plaintext highlighter-rouge">ClientOptions.NewWebSocketConn</code>. For an example, see the <code class="language-plaintext highlighter-rouge">ExampleNewClient_usingWebsockets</code>
+function in <code class="language-plaintext highlighter-rouge">example_client_test.go</code>.</li>
+</ul>
+
+<h4 id="breaking-changes">Breaking Changes</h4>
+
+<ul>
+  <li>Message properties that come from the standard AMQP message have been made into pointers, to allow them to be
+properly omitted (or indicate that they’ve been omitted) when sending and receiving.</li>
+</ul>
+
+<h3 id="azservicebus-030-changelog">azservicebus 0.3.0 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/messaging/azservicebus/v0.3.0/sdk/messaging/azservicebus/CHANGELOG.md">Changelog</a></h3>
+<h4 id="breaking-changes-1">Breaking Changes</h4>
+
+<ul>
+  <li>AdminClient has been moved into the <code class="language-plaintext highlighter-rouge">admin</code> subpackage.</li>
+  <li>ReceivedMessage.Body is now a function that returns a ([]byte, error), rather than being a field.
+This protects against a potential data-loss scenario where a message is received with a payload
+encoded in the sequence or value sections of an AMQP message, which cannot be prpoerly represented
+in the .Body. This will now return an error.</li>
+  <li>Functions that have options or might have options in the future have an additional *options parameter.
+As usual, passing ‘nil’ ignores the options, and will cause the function to use defaults.</li>
+  <li>MessageBatch.Add() has been renamed to MessageBatch.AddMessage(). AddMessage() now returns only an <code class="language-plaintext highlighter-rouge">error</code>,
+with a sentinel error (ErrMessageTooLarge) signaling that the batch cannot fit a new message.</li>
+  <li>Sender.SendMessages() has been removed in favor of simplifications made in MessageBatch.</li>
+</ul>
+
+<h4 id="bugs-fixed-1">Bugs Fixed</h4>
+
+<ul>
+  <li>ReceiveMessages has been tuned to match the .NET limits (which has worked well in practice). This partly addresses #15963,
+as our default limit was far higher than needed.</li>
+</ul>
+
+<h4 id="features-added-1">Features Added</h4>
+
+<ul>
+  <li>AbandonMessage and DeferMessage now take an additional <code class="language-plaintext highlighter-rouge">PropertiesToModify</code> option, allowing
+the message properties to be modified when they are settled.</li>
+  <li>Missing fields for entities in the admin.Client have been added (UserMetadata, etc..)</li>
+</ul>
+
+<h3 id="azservicebus-031-changelog">azservicebus 0.3.1 <a href="https://github.com/Azure/azure-sdk-for-go/tree/sdk/messaging/azservicebus/v0.3.1/sdk/messaging/azservicebus/CHANGELOG.md">Changelog</a></h3>
+<h4 id="bugs-fixed-2">Bugs Fixed</h4>
+
+<ul>
+  <li>Updating go-amqp to v0.16.4 to fix a race condition found when running <code class="language-plaintext highlighter-rouge">go test -race</code>.  Thanks to @peterzeller for reporting this issue. PR: #16168</li>
+</ul>
+
+<h2 id="need-help">Need help</h2>
+
+<ul>
+  <li>For reference documentation visit the <a href="https://pkg.go.dev/github.com/Azure/azure-sdk-for-go/">Azure SDK for Go documentation</a>.</li>
+  <li>For tutorials, samples, quick starts and other documentation, visit the <a href="https://github.com/azure/azure-sdk-for-go/">Azure SDK for Go repository</a>.</li>
+  <li>File an issue via <a href="https://github.com/Azure/azure-sdk-for-go/issues/new/choose">Github Issues</a>.</li>
+</ul>
+
+<h2 id="latest-releases">Latest Releases</h2>
+
+<p>View all the latest versions of go packages <a href="/azure-sdk/releases/latest/go.html">here</a>.</p>
+
+<h2 id="installation-instructions">Installation Instructions</h2>
+
+<p>To use the latest GA and beta libraries use the <code class="language-plaintext highlighter-rouge">go get</code> command to add the package to a go.mod file. If your project does not use Go modules, refer to the Go documentation for information about specifying dependencies.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/messaging/azservicebus@v0.3.2
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/messaging/azservicebus@v0.3.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/messaging/azservicebus@v0.3.1
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/aad/armaad@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/advisor/armadvisor@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/analysisservices/armanalysisservices@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/appconfiguration/armappconfiguration@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/attestation/armattestation@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/automanage/armautomanage@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/azurearcdata/armazurearcdata@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/azuredata/armazuredata@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/azurestackhci/armazurestackhci@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/baremetalinfrastructure/armbaremetalinfrastructure@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/batch/armbatch@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/billing/armbilling@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/blockchain/armblockchain@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/blueprint/armblueprint@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/botservice/armbotservice@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/changeanalysis/armchangeanalysis@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/communication/armcommunication@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/confidentialledger/armconfidentialledger@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/confluent/armconfluent@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/containerinstance/armcontainerinstance@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/containerservice/armcontainerservice@v0.2.1
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/costmanagement/armcostmanagement@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/customerlockbox/armcustomerlockbox@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/databox/armdatabox@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/databoxedge/armdataboxedge@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/datacatalog/armdatacatalog@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/datafactory/armdatafactory@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/dataprotection/armdataprotection@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/datashare/armdatashare@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/deploymentmanager/armdeploymentmanager@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/desktopvirtualization/armdesktopvirtualization@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/deviceprovisioningservices/armdeviceprovisioningservices@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/deviceupdate/armdeviceupdate@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/devops/armdevops@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/devtestlabs/armdevtestlabs@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/digitaltwins/armdigitaltwins@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/dns/armdns@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/domainservices/armdomainservices@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/edgeorder/armedgeorder@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/edgeorderpartner/armedgeorderpartner@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/elastic/armelastic@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/extendedlocation/armextendedlocation@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/frontdoor/armfrontdoor@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/guestconfiguration/armguestconfiguration@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/hanaonazure/armhanaonazure@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/hardwaresecuritymodules/armhardwaresecuritymodules@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/hdinsight/armhdinsight@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/healthbot/armhealthbot@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/healthcareapis/armhealthcareapis@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/hybridconnectivity/armhybridconnectivity@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/hybriddatamanager/armhybriddatamanager@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/hybridkubernetes/armhybridkubernetes@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/hybridnetwork/armhybridnetwork@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/iotcentral/armiotcentral@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/iotsecurity/armiotsecurity@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/kubernetesconfiguration/armkubernetesconfiguration@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/kusto/armkusto@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/labservices/armlabservices@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/loadtestservice/armloadtestservice@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/m365securityandcompliance/armm365securityandcompliance@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/maintenance/armmaintenance@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/managedservices/armmanagedservices@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/managementpartner/armmanagementpartner@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/maps/armmaps@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/mariadb/armmariadb@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/marketplace/armmarketplace@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/marketplaceordering/armmarketplaceordering@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/orbital/armorbital@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/portal/armportal@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/redhatopenshift/armredhatopenshift@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/redisenterprise/armredisenterprise@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/reservations/armreservations@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/resourcegraph/armresourcegraph@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/resources/armdeploymentscripts@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/resources/armfeatures@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/resources/armlinks@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/resources/armlocks@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/resources/armmanagedapplications@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/resources/armpolicy@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/resources/armsubscriptions@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/resources/armtemplatespecs@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/securityinsight/armsecurityinsight@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/serialconsole/armserialconsole@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/servicefabricmesh/armservicefabricmesh@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/servicelinker/armservicelinker@v0.1.0
+go get -u github.com/Azure/azure-sdk-for-go/sdk/sdk/resourcemanager/sqlvirtualmachine/armsqlvirtualmachine@v0.1.0
+</code></pre></div></div>
+
+<h2 id="feedback">Feedback</h2>
+
+<p>If you have a bug or feature request for one of the libraries, please post an issue to <a href="https://github.com/azure/azure-sdk-for-go/issues">GitHub</a>.</p>
+
+
+            </div>
+        </article>
+        
+        
+
+    </div>
+</div>
+
+                </div>
+                <!-- /.row -->
+
+            </div>
+            <!-- /.container -->
+        </div>
+        <!-- /#main -->
+    </div>
+    
+    <!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-62780441-46"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-62780441-46');
+</script>
+
+<!-- OLD SCRIPT
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-62780441-46','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+-->
+
+    
+    
+    <!-- the app_insights gets auto inserted from the config file -->
+<!-- For other configuration elements, see https://docs.microsoft.com/azure/azure-monitor/app/javascript#snippet-based-setup -->
+
+<script type="text/javascript">
+var sdkInstance="appInsightsSDK";window[sdkInstance]="appInsights";var aiName=window[sdkInstance],aisdk=window[aiName]||function(n){var o={config:n,initialize:!0},t=document,e=window,i="script";setTimeout(function(){var e=t.createElement(i);e.src=n.url||"https://az416426.vo.msecnd.net/scripts/b/ai.2.min.js",t.getElementsByTagName(i)[0].parentNode.appendChild(e)});try{o.cookie=t.cookie}catch(e){}function a(n){o[n]=function(){var e=arguments;o.queue.push(function(){o[n].apply(o,e)})}}o.queue=[],o.version=2;for(var s=["Event","PageView","Exception","Trace","DependencyData","Metric","PageViewPerformance"];s.length;)a("track"+s.pop());var r="Track",c=r+"Page";a("start"+c),a("stop"+c);var u=r+"Event";if(a("start"+u),a("stop"+u),a("addTelemetryInitializer"),a("setAuthenticatedUserContext"),a("clearAuthenticatedUserContext"),a("flush"),o.SeverityLevel={Verbose:0,Information:1,Warning:2,Error:3,Critical:4},!(!0===n.disableExceptionTracking||n.extensionConfig&&n.extensionConfig.ApplicationInsightsAnalytics&&!0===n.extensionConfig.ApplicationInsightsAnalytics.disableExceptionTracking)){a("_"+(s="onerror"));var p=e[s];e[s]=function(e,n,t,i,a){var r=p&&p(e,n,t,i,a);return!0!==r&&o["_"+s]({message:e,url:n,lineNumber:t,columnNumber:i,error:a}),r},n.autoExceptionInstrumented=!0}return o}(
+{
+    instrumentationKey:"5e03f19a-f5b4-4620-97d5-35707cec7fcb",
+    autoTrackPageVisitTime:true,
+    isCookieUseDisabled:true
+}
+);(window[aiName]=aisdk).queue&&0===aisdk.queue.length&&aisdk.trackPageView({});
+</script>
+
+    
+</body>
+<hr class="shaded"/>
+<footer>
+    <div class="container-fluid">
+        <div class="row footer">
+            <div class="col-lg-6 text-left pb-1">
+           &copy;2024 Microsoft Azure. All rights reserved. 
+ Site last generated: May 30, 2024
+            </div>
+            <div class="col-lg-6 text-right">
+                <p><img src="/azure-sdk/images/company_logo.png" width="100px" alt="Microsoft logo"/></p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+</html>

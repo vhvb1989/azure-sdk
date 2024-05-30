@@ -1,0 +1,1458 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="keywords" content="javascript typescript azure,  ">
+<title>Azure SDK for JavaScript (November 2023) | Azure SDKs</title>
+<link rel="stylesheet" href="/azure-sdk/css/syntax.css" />
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/azure-sdk/css/modern-business.css" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="/azure-sdk/css/boxshadowproperties.css" />
+<link rel="stylesheet" href="/azure-sdk/css/theme-azure.css" />
+<link rel="stylesheet" href="/azure-sdk/css/customstyles.css" />
+<link rel="stylesheet" href="/azure-sdk/css/normalize.css">
+<link rel="stylesheet" href="/azure-sdk/css/tipuesearch.css">
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="/azure-sdk/js/jquery.navgoco.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.2.0/anchor.min.js"></script>
+<script src="/azure-sdk/js/toc.js"></script>
+<script src="/azure-sdk/js/customscripts.js"></script>
+
+<link rel="shortcut icon" href="/azure-sdk/images/azure-sdk-glyph.svg"/>
+<link rel="alternate" type="application/rss+xml" title="Azure SDKs" href="/azure-sdk/feed.xml" />
+
+    <script>
+        $(document).ready(function () {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function (e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function (e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+
+        });
+
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function () {
+            $("#tg-sb-link").click(function () {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+    <!-- Due to the page header height, all anchors uses top padding to offset the top possion and appear below the main header.
+        If one requirement icon is just below another, the padding of the icon overlaps the one on top of it and block the clicking surface.
+        The script below finds all requirements icons and adds z-index decrementally to place any previous icon on top of the next ones.
+        The script runs after the page is completelly load (all content is downloaded).
+      -->
+    <script>
+        $(window).bind("load", function () {
+            let requeriments = $('.requirement');
+            requeriments.each(function (index, element) {
+                $(element).css("z-index", requeriments.length - index);
+            });
+        });
+    </script>
+
+</head>
+
+<body>
+    <!-- Navigation -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/azure-sdk/releases/latest/index.html"/>
+                <span class="projectTitle"><img style="margin-top: -8px;" class="d-inline-block align-top" src="/azure-sdk/images/azure-sdk-glyph.svg" width="35" height="35" alt=""/> Azure SDKs</span>
+            </a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <!-- toggle sidebar button -->
+                <!-- <li><a id="tg-sb-link" href="#"><i id="tg-sb-icon" class="fa fa-toggle-on"></i> Nav</a></li> -->
+                <!-- entries without drop-downs appear here -->
+
+
+
+
+
+                
+                
+                
+                <li><a href="https://aka.ms/azsdk/blog" rel="noopener">Blog</a></li>
+                
+                
+                
+                <li><a href="/azure-sdk/releases/latest/">Releases</a></li>
+                
+                
+                
+                <!-- entries with drop-downs appear here -->
+                <!-- conditional logic to control which topnav appears for the audience defined in the configuration file.-->
+                
+                
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Guidelines<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        
+                        
+                        <li><a href="/azure-sdk/general_introduction.html" rel="noopener">General Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/dotnet_introduction.html" rel="noopener">.NET Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/java_introduction.html" rel="noopener">Java Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/python_design.html" rel="noopener">Python Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/typescript_introduction.html" rel="noopener">TypeScript Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/android_design.html" rel="noopener">Android Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/ios_design.html" rel="noopener">iOS Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/clang_design.html" rel="noopener">C Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/cpp_introduction.html" rel="noopener">C++ Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/golang_introduction.html" rel="noopener">Go Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/rust_introduction.html" rel="noopener">Rust Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/policies_adoption.html" rel="noopener">GitHub Repos</a></li>
+                        
+                        <li><a href="/azure-sdk/policies_reviewprocess.html" rel="noopener">Policies</a></li>
+                        
+                        
+                    </ul>
+                </li>
+                
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">API References<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        
+                        
+                        
+                        <li><a href="https://aka.ms/net-docs" rel="noopener">.NET</a></li>
+                        
+                        
+                        
+                        <li><a href="https://aka.ms/java-docs" rel="noopener">Java</a></li>
+                        
+                        
+                        
+                        <li><a href="https://aka.ms/python-docs" rel="noopener">Python</a></li>
+                        
+                        
+                        
+                        <li><a href="https://aka.ms/js-docs" rel="noopener">TypeScript</a></li>
+                        
+                        
+                        
+                    </ul>
+                </li>
+                
+                
+                
+                <li>
+                    
+                        <a style="font-size: 1.666em !important" class="fa fa-github fa-2x" title="GitHub Link" href="https://github.com/azure/azure-sdk-for-js"></a>
+                    
+                </li>
+                <li>
+                    <a style="font-size: 1.666em !important" class="fa fa-twitter fa-2x" title="Twitter Link" href="https://twitter.com/AzureSDK"></a>
+                </li>
+            </ul>
+        </div>
+        </div>
+        <!-- /.container -->
+</nav>
+
+    <!-- Page Content -->
+    <div class="container-fluid" style="margin-top: 60px; min-height: calc(100vh - 50px);">
+        <div id="main">
+            <!-- Content Row -->
+            <div class="row">
+                
+                
+                <!-- Sidebar Column -->
+                <div class="col-md-2 col-xs-12" id="tg-sb-sidebar">
+                    
+
+<div id="mysidebar" class="nav">
+
+  <script src="/azure-sdk/js/tipuesearch_content.js"></script>
+  <script src="/azure-sdk/js/tipuesearch_set.js"></script>
+  <script src="/azure-sdk/js/tipuesearch.min.js"></script>
+
+<p>
+<form action="/azure-sdk/search.html" >
+    <div class=" tipue_search_left"><img src="/azure-sdk/images/search.png" alt="Search Icon" class="tipue_search_icon"></div>
+    <input type="text" class="form-control tipue_search_right" name="q" id="tipue_search_input" pattern=".{3,}" title="At least 3 characters" required placeholder="Search website">
+</form>
+</p>
+<div style="clear: both;"></div>
+  <ol>
+    <li class="sidebarTitle"> </li>
+    
+      
+        
+        <li>
+        
+          
+          <a title="Latest" href="/azure-sdk/releases/latest/index.html">Latest</a>
+          
+          <ul>
+            
+              
+                <li><a title=".NET" href="/azure-sdk/releases/latest/dotnet.html">.NET</a></li>
+              
+              
+            
+              
+                <li><a title="Java" href="/azure-sdk/releases/latest/java.html">Java</a></li>
+              
+              
+            
+              
+                <li><a title="JavaScript/TypeScript" href="/azure-sdk/releases/latest/js.html">JavaScript/TypeScript</a></li>
+              
+              
+            
+              
+                <li><a title="Python" href="/azure-sdk/releases/latest/python.html">Python</a></li>
+              
+              
+            
+              
+                <li><a title="Go" href="/azure-sdk/releases/latest/go.html">Go</a></li>
+              
+              
+            
+              
+                <li><a title="C++" href="/azure-sdk/releases/latest/cpp.html">C++</a></li>
+              
+              
+            
+              
+                <li><a title="Embedded C" href="/azure-sdk/releases/latest/c.html">Embedded C</a></li>
+              
+              
+            
+              
+                <li><a title="Android" href="/azure-sdk/releases/latest/android.html">Android</a></li>
+              
+              
+            
+              
+                <li><a title="iOS" href="/azure-sdk/releases/latest/ios.html">iOS</a></li>
+              
+              
+            
+              
+                <li><a title="Specs" href="/azure-sdk/releases/latest/specs.html">Specs</a></li>
+              
+              
+            
+          </ul>
+        </li>
+      
+        
+        <li>
+        
+          
+          <a title="2024 Releases" href="#">2024 Releases</a>
+          
+          <ul>
+            
+              
+                <li><a title="May" href="/azure-sdk/releases/2024-05/index.html">May</a></li>
+              
+              
+            
+              
+                <li><a title="April" href="/azure-sdk/releases/2024-04/index.html">April</a></li>
+              
+              
+            
+              
+                <li><a title="March" href="/azure-sdk/releases/2024-03/index.html">March</a></li>
+              
+              
+            
+              
+                <li><a title="February" href="/azure-sdk/releases/2024-02/index.html">February</a></li>
+              
+              
+            
+              
+                <li><a title="January" href="/azure-sdk/releases/2024-01/index.html">January</a></li>
+              
+              
+            
+          </ul>
+        </li>
+      
+        
+        <li>
+        
+          
+          <a title="2023 Releases" href="#">2023 Releases</a>
+          
+          <ul>
+            
+              
+                <li><a title="December" href="/azure-sdk/releases/2023-12/index.html">December</a></li>
+              
+              
+            
+              
+                <li><a title="November" href="/azure-sdk/releases/2023-11/index.html">November</a></li>
+              
+              
+            
+              
+                <li><a title="October" href="/azure-sdk/releases/2023-10/index.html">October</a></li>
+              
+              
+            
+              
+                <li><a title="September" href="/azure-sdk/releases/2023-09/index.html">September</a></li>
+              
+              
+            
+              
+                <li><a title="August" href="/azure-sdk/releases/2023-08/index.html">August</a></li>
+              
+              
+            
+              
+                <li><a title="July" href="/azure-sdk/releases/2023-07/index.html">July</a></li>
+              
+              
+            
+              
+                <li><a title="June" href="/azure-sdk/releases/2023-06/index.html">June</a></li>
+              
+              
+            
+              
+                <li><a title="May" href="/azure-sdk/releases/2023-05/index.html">May</a></li>
+              
+              
+            
+              
+                <li><a title="April" href="/azure-sdk/releases/2023-04/index.html">April</a></li>
+              
+              
+            
+              
+                <li><a title="March" href="/azure-sdk/releases/2023-03/index.html">March</a></li>
+              
+              
+            
+              
+                <li><a title="February" href="/azure-sdk/releases/2023-02/index.html">February</a></li>
+              
+              
+            
+              
+                <li><a title="January" href="/azure-sdk/releases/2023-01/index.html">January</a></li>
+              
+              
+            
+          </ul>
+        </li>
+      
+        
+        <li>
+        
+          
+          <a title="2022 Releases" href="#">2022 Releases</a>
+          
+          <ul>
+            
+              
+                <li><a title="December" href="/azure-sdk/releases/2022-12/index.html">December</a></li>
+              
+              
+            
+              
+                <li><a title="November" href="/azure-sdk/releases/2022-11/index.html">November</a></li>
+              
+              
+            
+              
+                <li><a title="October" href="/azure-sdk/releases/2022-10/index.html">October</a></li>
+              
+              
+            
+              
+                <li><a title="September" href="/azure-sdk/releases/2022-09/index.html">September</a></li>
+              
+              
+            
+              
+                <li><a title="August" href="/azure-sdk/releases/2022-08/index.html">August</a></li>
+              
+              
+            
+              
+                <li><a title="July" href="/azure-sdk/releases/2022-07/index.html">July</a></li>
+              
+              
+            
+              
+                <li><a title="June" href="/azure-sdk/releases/2022-06/index.html">June</a></li>
+              
+              
+            
+              
+                <li><a title="May" href="/azure-sdk/releases/2022-05/index.html">May</a></li>
+              
+              
+            
+              
+                <li><a title="April" href="/azure-sdk/releases/2022-04/index.html">April</a></li>
+              
+              
+            
+              
+                <li><a title="March" href="/azure-sdk/releases/2022-03/index.html">March</a></li>
+              
+              
+            
+              
+                <li><a title="February" href="/azure-sdk/releases/2022-02/index.html">February</a></li>
+              
+              
+            
+              
+                <li><a title="January" href="/azure-sdk/releases/2022-01/index.html">January</a></li>
+              
+              
+            
+          </ul>
+        </li>
+      
+        
+        <li>
+        
+          
+          <a title="2021 Releases" href="#">2021 Releases</a>
+          
+          <ul>
+            
+              
+                <li><a title="December" href="/azure-sdk/releases/2021-12/index.html">December</a></li>
+              
+              
+            
+              
+                <li><a title="November" href="/azure-sdk/releases/2021-11/index.html">November</a></li>
+              
+              
+            
+              
+                <li><a title="October" href="/azure-sdk/releases/2021-10/index.html">October</a></li>
+              
+              
+            
+              
+                <li><a title="September" href="/azure-sdk/releases/2021-09/index.html">September</a></li>
+              
+              
+            
+              
+                <li><a title="August" href="/azure-sdk/releases/2021-08/index.html">August</a></li>
+              
+              
+            
+              
+                <li><a title="July" href="/azure-sdk/releases/2021-07/index.html">July</a></li>
+              
+              
+            
+              
+                <li><a title="June" href="/azure-sdk/releases/2021-06/index.html">June</a></li>
+              
+              
+            
+              
+                <li><a title="May" href="/azure-sdk/releases/2021-05/index.html">May</a></li>
+              
+              
+            
+              
+                <li><a title="April" href="/azure-sdk/releases/2021-04/index.html">April</a></li>
+              
+              
+            
+              
+                <li><a title="March" href="/azure-sdk/releases/2021-03/index.html">March</a></li>
+              
+              
+            
+              
+                <li><a title="February" href="/azure-sdk/releases/2021-02/index.html">February</a></li>
+              
+              
+            
+              
+                <li><a title="January" href="/azure-sdk/releases/2021-01/index.html">January</a></li>
+              
+              
+            
+          </ul>
+        </li>
+      
+        
+        <li>
+        
+          
+          <a title="2020 Releases" href="#">2020 Releases</a>
+          
+          <ul>
+            
+              
+                <li><a title="December" href="/azure-sdk/releases/2020-12/index.html">December</a></li>
+              
+              
+            
+              
+                <li><a title="November" href="/azure-sdk/releases/2020-11/index.html">November</a></li>
+              
+              
+            
+              
+                <li><a title="October" href="/azure-sdk/releases/2020-10/index.html">October</a></li>
+              
+              
+            
+              
+                <li><a title="September" href="/azure-sdk/releases/2020-09/index.html">September</a></li>
+              
+              
+            
+              
+                <li><a title="August" href="/azure-sdk/releases/2020-08/index.html">August</a></li>
+              
+              
+            
+              
+                <li><a title="July" href="/azure-sdk/releases/2020-07/index.html">July</a></li>
+              
+              
+            
+              
+                <li><a title="June" href="/azure-sdk/releases/2020-06/index.html">June</a></li>
+              
+              
+            
+              
+                <li><a title="May" href="/azure-sdk/releases/2020-05/index.html">May</a></li>
+              
+              
+            
+              
+                <li><a title="April" href="/azure-sdk/releases/2020-04/index.html">April</a></li>
+              
+              
+            
+              
+                <li><a title="March" href="/azure-sdk/releases/2020-03/index.html">March</a></li>
+              
+              
+            
+              
+                <li><a title="February" href="/azure-sdk/releases/2020-02/index.html">February</a></li>
+              
+              
+            
+              
+                <li><a title="January" href="/azure-sdk/releases/2020-01/index.html">January</a></li>
+              
+              
+            
+          </ul>
+        </li>
+      
+        
+        <li>
+        
+          
+          <a title="2019 Releases" href="#">2019 Releases</a>
+          
+          <ul>
+            
+              
+                <li><a title="December" href="/azure-sdk/releases/2019-12/index.html">December</a></li>
+              
+              
+            
+              
+                <li><a title="November" href="/azure-sdk/releases/2019-11/index.html">November</a></li>
+              
+              
+            
+              
+                <li><a title="October" href="/azure-sdk/releases/2019-10-11/index.html">October</a></li>
+              
+              
+            
+              
+                <li><a title="September" href="/azure-sdk/releases/2019-09-17/index.html">September</a></li>
+              
+              
+            
+              
+                <li><a title="August" href="/azure-sdk/releases/2019-08-06/index.html">August</a></li>
+              
+              
+            
+              
+                <li><a title="July" href="/azure-sdk/releases/2019-07-10/index.html">July</a></li>
+              
+              
+            
+          </ul>
+        </li>
+      
+        
+        <li>
+        
+          
+          <a title="Deprecated" href="/azure-sdk/releases/deprecated/index.html">Deprecated</a>
+          
+          <ul>
+            
+              
+                <li><a title=".NET" href="/azure-sdk/releases/deprecated/dotnet.html">.NET</a></li>
+              
+              
+            
+              
+                <li><a title="Java" href="/azure-sdk/releases/deprecated/java.html">Java</a></li>
+              
+              
+            
+              
+                <li><a title="JavaScript/TypeScript" href="/azure-sdk/releases/deprecated/js.html">JavaScript/TypeScript</a></li>
+              
+              
+            
+              
+                <li><a title="Python" href="/azure-sdk/releases/deprecated/python.html">Python</a></li>
+              
+              
+            
+              
+                <li><a title="Go" href="/azure-sdk/releases/deprecated/go.html">Go</a></li>
+              
+              
+            
+          </ul>
+        </li>
+      
+    
+  </ol>
+</div>
+
+<script>$("li.active").parents('li').toggleClass("active");</script>
+
+                </div>
+                
+                
+
+                <!-- Content Column -->
+                <div class="col-md-10 col-xs-12" id="tg-sb-content">
+                    <div class="row">
+    
+    <div class="col-md-2 col-xs-12 content-right pull-right">
+        
+<!-- this handles the automatic toc. use ## for subheads to auto-generate the on-page minitoc. if you use html tags, you must supply an ID for the heading element in order for it to appear in the minitoc. -->
+<script>
+$( document ).ready(function() {
+  // Handler for .ready() called.
+
+$('#toc').toc({ minimumHeaders: 0, listType: 'ul', showSpeed: 0, headers: 'h2,h3,h4' });
+
+/* this offset helps account for the space taken up by the floating toolbar. */
+$('#toc').on('click', 'a', function() {
+  var target = $(this.getAttribute('href'))
+    , scroll_target = target.offset().top
+
+  $(window).scrollTop(scroll_target - 60);
+  return false
+})
+  
+});
+</script>
+
+<div id="toc"></div>
+
+    </div>
+    
+    <div class="col-md-10  col-xs-12 content-center pull-left">
+        <article class="post" itemscope itemtype="https://schema.org/BlogPosting">
+
+            <header class="post-header">
+                <h1 class="post-title" itemprop="name headline">Azure SDK for JavaScript (November 2023)</h1>
+                <p class="post-meta">
+                    <time datetime="" itemprop="datePublished"></time> 
+        <!--
+                    
+                    /
+                    
+                    
+                    
+                    
+                    
+        -->
+                </p>
+        
+        
+            </header>
+        
+            <div class="post-content" itemprop="articleBody">
+        
+                
+        
+                
+<p>The Azure SDK team is pleased to announce our November 2023 client library releases.</p>
+
+<p>62 packages released this month.</p>
+
+<h4 id="stable-packages-23">Stable Packages (23)</h4>
+
+<ul>
+  <li>
+    <p>App Configuration</p>
+  </li>
+  <li>
+    <p>Azure Identity Broker</p>
+  </li>
+  <li>
+    <p>Core - Client - AMQP</p>
+  </li>
+  <li>
+    <p>Core - Client - Core Utils</p>
+  </li>
+  <li>
+    <p>Event Grid</p>
+  </li>
+  <li>
+    <p>Identity</p>
+  </li>
+  <li>
+    <p>Resource Management - Cognitive Search</p>
+  </li>
+  <li>
+    <p>Resource Management - Connected VMware</p>
+  </li>
+  <li>
+    <p>Resource Management - Container Service</p>
+  </li>
+  <li>
+    <p>Resource Management - Container Service Fleet</p>
+  </li>
+  <li>
+    <p>Resource Management - Content Delivery Network</p>
+  </li>
+  <li>
+    <p>Resource Management - Datadog</p>
+  </li>
+  <li>
+    <p>Resource Management - Desktop Virtualization</p>
+  </li>
+  <li>
+    <p>Resource Management - Key Vault</p>
+  </li>
+  <li>
+    <p>Resource Management - Kusto</p>
+  </li>
+  <li>
+    <p>Resource Management - NetApp Files</p>
+  </li>
+  <li>
+    <p>Resource Management - Resource Mover</p>
+  </li>
+  <li>
+    <p>Resource Management - Storage Mover</p>
+  </li>
+  <li>
+    <p>Schema Registry - Avro</p>
+  </li>
+  <li>
+    <p>Storage - Blobs</p>
+  </li>
+  <li>
+    <p>Storage - Files Data Lake</p>
+  </li>
+  <li>
+    <p>Storage - Files Share</p>
+  </li>
+  <li>
+    <p>Storage - Queues</p>
+  </li>
+</ul>
+
+<h4 id="patch-updates-7">Patch Updates (7)</h4>
+
+<ul>
+  <li>
+    <p>Azure Monitor OpenTelemetry</p>
+  </li>
+  <li>
+    <p>Communication Call Automation</p>
+  </li>
+  <li>
+    <p>Core - Client - Core Rest Pipeline</p>
+  </li>
+  <li>
+    <p>Core - Client - Core Utils</p>
+  </li>
+  <li>
+    <p>Event Hubs</p>
+  </li>
+  <li>
+    <p>Identity</p>
+  </li>
+  <li>
+    <p>Service Bus</p>
+  </li>
+</ul>
+
+<h4 id="beta-packages-27">Beta Packages (27)</h4>
+
+<ul>
+  <li>
+    <p>Azure Identity Broker</p>
+  </li>
+  <li>
+    <p>Communication Call Automation</p>
+  </li>
+  <li>
+    <p>Defender EASM</p>
+  </li>
+  <li>
+    <p>Identity</p>
+  </li>
+  <li>
+    <p>Key Vault - Administration</p>
+  </li>
+  <li>
+    <p>Key Vault - Certificates</p>
+  </li>
+  <li>
+    <p>Key Vault - Keys</p>
+  </li>
+  <li>
+    <p>Key Vault - Secrets</p>
+  </li>
+  <li>
+    <p>OpenAI</p>
+  </li>
+  <li>
+    <p>OpenTelemetry Exporter</p>
+  </li>
+  <li>
+    <p>Resource Management - Azure Stack HCI</p>
+  </li>
+  <li>
+    <p>Resource Management - Container Service</p>
+  </li>
+  <li>
+    <p>Resource Management - Container Service Fleet</p>
+  </li>
+  <li>
+    <p>Resource Management - Dev Center</p>
+  </li>
+  <li>
+    <p>Resource Management - Elasticsan</p>
+  </li>
+  <li>
+    <p>Resource Management - Postgresql</p>
+  </li>
+  <li>
+    <p>Resource Management - Recoveryservicesdatareplication</p>
+  </li>
+  <li>
+    <p>Resource Management - Resource Health</p>
+  </li>
+  <li>
+    <p>Resource Management - Self Help</p>
+  </li>
+  <li>
+    <p>Resource Management - SignalR</p>
+  </li>
+  <li>
+    <p>Resource Management - Support</p>
+  </li>
+  <li>
+    <p>Resource Management - Web PubSub</p>
+  </li>
+  <li>
+    <p>Storage - Blobs</p>
+  </li>
+  <li>
+    <p>Storage - Files Data Lake</p>
+  </li>
+  <li>
+    <p>Storage - Files Share</p>
+  </li>
+  <li>
+    <p>Storage - Queues</p>
+  </li>
+  <li>
+    <p>WebPubSub Client SDK Protobuf</p>
+  </li>
+</ul>
+
+<h2 id="release-highlights">Release highlights</h2>
+
+<h3 id="app-configuration-150-changelog">App Configuration 1.5.0 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/app-configuration_1.5.0/sdk/appconfiguration/app-configuration/CHANGELOG.md">Changelog</a></h3>
+<h4 id="bugs-fixed">Bugs Fixed</h4>
+
+<ul>
+  <li>To match the input type, change the output representation of <code class="language-plaintext highlighter-rouge">label</code> and <code class="language-plaintext highlighter-rouge">contentType</code> from <code class="language-plaintext highlighter-rouge">null</code> to <code class="language-plaintext highlighter-rouge">undefined</code> when these properties are empty or not defined in the configuration setting object. <a href="https://github.com/Azure/azure-sdk-for-js/pull/27622">#27622</a></li>
+</ul>
+
+<h4 id="features-added">Features Added</h4>
+
+<ul>
+  <li>With the new API version <code class="language-plaintext highlighter-rouge">2023-10-01</code>, the configuration snapshot feature is generally available.</li>
+</ul>
+
+<p>This feature allows you to create snapshots by specifying key and label filters. These filters help capture the necessary configuration settings from your App Configuration instance, creating an immutable, composed view of the configuration store.</p>
+
+<p>The filtered configuration settings are stored as a snapshot with the name provided during its creation.
+<code class="language-plaintext highlighter-rouge">AppConfigurationClient</code> is enhanced to support new operations such as create, list archive, and recover operations with snapshots.</p>
+
+<p>See <a href="https://github.com/Azure/azure-sdk-for-js/tree/main/sdk/appconfiguration/app-configuration/samples/v1-beta/typescript/src/snapshot.ts"><code class="language-plaintext highlighter-rouge">snapshot.ts</code></a> for more information now how to use snapshots.</p>
+
+<h3 id="azure-identity-broker-100-changelog">Azure Identity Broker 1.0.0 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/identity-broker_1.0.0/sdk/identity/identity-broker/CHANGELOG.md">Changelog</a></h3>
+<h4 id="features-added-1">Features Added</h4>
+<ul>
+  <li>First GA release of the plugin package <code class="language-plaintext highlighter-rouge">@azure/identity-broker</code> to <a href="https://learn.microsoft.com/azure/active-directory/develop/scenario-desktop-acquire-token-wam">support authentication through broker such as WAM</a>. This plugin works with the <a href="https://github.com/Azure/azure-sdk-for-js/pull/26091/"><code class="language-plaintext highlighter-rouge">brokerOptions</code> on <code class="language-plaintext highlighter-rouge">InteractiveBrowserCredential</code> added in the <code class="language-plaintext highlighter-rouge">@azure/identity</code> package</a>.</li>
+</ul>
+
+<h3 id="azure-identity-broker-100-beta1-changelog">Azure Identity Broker 1.0.0-beta.1 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/identity-broker_1.0.0-beta.1/sdk/identity/identity-broker/CHANGELOG.md">Changelog</a></h3>
+<h4 id="features-added-2">Features Added</h4>
+<ul>
+  <li>Created a plugin package to <a href="https://learn.microsoft.com/azure/active-directory/develop/scenario-desktop-acquire-token-wam">support authentication through broker such as WAM</a>. This plugin works with the <a href="https://github.com/Azure/azure-sdk-for-js/pull/26091"><code class="language-plaintext highlighter-rouge">brokerOptions</code> on <code class="language-plaintext highlighter-rouge">InteractiveBrowserCredential</code> added in the <code class="language-plaintext highlighter-rouge">@azure/identity</code> package</a>.</li>
+</ul>
+
+<h3 id="azure-monitor-opentelemetry-111-changelog">Azure Monitor OpenTelemetry 1.1.1 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/monitor-opentelemetry_1.1.1/sdk/monitor/monitor-opentelemetry/CHANGELOG.md">Changelog</a></h3>
+<h4 id="bugs-fixed-1">Bugs Fixed</h4>
+
+<ul>
+  <li>Add AKS resource provider in Statsbeat, add missing resource identifiers.</li>
+  <li>Handle issue of custom MeterReaders not being able to collect metrics for instrumentations.</li>
+</ul>
+
+<h3 id="communication-call-automation-110-beta3-changelog">Communication Call Automation 1.1.0-beta.3 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/communication-call-automation_1.1.0-beta.3/sdk/communication/communication-call-automation/CHANGELOG.md">Changelog</a></h3>
+<h4 id="bug-fixes">Bug fixes</h4>
+
+<ul>
+  <li>Await on downlaodToPath method will now properly wait untill download completes.</li>
+</ul>
+
+<h3 id="communication-call-automation-101-changelog">Communication Call Automation 1.0.1 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/communication-call-automation_1.0.1/sdk/communication/communication-call-automation/CHANGELOG.md">Changelog</a></h3>
+<h4 id="bugs-fixed-2">Bugs Fixed</h4>
+<ul>
+  <li>Await on downloadToPath method will now properly wait untill download completes.</li>
+</ul>
+
+<h3 id="core---client---amqp-410-changelog">Core - Client - AMQP 4.1.0 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/core-amqp_4.1.0/sdk/core/core-amqp/CHANGELOG.md">Changelog</a></h3>
+<h4 id="other-changes">Other Changes</h4>
+
+<ul>
+  <li>Add a retryable client error that is thrown when the sender link is not ready.</li>
+</ul>
+
+<h3 id="core---client---core-rest-pipeline-1122-changelog">Core - Client - Core Rest Pipeline 1.12.2 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/core-rest-pipeline_1.12.2/sdk/core/core-rest-pipeline/CHANGELOG.md">Changelog</a></h3>
+<h4 id="bugs-fixed-3">Bugs Fixed</h4>
+<ul>
+  <li>Support Cloudflare workers by only setting the available fields in the <code class="language-plaintext highlighter-rouge">Request</code> class for the Fetch API. <a href="https://github.com/Azure/azure-sdk-for-js/pull/27423">PR #27423</a></li>
+  <li>Add <code class="language-plaintext highlighter-rouge">ENOTFOUND</code> code to exponential retry policy. <a href="https://github.com/Azure/azure-sdk-for-js/pull/27437">PR #27437</a></li>
+  <li>Wait before stop listening to the abort signal until after the response stream has been drained to allow for aborting prolonged responses <a href="https://github.com/Azure/azure-sdk-for-js/pull/27205">PR #27205</a></li>
+</ul>
+
+<h3 id="core---client---core-utils-160-changelog">Core - Client - Core Utils 1.6.0 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/core-util_1.6.0/sdk/core/core-util/CHANGELOG.md">Changelog</a></h3>
+<h4 id="bugs-fixed-4">Bugs Fixed</h4>
+
+<ul>
+  <li>Improved <code class="language-plaintext highlighter-rouge">isNode</code> to be false when <code class="language-plaintext highlighter-rouge">isDeno</code> is true due to Deno implementing <code class="language-plaintext highlighter-rouge">process.version.node</code></li>
+</ul>
+
+<h4 id="features-added-3">Features Added</h4>
+
+<ul>
+  <li>Add support for hex encoding to <code class="language-plaintext highlighter-rouge">uint8ArrayToString</code> and <code class="language-plaintext highlighter-rouge">stringToUint8Array</code></li>
+  <li>Fix bug when <code class="language-plaintext highlighter-rouge">uint8ArrayToString</code> with Base64 encoding would not decode binary data
+containing bytes which are not valid ISO/IEC 8859-1 (latin1) characters.</li>
+</ul>
+
+<h3 id="core---client---core-utils-161-changelog">Core - Client - Core Utils 1.6.1 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/core-util_1.6.1/sdk/core/core-util/CHANGELOG.md">Changelog</a></h3>
+<h4 id="bugs-fixed-5">Bugs Fixed</h4>
+
+<ul>
+  <li>Fixed Base64 decode in <code class="language-plaintext highlighter-rouge">stringToUint8Array</code> in browser so that it supports binary that contains UTF-16 characters which have a continuation token.</li>
+</ul>
+
+<h3 id="defender-easm-100-beta1-changelog">Defender EASM 1.0.0-beta.1 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure-rest/defender-easm_1.0.0-beta.1/sdk/easm/defender-easm-rest/CHANGELOG.md">Changelog</a></h3>
+<ul>
+  <li>First release of package, see README.md for details.</li>
+</ul>
+
+<h3 id="event-grid-500-changelog">Event Grid 5.0.0 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/eventgrid_5.0.0/sdk/eventgrid/eventgrid/CHANGELOG.md">Changelog</a></h3>
+<h4 id="breaking-changes">Breaking Changes</h4>
+
+<ul>
+  <li>In <code class="language-plaintext highlighter-rouge">ResourceNotificationsResourceUpdatedDetails</code> interface, the data type of property <code class="language-plaintext highlighter-rouge">tags</code> has been changed from <code class="language-plaintext highlighter-rouge">string</code> to object. Please refer <a href="https://github.com/Azure/azure-sdk-for-js/pull/27679/">PR #27679</a> for further details.</li>
+</ul>
+
+<h4 id="features-added-4">Features Added</h4>
+
+<ul>
+  <li>
+    <p>Added new System Events:</p>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">Microsoft.ResourceNotifications.Resources.CreatedOrUpdated</code></li>
+  <li><code class="language-plaintext highlighter-rouge">Microsoft.ResourceNotifications.Resources.Deleted</code></li>
+</ul>
+
+<h3 id="event-hubs-5113-changelog">Event Hubs 5.11.3 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/event-hubs_5.11.3/sdk/eventhub/event-hubs/CHANGELOG.md">Changelog</a></h3>
+<h4 id="bugs-fixed-6">Bugs Fixed</h4>
+
+<ul>
+  <li>Improve event prefetching to not overload the internal queue.</li>
+</ul>
+
+<h3 id="identity-332-changelog">Identity 3.3.2 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/identity_3.3.2/sdk/identity/identity/CHANGELOG.md">Changelog</a></h3>
+<h4 id="bugs-fixed-7">Bugs Fixed</h4>
+<ul>
+  <li>Ensure <code class="language-plaintext highlighter-rouge">AzurePowershellCredential</code> calls PowerShell with the <code class="language-plaintext highlighter-rouge">-NoProfile</code>  and “-NonInteractive” flag to avoid loading user profiles for more consistent behavior. (<a href="https://github.com/Azure/azure-sdk-for-js/pull/27023">#27023</a>)</li>
+  <li>Fixed browser bundling for Azure Developer CLI credential. ([Identity] update mapping for browser for azd (#27097))</li>
+  <li><code class="language-plaintext highlighter-rouge">ManagedIdentityCredential</code> will fall through to the next credential in the chain in the case that Docker Desktop returns a 403 response when attempting to access the IMDS endpoint.(<a href="https://github.com/Azure/azure-sdk-for-js/pull/27050">#27050</a>).</li>
+</ul>
+
+<h3 id="identity-400-beta1-changelog">Identity 4.0.0-beta.1 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/identity_4.0.0-beta.1/sdk/identity/identity/CHANGELOG.md">Changelog</a></h3>
+<h4 id="breaking-changes-1">Breaking Changes</h4>
+<ul>
+  <li>The <code class="language-plaintext highlighter-rouge">redirectUri</code> is no longer a required option for <code class="language-plaintext highlighter-rouge">InteractiveBrowserCredential</code> on Node.js. There’s no API change, but this is a behavior change.</li>
+</ul>
+
+<h4 id="features-added-5">Features Added</h4>
+<ul>
+  <li>Added <code class="language-plaintext highlighter-rouge">brokerOptions</code> in <code class="language-plaintext highlighter-rouge">InteractiveBrowserCredential</code> for authentication broker support such as WAM. This feature works along with the new <code class="language-plaintext highlighter-rouge">@azure/identity-broker</code> plugin package. Note that this feature is only available in node.</li>
+  <li>Added support for MSA passthrough in the <code class="language-plaintext highlighter-rouge">brokerOptions</code> of <code class="language-plaintext highlighter-rouge">InteractiveBrowserCredential</code>. Note this is only available for legacy 1st party applications.</li>
+  <li>Added <code class="language-plaintext highlighter-rouge">BrowserCustomizationOptions</code> for success and error messages in the <code class="language-plaintext highlighter-rouge">InteractiveBrowserCredential</code>.</li>
+</ul>
+
+<h3 id="identity-340-changelog">Identity 3.4.0 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/identity_3.4.0/sdk/identity/identity/CHANGELOG.md">Changelog</a></h3>
+<h3 id="features-added-6">Features Added</h3>
+<ul>
+  <li>Upgraded version of @azure/msal-node to v2.5.0 to support all versions of Node.js - Node 16, Node 18 and Node 20.</li>
+</ul>
+
+<h3 id="identity-400-changelog">Identity 4.0.0 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/identity_4.0.0/sdk/identity/identity/CHANGELOG.md">Changelog</a></h3>
+<h4 id="features-added-7">Features Added</h4>
+<ul>
+  <li>All the features shipped as part of 4.0.0-beta.1 will be GA with this version. The most important features being the browser customization for success/ error messages and the support of brokered authentication on Windows OS, such as WAM.</li>
+</ul>
+
+<h4 id="breaking-changes-2">Breaking Changes</h4>
+<ul>
+  <li>Starting with v4.0.0 of <code class="language-plaintext highlighter-rouge">@azure/identity</code>, Node.js v20 will be supported and Node.js v16 will no longer be supported.</li>
+</ul>
+
+<h3 id="key-vault---administration-450-beta1-changelog">Key Vault - Administration 4.5.0-beta.1 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/keyvault-admin_4.5.0-beta.1/sdk/keyvault/keyvault-admin/CHANGELOG.md">Changelog</a></h3>
+<h4 id="features-added-8">Features Added</h4>
+
+<ul>
+  <li>Managed Identity can now be used in place of a SAS token to access the blob storage resource when performing backup and restore operations.</li>
+</ul>
+
+<h3 id="key-vault---certificates-480-beta1-changelog">Key Vault - Certificates 4.8.0-beta.1 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/keyvault-certificates_4.8.0-beta.1/sdk/keyvault/keyvault-certificates/CHANGELOG.md">Changelog</a></h3>
+<h4 id="features-added-9">Features Added</h4>
+
+<ul>
+  <li>Added property <code class="language-plaintext highlighter-rouge">x509ThumbprintString</code> to <code class="language-plaintext highlighter-rouge">CertificateProperties</code>. This property is a hex string representation of the existing <code class="language-plaintext highlighter-rouge">x509Thumbprint</code> property added for convenience.</li>
+</ul>
+
+<h3 id="key-vault---keys-480-beta1-changelog">Key Vault - Keys 4.8.0-beta.1 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/keyvault-keys_4.8.0-beta.1/sdk/keyvault/keyvault-keys/CHANGELOG.md">Changelog</a></h3>
+<h4 id="features-added-10">Features Added</h4>
+
+<ul>
+  <li>Added <code class="language-plaintext highlighter-rouge">hsmPlatform</code> property to <code class="language-plaintext highlighter-rouge">KeyProperties</code>.</li>
+</ul>
+
+<h3 id="key-vault---secrets-480-beta1-changelog">Key Vault - Secrets 4.8.0-beta.1 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/keyvault-secrets_4.8.0-beta.1/sdk/keyvault/keyvault-secrets/CHANGELOG.md">Changelog</a></h3>
+<h4 id="other-changes-1">Other Changes</h4>
+
+<ul>
+  <li>The default service version is now <code class="language-plaintext highlighter-rouge">7.5-preview.1</code>.</li>
+</ul>
+
+<h3 id="openai-100-beta7-changelog">OpenAI 1.0.0-beta.7 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/openai_1.0.0-beta.7/sdk/openai/openai/CHANGELOG.md">Changelog</a></h3>
+<h4 id="bugs-fixed-8">Bugs Fixed</h4>
+
+<ul>
+  <li>Support Cloudflare workers by only setting the available fields in the <code class="language-plaintext highlighter-rouge">Request</code> class for the Fetch API.</li>
+  <li>Wait before stop listening to the abort signal until after the response stream has been drained to allow for aborting prolonged responses.</li>
+</ul>
+
+<h3 id="opentelemetry-exporter-100-beta18-changelog">OpenTelemetry Exporter 1.0.0-beta.18 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/monitor-opentelemetry-exporter_1.0.0-beta.18/sdk/monitor/monitor-opentelemetry-exporter/CHANGELOG.md">Changelog</a></h3>
+<h4 id="bugs-fixed-9">Bugs Fixed</h4>
+
+<ul>
+  <li>Fix Feature and Instrumentation Statsbeat type value.</li>
+</ul>
+
+<h3 id="resource-management---azure-stack-hci-400-beta1-changelog">Resource Management - Azure Stack HCI 4.0.0-beta.1 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/arm-azurestackhci_4.0.0-beta.1/sdk/azurestackhci/arm-azurestackhci/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---cognitive-search-320-changelog">Resource Management - Cognitive Search 3.2.0 <a href="https://github.com/Azure/azure-sdk-for-js/tree/main/sdk/search/arm-search/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---connected-vmware-100-changelog">Resource Management - Connected VMware 1.0.0 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/arm-connectedvmware_1.0.0/sdk/connectedvmware/arm-connectedvmware/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---container-service-1940-beta2-changelog">Resource Management - Container Service 19.4.0-beta.2 <a href="https://github.com/Azure/azure-sdk-for-js/tree/main/sdk/containerservice/arm-containerservice/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---container-service-1940-changelog">Resource Management - Container Service 19.4.0 <a href="https://github.com/Azure/azure-sdk-for-js/tree/main/sdk/containerservice/arm-containerservice/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---container-service-fleet-100-beta3-changelog">Resource Management - Container Service Fleet 1.0.0-beta.3 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/arm-containerservicefleet_1.0.0-beta.3/sdk/containerservice/arm-containerservicefleet/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---container-service-fleet-100-changelog">Resource Management - Container Service Fleet 1.0.0 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/arm-containerservicefleet_1.0.0/sdk/containerservice/arm-containerservicefleet/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---content-delivery-network-900-changelog">Resource Management - Content Delivery Network 9.0.0 <a href="https://github.com/Azure/azure-sdk-for-js/tree/main/sdk/cdn/arm-cdn/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---datadog-310-changelog">Resource Management - Datadog 3.1.0 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/arm-datadog_3.1.0/sdk/datadog/arm-datadog/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---desktop-virtualization-110-changelog">Resource Management - Desktop Virtualization 1.1.0 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/arm-desktopvirtualization_1.1.0/sdk/desktopvirtualization/arm-desktopvirtualization/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---dev-center-110-beta1-changelog">Resource Management - Dev Center 1.1.0-beta.1 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/arm-devcenter_1.1.0-beta.1/sdk/devcenter/arm-devcenter/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---elasticsan-100-beta3-changelog">Resource Management - Elasticsan 1.0.0-beta.3 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/arm-elasticsan_1.0.0-beta.3/sdk/elasticsans/arm-elasticsan/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---key-vault-310-changelog">Resource Management - Key Vault 3.1.0 <a href="https://github.com/Azure/azure-sdk-for-js/tree/main/sdk/keyvault/arm-keyvault/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---kusto-810-changelog">Resource Management - Kusto 8.1.0 <a href="https://github.com/Azure/azure-sdk-for-js/tree/main/sdk/kusto/arm-kusto/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---netapp-files-1900-changelog">Resource Management - NetApp Files 19.0.0 <a href="https://github.com/Azure/azure-sdk-for-js/tree/main/sdk/netapp/arm-netapp/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---postgresql-800-beta3-changelog">Resource Management - Postgresql 8.0.0-beta.3 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/arm-postgresql-flexible_8.0.0-beta.3/sdk/postgresql/arm-postgresql-flexible/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---recoveryservicesdatareplication-100-beta1-changelog">Resource Management - Recoveryservicesdatareplication 1.0.0-beta.1 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/arm-recoveryservicesdatareplication_1.0.0-beta.1/sdk/recoveryservicesdatareplication/arm-recoveryservicesdatareplication/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---resource-health-410-beta1-changelog">Resource Management - Resource Health 4.1.0-beta.1 <a href="https://github.com/Azure/azure-sdk-for-js/tree/main/sdk/resourcehealth/arm-resourcehealth/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---resource-mover-220-changelog">Resource Management - Resource Mover 2.2.0 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/arm-resourcemover_2.2.0/sdk/resourcemover/arm-resourcemover/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---self-help-200-beta1-changelog">Resource Management - Self Help 2.0.0-beta.1 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/arm-selfhelp_2.0.0-beta.1/sdk/selfhelp/arm-selfhelp/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---signalr-600-beta2-changelog">Resource Management - SignalR 6.0.0-beta.2 <a href="https://github.com/Azure/azure-sdk-for-js/tree/main/sdk/signalr/arm-signalr/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---storage-mover-200-changelog">Resource Management - Storage Mover 2.0.0 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/arm-storagemover_2.0.0/sdk/storagemover/arm-storagemover/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---support-220-beta1-changelog">Resource Management - Support 2.2.0-beta.1 <a href="https://github.com/Azure/azure-sdk-for-js/tree/main/sdk/support/arm-support/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---web-pubsub-200-beta2-changelog">Resource Management - Web PubSub 2.0.0-beta.2 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/arm-webpubsub_2.0.0-beta.2/sdk/web-pubsub/arm-webpubsub/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="schema-registry---avro-110-changelog">Schema Registry - Avro 1.1.0 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/schema-registry-avro_1.1.0/sdk/schemaregistry/schema-registry-avro/CHANGELOG.md">Changelog</a></h3>
+<h4 id="features-added-11">Features Added</h4>
+
+<ul>
+  <li>Adds support for serializing and deserializing for <code class="language-plaintext highlighter-rouge">timestamp-millis</code> logical type as native <code class="language-plaintext highlighter-rouge">Date</code> objects.</li>
+</ul>
+
+<h3 id="service-bus-793-changelog">Service Bus 7.9.3 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/service-bus_7.9.3/sdk/servicebus/service-bus/CHANGELOG.md">Changelog</a></h3>
+<h4 id="bugs-fixed-10">Bugs Fixed</h4>
+
+<ul>
+  <li>Throw a retryable error when sending message and link is detached <a href="https://github.com/Azure/azure-sdk-for-js/pull/27557">PR #27557</a></li>
+</ul>
+
+<h3 id="storage---blobs-12170-beta1-changelog">Storage - Blobs 12.17.0-beta.1 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/storage-blob_12.17.0-beta.1/sdk/storage/storage-blob/CHANGELOG.md">Changelog</a></h3>
+<h4 id="features-added-12">Features Added</h4>
+
+<ul>
+  <li>Added support for service version 2023-11-03.</li>
+  <li>Added method to generate audience for blob servcie for a storage account.</li>
+</ul>
+
+<h3 id="storage---blobs-12230-beta1-changelog">Storage - Blobs 12.23.0-beta.1 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/storage-blob_12.23.0-beta.1/sdk/storage/storage-blob/CHANGELOG.md">Changelog</a></h3>
+<h4 id="other-changes-2">Other Changes</h4>
+
+<ul>
+  <li>Migrated dependency on <code class="language-plaintext highlighter-rouge">@azure/core-http</code> to <code class="language-plaintext highlighter-rouge">@azure/core-rest-pipeline</code>.</li>
+</ul>
+
+<h3 id="storage---blobs-12170-changelog">Storage - Blobs 12.17.0 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/storage-blob_12.17.0/sdk/storage/storage-blob/CHANGELOG.md">Changelog</a></h3>
+<h4 id="features-added-13">Features Added</h4>
+
+<ul>
+  <li>Includes all features released in 12.17.0-beta.1.</li>
+</ul>
+
+<h3 id="storage---files-data-lake-12160-beta1-changelog">Storage - Files Data Lake 12.16.0-beta.1 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/storage-file-datalake_12.16.0-beta.1/sdk/storage/storage-file-datalake/CHANGELOG.md">Changelog</a></h3>
+<h4 id="features-added-14">Features Added</h4>
+
+<ul>
+  <li>Added support for service version 2023-11-03.</li>
+  <li>Added support for indicating audience in StoragePipelineOptions.</li>
+</ul>
+
+<h3 id="storage---files-data-lake-12220-beta1-changelog">Storage - Files Data Lake 12.22.0-beta.1 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/storage-file-datalake_12.22.0-beta.1/sdk/storage/storage-file-datalake/CHANGELOG.md">Changelog</a></h3>
+<h4 id="other-changes-3">Other Changes</h4>
+
+<ul>
+  <li>Migrated dependency on <code class="language-plaintext highlighter-rouge">@azure/core-http</code> to <code class="language-plaintext highlighter-rouge">@azure/core-rest-pipeline</code>.</li>
+</ul>
+
+<h3 id="storage---files-data-lake-12160-changelog">Storage - Files Data Lake 12.16.0 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/storage-file-datalake_12.16.0/sdk/storage/storage-file-datalake/CHANGELOG.md">Changelog</a></h3>
+<h4 id="features-added-15">Features Added</h4>
+
+<ul>
+  <li>Includes all features released in 12.16.0-beta.1.</li>
+</ul>
+
+<h3 id="storage---files-share-12170-beta1-changelog">Storage - Files Share 12.17.0-beta.1 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/storage-file-share_12.17.0-beta.1/sdk/storage/storage-file-share/CHANGELOG.md">Changelog</a></h3>
+<h4 id="features-added-16">Features Added</h4>
+
+<ul>
+  <li>Added support for service version 2023-11-03.</li>
+  <li>Added support for indicating audience in StoragePipelineOptions.</li>
+</ul>
+
+<h3 id="storage---files-share-12230-beta1-changelog">Storage - Files Share 12.23.0-beta.1 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/storage-file-share_12.23.0-beta.1/sdk/storage/storage-file-share/CHANGELOG.md">Changelog</a></h3>
+<h4 id="other-changes-4">Other Changes</h4>
+
+<ul>
+  <li>Migrated dependency on <code class="language-plaintext highlighter-rouge">@azure/core-http</code> to <code class="language-plaintext highlighter-rouge">@azure/core-rest-pipeline</code>.</li>
+</ul>
+
+<h3 id="storage---files-share-12170-changelog">Storage - Files Share 12.17.0 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/storage-file-share_12.17.0/sdk/storage/storage-file-share/CHANGELOG.md">Changelog</a></h3>
+<h4 id="features-added-17">Features Added</h4>
+
+<ul>
+  <li>Includes all features released in 12.17.0-beta.1.</li>
+</ul>
+
+<h3 id="storage---queues-12160-beta1-changelog">Storage - Queues 12.16.0-beta.1 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/storage-queue_12.16.0-beta.1/sdk/storage/storage-queue/CHANGELOG.md">Changelog</a></h3>
+<h4 id="features-added-18">Features Added</h4>
+
+<ul>
+  <li>Added support for service version 2023-11-03.</li>
+  <li>Added support for indicating audience in StoragePipelineOptions.</li>
+</ul>
+
+<h3 id="storage---queues-12220-beta1-changelog">Storage - Queues 12.22.0-beta.1 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/storage-queue_12.22.0-beta.1/sdk/storage/storage-queue/CHANGELOG.md">Changelog</a></h3>
+<h4 id="other-changes-5">Other Changes</h4>
+
+<ul>
+  <li>Migrated dependency on <code class="language-plaintext highlighter-rouge">@azure/core-http</code> to <code class="language-plaintext highlighter-rouge">@azure/core-rest-pipeline</code>.</li>
+</ul>
+
+<h3 id="storage---queues-12160-changelog">Storage - Queues 12.16.0 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/storage-queue_12.16.0/sdk/storage/storage-queue/CHANGELOG.md">Changelog</a></h3>
+<h4 id="features-added-19">Features Added</h4>
+
+<ul>
+  <li>Includes all features released in 12.16.0-beta.1.</li>
+</ul>
+
+<h3 id="webpubsub-client-sdk-protobuf-100-beta2-changelog">WebPubSub Client SDK Protobuf 1.0.0-beta.2 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/web-pubsub-client-protobuf_1.0.0-beta.2/sdk/web-pubsub/web-pubsub-client-protobuf/CHANGELOG.md">Changelog</a></h3>
+<h4 id="bugs-fixed-11">Bugs Fixed</h4>
+
+<ul>
+  <li>Fix the bug that commonjs doesn’t work</li>
+</ul>
+
+<h2 id="latest-releases">Latest Releases</h2>
+
+<p>View all the latest versions of JavaScript packages <a href="/azure-sdk/releases/latest/js.html">here</a>.</p>
+
+<h2 id="installation-instructions">Installation Instructions</h2>
+
+<p>To install the packages, copy and paste the below into a terminal.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure-rest/defender-easm@1.0.0-beta.1
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/app-configuration@1.5.0
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/arm-azurestackhci@4.0.0-beta.1
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/arm-cdn@9.0.0
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/arm-connectedvmware@1.0.0
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/arm-containerservice@19.4.0-beta.2
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/arm-containerservice@19.4.0
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/arm-containerservicefleet@1.0.0-beta.3
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/arm-containerservicefleet@1.0.0
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/arm-datadog@3.1.0
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/arm-desktopvirtualization@1.1.0
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/arm-devcenter@1.1.0-beta.1
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/arm-elasticsan@1.0.0-beta.3
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/arm-keyvault@3.1.0
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/arm-kusto@8.1.0
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/arm-netapp@19.0.0
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/arm-postgresql-flexible@8.0.0-beta.3
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/arm-recoveryservicesdatareplication@1.0.0-beta.1
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/arm-resourcehealth@4.1.0-beta.1
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/arm-resourcemover@2.2.0
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/arm-search@3.2.0
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/arm-selfhelp@2.0.0-beta.1
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/arm-signalr@6.0.0-beta.2
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/arm-storagemover@2.0.0
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/arm-support@2.2.0-beta.1
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/arm-webpubsub@2.0.0-beta.2
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/communication-call-automation@1.1.0-beta.3
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/communication-call-automation@1.0.1
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/core-amqp@4.1.0
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/core-rest-pipeline@1.12.2
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/core-util@1.6.0
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/core-util@1.6.1
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/event-hubs@5.11.3
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/eventgrid@5.0.0
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/identity@3.3.2
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/identity@4.0.0-beta.1
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/identity@3.4.0
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/identity@4.0.0
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/identity-broker@1.0.0
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/identity-broker@1.0.0-beta.1
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/keyvault-admin@4.5.0-beta.1
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/keyvault-certificates@4.8.0-beta.1
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/keyvault-keys@4.8.0-beta.1
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/keyvault-secrets@4.8.0-beta.1
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/monitor-opentelemetry@1.1.1
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/monitor-opentelemetry-exporter@1.0.0-beta.18
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/openai@1.0.0-beta.7
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/schema-registry-avro@1.1.0
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/service-bus@7.9.3
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/storage-blob@12.17.0-beta.1
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/storage-blob@12.23.0-beta.1
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/storage-blob@12.17.0
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/storage-file-datalake@12.16.0-beta.1
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/storage-file-datalake@12.22.0-beta.1
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/storage-file-datalake@12.16.0
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/storage-file-share@12.17.0-beta.1
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/storage-file-share@12.23.0-beta.1
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/storage-file-share@12.17.0
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/storage-queue@12.16.0-beta.1
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/storage-queue@12.22.0-beta.1
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/storage-queue@12.16.0
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/web-pubsub-client-protobuf@1.0.0-beta.2
+</code></pre></div></div>
+
+<h2 id="feedback">Feedback</h2>
+
+<p>If you have a bug or feature request for one of the libraries, please post an issue at the <a href="https://github.com/azure/azure-sdk-for-js/issues">azure-sdk-for-js repository</a></p>
+
+
+            </div>
+        </article>
+        
+        
+
+    </div>
+</div>
+
+                </div>
+                <!-- /.row -->
+
+            </div>
+            <!-- /.container -->
+        </div>
+        <!-- /#main -->
+    </div>
+    
+    <!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-62780441-46"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-62780441-46');
+</script>
+
+<!-- OLD SCRIPT
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-62780441-46','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+-->
+
+    
+    
+    <!-- the app_insights gets auto inserted from the config file -->
+<!-- For other configuration elements, see https://docs.microsoft.com/azure/azure-monitor/app/javascript#snippet-based-setup -->
+
+<script type="text/javascript">
+var sdkInstance="appInsightsSDK";window[sdkInstance]="appInsights";var aiName=window[sdkInstance],aisdk=window[aiName]||function(n){var o={config:n,initialize:!0},t=document,e=window,i="script";setTimeout(function(){var e=t.createElement(i);e.src=n.url||"https://az416426.vo.msecnd.net/scripts/b/ai.2.min.js",t.getElementsByTagName(i)[0].parentNode.appendChild(e)});try{o.cookie=t.cookie}catch(e){}function a(n){o[n]=function(){var e=arguments;o.queue.push(function(){o[n].apply(o,e)})}}o.queue=[],o.version=2;for(var s=["Event","PageView","Exception","Trace","DependencyData","Metric","PageViewPerformance"];s.length;)a("track"+s.pop());var r="Track",c=r+"Page";a("start"+c),a("stop"+c);var u=r+"Event";if(a("start"+u),a("stop"+u),a("addTelemetryInitializer"),a("setAuthenticatedUserContext"),a("clearAuthenticatedUserContext"),a("flush"),o.SeverityLevel={Verbose:0,Information:1,Warning:2,Error:3,Critical:4},!(!0===n.disableExceptionTracking||n.extensionConfig&&n.extensionConfig.ApplicationInsightsAnalytics&&!0===n.extensionConfig.ApplicationInsightsAnalytics.disableExceptionTracking)){a("_"+(s="onerror"));var p=e[s];e[s]=function(e,n,t,i,a){var r=p&&p(e,n,t,i,a);return!0!==r&&o["_"+s]({message:e,url:n,lineNumber:t,columnNumber:i,error:a}),r},n.autoExceptionInstrumented=!0}return o}(
+{
+    instrumentationKey:"5e03f19a-f5b4-4620-97d5-35707cec7fcb",
+    autoTrackPageVisitTime:true,
+    isCookieUseDisabled:true
+}
+);(window[aiName]=aisdk).queue&&0===aisdk.queue.length&&aisdk.trackPageView({});
+</script>
+
+    
+</body>
+<hr class="shaded"/>
+<footer>
+    <div class="container-fluid">
+        <div class="row footer">
+            <div class="col-lg-6 text-left pb-1">
+           &copy;2024 Microsoft Azure. All rights reserved. 
+ Site last generated: May 30, 2024
+            </div>
+            <div class="col-lg-6 text-right">
+                <p><img src="/azure-sdk/images/company_logo.png" width="100px" alt="Microsoft logo"/></p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+</html>

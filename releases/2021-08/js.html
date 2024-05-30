@@ -1,0 +1,1860 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="keywords" content="javascript typescript azure,  ">
+<title>Azure SDK for JavaScript (August 2021) | Azure SDKs</title>
+<link rel="stylesheet" href="/azure-sdk/css/syntax.css" />
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/azure-sdk/css/modern-business.css" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="/azure-sdk/css/boxshadowproperties.css" />
+<link rel="stylesheet" href="/azure-sdk/css/theme-azure.css" />
+<link rel="stylesheet" href="/azure-sdk/css/customstyles.css" />
+<link rel="stylesheet" href="/azure-sdk/css/normalize.css">
+<link rel="stylesheet" href="/azure-sdk/css/tipuesearch.css">
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="/azure-sdk/js/jquery.navgoco.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.2.0/anchor.min.js"></script>
+<script src="/azure-sdk/js/toc.js"></script>
+<script src="/azure-sdk/js/customscripts.js"></script>
+
+<link rel="shortcut icon" href="/azure-sdk/images/azure-sdk-glyph.svg"/>
+<link rel="alternate" type="application/rss+xml" title="Azure SDKs" href="/azure-sdk/feed.xml" />
+
+    <script>
+        $(document).ready(function () {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function (e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function (e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+
+        });
+
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function () {
+            $("#tg-sb-link").click(function () {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+    <!-- Due to the page header height, all anchors uses top padding to offset the top possion and appear below the main header.
+        If one requirement icon is just below another, the padding of the icon overlaps the one on top of it and block the clicking surface.
+        The script below finds all requirements icons and adds z-index decrementally to place any previous icon on top of the next ones.
+        The script runs after the page is completelly load (all content is downloaded).
+      -->
+    <script>
+        $(window).bind("load", function () {
+            let requeriments = $('.requirement');
+            requeriments.each(function (index, element) {
+                $(element).css("z-index", requeriments.length - index);
+            });
+        });
+    </script>
+
+</head>
+
+<body>
+    <!-- Navigation -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/azure-sdk/releases/latest/index.html"/>
+                <span class="projectTitle"><img style="margin-top: -8px;" class="d-inline-block align-top" src="/azure-sdk/images/azure-sdk-glyph.svg" width="35" height="35" alt=""/> Azure SDKs</span>
+            </a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <!-- toggle sidebar button -->
+                <!-- <li><a id="tg-sb-link" href="#"><i id="tg-sb-icon" class="fa fa-toggle-on"></i> Nav</a></li> -->
+                <!-- entries without drop-downs appear here -->
+
+
+
+
+
+                
+                
+                
+                <li><a href="https://aka.ms/azsdk/blog" rel="noopener">Blog</a></li>
+                
+                
+                
+                <li><a href="/azure-sdk/releases/latest/">Releases</a></li>
+                
+                
+                
+                <!-- entries with drop-downs appear here -->
+                <!-- conditional logic to control which topnav appears for the audience defined in the configuration file.-->
+                
+                
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Guidelines<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        
+                        
+                        <li><a href="/azure-sdk/general_introduction.html" rel="noopener">General Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/dotnet_introduction.html" rel="noopener">.NET Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/java_introduction.html" rel="noopener">Java Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/python_design.html" rel="noopener">Python Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/typescript_introduction.html" rel="noopener">TypeScript Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/android_design.html" rel="noopener">Android Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/ios_design.html" rel="noopener">iOS Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/clang_design.html" rel="noopener">C Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/cpp_introduction.html" rel="noopener">C++ Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/golang_introduction.html" rel="noopener">Go Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/rust_introduction.html" rel="noopener">Rust Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/policies_adoption.html" rel="noopener">GitHub Repos</a></li>
+                        
+                        <li><a href="/azure-sdk/policies_reviewprocess.html" rel="noopener">Policies</a></li>
+                        
+                        
+                    </ul>
+                </li>
+                
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">API References<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        
+                        
+                        
+                        <li><a href="https://aka.ms/net-docs" rel="noopener">.NET</a></li>
+                        
+                        
+                        
+                        <li><a href="https://aka.ms/java-docs" rel="noopener">Java</a></li>
+                        
+                        
+                        
+                        <li><a href="https://aka.ms/python-docs" rel="noopener">Python</a></li>
+                        
+                        
+                        
+                        <li><a href="https://aka.ms/js-docs" rel="noopener">TypeScript</a></li>
+                        
+                        
+                        
+                    </ul>
+                </li>
+                
+                
+                
+                <li>
+                    
+                        <a style="font-size: 1.666em !important" class="fa fa-github fa-2x" title="GitHub Link" href="https://github.com/azure/azure-sdk-for-js"></a>
+                    
+                </li>
+                <li>
+                    <a style="font-size: 1.666em !important" class="fa fa-twitter fa-2x" title="Twitter Link" href="https://twitter.com/AzureSDK"></a>
+                </li>
+            </ul>
+        </div>
+        </div>
+        <!-- /.container -->
+</nav>
+
+    <!-- Page Content -->
+    <div class="container-fluid" style="margin-top: 60px; min-height: calc(100vh - 50px);">
+        <div id="main">
+            <!-- Content Row -->
+            <div class="row">
+                
+                
+                <!-- Sidebar Column -->
+                <div class="col-md-2 col-xs-12" id="tg-sb-sidebar">
+                    
+
+<div id="mysidebar" class="nav">
+
+  <script src="/azure-sdk/js/tipuesearch_content.js"></script>
+  <script src="/azure-sdk/js/tipuesearch_set.js"></script>
+  <script src="/azure-sdk/js/tipuesearch.min.js"></script>
+
+<p>
+<form action="/azure-sdk/search.html" >
+    <div class=" tipue_search_left"><img src="/azure-sdk/images/search.png" alt="Search Icon" class="tipue_search_icon"></div>
+    <input type="text" class="form-control tipue_search_right" name="q" id="tipue_search_input" pattern=".{3,}" title="At least 3 characters" required placeholder="Search website">
+</form>
+</p>
+<div style="clear: both;"></div>
+  <ol>
+    <li class="sidebarTitle"> </li>
+    
+      
+        
+        <li>
+        
+          
+          <a title="Latest" href="/azure-sdk/releases/latest/index.html">Latest</a>
+          
+          <ul>
+            
+              
+                <li><a title=".NET" href="/azure-sdk/releases/latest/dotnet.html">.NET</a></li>
+              
+              
+            
+              
+                <li><a title="Java" href="/azure-sdk/releases/latest/java.html">Java</a></li>
+              
+              
+            
+              
+                <li><a title="JavaScript/TypeScript" href="/azure-sdk/releases/latest/js.html">JavaScript/TypeScript</a></li>
+              
+              
+            
+              
+                <li><a title="Python" href="/azure-sdk/releases/latest/python.html">Python</a></li>
+              
+              
+            
+              
+                <li><a title="Go" href="/azure-sdk/releases/latest/go.html">Go</a></li>
+              
+              
+            
+              
+                <li><a title="C++" href="/azure-sdk/releases/latest/cpp.html">C++</a></li>
+              
+              
+            
+              
+                <li><a title="Embedded C" href="/azure-sdk/releases/latest/c.html">Embedded C</a></li>
+              
+              
+            
+              
+                <li><a title="Android" href="/azure-sdk/releases/latest/android.html">Android</a></li>
+              
+              
+            
+              
+                <li><a title="iOS" href="/azure-sdk/releases/latest/ios.html">iOS</a></li>
+              
+              
+            
+              
+                <li><a title="Specs" href="/azure-sdk/releases/latest/specs.html">Specs</a></li>
+              
+              
+            
+          </ul>
+        </li>
+      
+        
+        <li>
+        
+          
+          <a title="2024 Releases" href="#">2024 Releases</a>
+          
+          <ul>
+            
+              
+                <li><a title="May" href="/azure-sdk/releases/2024-05/index.html">May</a></li>
+              
+              
+            
+              
+                <li><a title="April" href="/azure-sdk/releases/2024-04/index.html">April</a></li>
+              
+              
+            
+              
+                <li><a title="March" href="/azure-sdk/releases/2024-03/index.html">March</a></li>
+              
+              
+            
+              
+                <li><a title="February" href="/azure-sdk/releases/2024-02/index.html">February</a></li>
+              
+              
+            
+              
+                <li><a title="January" href="/azure-sdk/releases/2024-01/index.html">January</a></li>
+              
+              
+            
+          </ul>
+        </li>
+      
+        
+        <li>
+        
+          
+          <a title="2023 Releases" href="#">2023 Releases</a>
+          
+          <ul>
+            
+              
+                <li><a title="December" href="/azure-sdk/releases/2023-12/index.html">December</a></li>
+              
+              
+            
+              
+                <li><a title="November" href="/azure-sdk/releases/2023-11/index.html">November</a></li>
+              
+              
+            
+              
+                <li><a title="October" href="/azure-sdk/releases/2023-10/index.html">October</a></li>
+              
+              
+            
+              
+                <li><a title="September" href="/azure-sdk/releases/2023-09/index.html">September</a></li>
+              
+              
+            
+              
+                <li><a title="August" href="/azure-sdk/releases/2023-08/index.html">August</a></li>
+              
+              
+            
+              
+                <li><a title="July" href="/azure-sdk/releases/2023-07/index.html">July</a></li>
+              
+              
+            
+              
+                <li><a title="June" href="/azure-sdk/releases/2023-06/index.html">June</a></li>
+              
+              
+            
+              
+                <li><a title="May" href="/azure-sdk/releases/2023-05/index.html">May</a></li>
+              
+              
+            
+              
+                <li><a title="April" href="/azure-sdk/releases/2023-04/index.html">April</a></li>
+              
+              
+            
+              
+                <li><a title="March" href="/azure-sdk/releases/2023-03/index.html">March</a></li>
+              
+              
+            
+              
+                <li><a title="February" href="/azure-sdk/releases/2023-02/index.html">February</a></li>
+              
+              
+            
+              
+                <li><a title="January" href="/azure-sdk/releases/2023-01/index.html">January</a></li>
+              
+              
+            
+          </ul>
+        </li>
+      
+        
+        <li>
+        
+          
+          <a title="2022 Releases" href="#">2022 Releases</a>
+          
+          <ul>
+            
+              
+                <li><a title="December" href="/azure-sdk/releases/2022-12/index.html">December</a></li>
+              
+              
+            
+              
+                <li><a title="November" href="/azure-sdk/releases/2022-11/index.html">November</a></li>
+              
+              
+            
+              
+                <li><a title="October" href="/azure-sdk/releases/2022-10/index.html">October</a></li>
+              
+              
+            
+              
+                <li><a title="September" href="/azure-sdk/releases/2022-09/index.html">September</a></li>
+              
+              
+            
+              
+                <li><a title="August" href="/azure-sdk/releases/2022-08/index.html">August</a></li>
+              
+              
+            
+              
+                <li><a title="July" href="/azure-sdk/releases/2022-07/index.html">July</a></li>
+              
+              
+            
+              
+                <li><a title="June" href="/azure-sdk/releases/2022-06/index.html">June</a></li>
+              
+              
+            
+              
+                <li><a title="May" href="/azure-sdk/releases/2022-05/index.html">May</a></li>
+              
+              
+            
+              
+                <li><a title="April" href="/azure-sdk/releases/2022-04/index.html">April</a></li>
+              
+              
+            
+              
+                <li><a title="March" href="/azure-sdk/releases/2022-03/index.html">March</a></li>
+              
+              
+            
+              
+                <li><a title="February" href="/azure-sdk/releases/2022-02/index.html">February</a></li>
+              
+              
+            
+              
+                <li><a title="January" href="/azure-sdk/releases/2022-01/index.html">January</a></li>
+              
+              
+            
+          </ul>
+        </li>
+      
+        
+        <li>
+        
+          
+          <a title="2021 Releases" href="#">2021 Releases</a>
+          
+          <ul>
+            
+              
+                <li><a title="December" href="/azure-sdk/releases/2021-12/index.html">December</a></li>
+              
+              
+            
+              
+                <li><a title="November" href="/azure-sdk/releases/2021-11/index.html">November</a></li>
+              
+              
+            
+              
+                <li><a title="October" href="/azure-sdk/releases/2021-10/index.html">October</a></li>
+              
+              
+            
+              
+                <li><a title="September" href="/azure-sdk/releases/2021-09/index.html">September</a></li>
+              
+              
+            
+              
+                <li><a title="August" href="/azure-sdk/releases/2021-08/index.html">August</a></li>
+              
+              
+            
+              
+                <li><a title="July" href="/azure-sdk/releases/2021-07/index.html">July</a></li>
+              
+              
+            
+              
+                <li><a title="June" href="/azure-sdk/releases/2021-06/index.html">June</a></li>
+              
+              
+            
+              
+                <li><a title="May" href="/azure-sdk/releases/2021-05/index.html">May</a></li>
+              
+              
+            
+              
+                <li><a title="April" href="/azure-sdk/releases/2021-04/index.html">April</a></li>
+              
+              
+            
+              
+                <li><a title="March" href="/azure-sdk/releases/2021-03/index.html">March</a></li>
+              
+              
+            
+              
+                <li><a title="February" href="/azure-sdk/releases/2021-02/index.html">February</a></li>
+              
+              
+            
+              
+                <li><a title="January" href="/azure-sdk/releases/2021-01/index.html">January</a></li>
+              
+              
+            
+          </ul>
+        </li>
+      
+        
+        <li>
+        
+          
+          <a title="2020 Releases" href="#">2020 Releases</a>
+          
+          <ul>
+            
+              
+                <li><a title="December" href="/azure-sdk/releases/2020-12/index.html">December</a></li>
+              
+              
+            
+              
+                <li><a title="November" href="/azure-sdk/releases/2020-11/index.html">November</a></li>
+              
+              
+            
+              
+                <li><a title="October" href="/azure-sdk/releases/2020-10/index.html">October</a></li>
+              
+              
+            
+              
+                <li><a title="September" href="/azure-sdk/releases/2020-09/index.html">September</a></li>
+              
+              
+            
+              
+                <li><a title="August" href="/azure-sdk/releases/2020-08/index.html">August</a></li>
+              
+              
+            
+              
+                <li><a title="July" href="/azure-sdk/releases/2020-07/index.html">July</a></li>
+              
+              
+            
+              
+                <li><a title="June" href="/azure-sdk/releases/2020-06/index.html">June</a></li>
+              
+              
+            
+              
+                <li><a title="May" href="/azure-sdk/releases/2020-05/index.html">May</a></li>
+              
+              
+            
+              
+                <li><a title="April" href="/azure-sdk/releases/2020-04/index.html">April</a></li>
+              
+              
+            
+              
+                <li><a title="March" href="/azure-sdk/releases/2020-03/index.html">March</a></li>
+              
+              
+            
+              
+                <li><a title="February" href="/azure-sdk/releases/2020-02/index.html">February</a></li>
+              
+              
+            
+              
+                <li><a title="January" href="/azure-sdk/releases/2020-01/index.html">January</a></li>
+              
+              
+            
+          </ul>
+        </li>
+      
+        
+        <li>
+        
+          
+          <a title="2019 Releases" href="#">2019 Releases</a>
+          
+          <ul>
+            
+              
+                <li><a title="December" href="/azure-sdk/releases/2019-12/index.html">December</a></li>
+              
+              
+            
+              
+                <li><a title="November" href="/azure-sdk/releases/2019-11/index.html">November</a></li>
+              
+              
+            
+              
+                <li><a title="October" href="/azure-sdk/releases/2019-10-11/index.html">October</a></li>
+              
+              
+            
+              
+                <li><a title="September" href="/azure-sdk/releases/2019-09-17/index.html">September</a></li>
+              
+              
+            
+              
+                <li><a title="August" href="/azure-sdk/releases/2019-08-06/index.html">August</a></li>
+              
+              
+            
+              
+                <li><a title="July" href="/azure-sdk/releases/2019-07-10/index.html">July</a></li>
+              
+              
+            
+          </ul>
+        </li>
+      
+        
+        <li>
+        
+          
+          <a title="Deprecated" href="/azure-sdk/releases/deprecated/index.html">Deprecated</a>
+          
+          <ul>
+            
+              
+                <li><a title=".NET" href="/azure-sdk/releases/deprecated/dotnet.html">.NET</a></li>
+              
+              
+            
+              
+                <li><a title="Java" href="/azure-sdk/releases/deprecated/java.html">Java</a></li>
+              
+              
+            
+              
+                <li><a title="JavaScript/TypeScript" href="/azure-sdk/releases/deprecated/js.html">JavaScript/TypeScript</a></li>
+              
+              
+            
+              
+                <li><a title="Python" href="/azure-sdk/releases/deprecated/python.html">Python</a></li>
+              
+              
+            
+              
+                <li><a title="Go" href="/azure-sdk/releases/deprecated/go.html">Go</a></li>
+              
+              
+            
+          </ul>
+        </li>
+      
+    
+  </ol>
+</div>
+
+<script>$("li.active").parents('li').toggleClass("active");</script>
+
+                </div>
+                
+                
+
+                <!-- Content Column -->
+                <div class="col-md-10 col-xs-12" id="tg-sb-content">
+                    <div class="row">
+    
+    <div class="col-md-2 col-xs-12 content-right pull-right">
+        
+<!-- this handles the automatic toc. use ## for subheads to auto-generate the on-page minitoc. if you use html tags, you must supply an ID for the heading element in order for it to appear in the minitoc. -->
+<script>
+$( document ).ready(function() {
+  // Handler for .ready() called.
+
+$('#toc').toc({ minimumHeaders: 0, listType: 'ul', showSpeed: 0, headers: 'h2,h3,h4' });
+
+/* this offset helps account for the space taken up by the floating toolbar. */
+$('#toc').on('click', 'a', function() {
+  var target = $(this.getAttribute('href'))
+    , scroll_target = target.offset().top
+
+  $(window).scrollTop(scroll_target - 60);
+  return false
+})
+  
+});
+</script>
+
+<div id="toc"></div>
+
+    </div>
+    
+    <div class="col-md-10  col-xs-12 content-center pull-left">
+        <article class="post" itemscope itemtype="https://schema.org/BlogPosting">
+
+            <header class="post-header">
+                <h1 class="post-title" itemprop="name headline">Azure SDK for JavaScript (August 2021)</h1>
+                <p class="post-meta">
+                    <time datetime="" itemprop="datePublished"></time> 
+        <!--
+                    
+                    /
+                    
+                    
+                    
+                    
+                    
+        -->
+                </p>
+        
+        
+            </header>
+        
+            <div class="post-content" itemprop="articleBody">
+        
+                
+        
+                
+<p>The Azure SDK team is pleased to announce our August 2021 client library releases.</p>
+
+<p>62 packages released this month.</p>
+
+<h4 id="stable-packages-19">Stable Packages (19)</h4>
+
+<ul>
+  <li>
+    <p>App Configuration</p>
+  </li>
+  <li>
+    <p>Communication Common</p>
+  </li>
+  <li>
+    <p>Core - Client</p>
+  </li>
+  <li>
+    <p>Core - HTTP</p>
+  </li>
+  <li>
+    <p>Core - LRO</p>
+  </li>
+  <li>
+    <p>Core - XML</p>
+  </li>
+  <li>
+    <p>Core Rest Pipeline</p>
+  </li>
+  <li>
+    <p>Cosmos DB</p>
+  </li>
+  <li>
+    <p>Event Grid</p>
+  </li>
+  <li>
+    <p>Form Recognizer</p>
+  </li>
+  <li>
+    <p>Identity</p>
+  </li>
+  <li>
+    <p>Key Vault - Administration</p>
+  </li>
+  <li>
+    <p>Key Vault - Certificates</p>
+  </li>
+  <li>
+    <p>Key Vault - Keys</p>
+  </li>
+  <li>
+    <p>Key Vault - Secrets</p>
+  </li>
+  <li>
+    <p>Storage - Blobs</p>
+  </li>
+  <li>
+    <p>Storage - Files Data Lake</p>
+  </li>
+  <li>
+    <p>Storage - Files Shares</p>
+  </li>
+  <li>
+    <p>Storage - Queues</p>
+  </li>
+</ul>
+
+<h4 id="patch-updates-5">Patch Updates (5)</h4>
+
+<ul>
+  <li>
+    <p>Core - Client</p>
+  </li>
+  <li>
+    <p>Core Rest Pipeline</p>
+  </li>
+  <li>
+    <p>Cosmos DB</p>
+  </li>
+  <li>
+    <p>Identity</p>
+  </li>
+  <li>
+    <p>Tables</p>
+  </li>
+</ul>
+
+<h4 id="beta-packages-31">Beta Packages (31)</h4>
+
+<ul>
+  <li>
+    <p>Cognitive Search</p>
+  </li>
+  <li>
+    <p>Communication Chat</p>
+  </li>
+  <li>
+    <p>Communication Network Traversal</p>
+  </li>
+  <li>
+    <p>Core - Client Paging</p>
+  </li>
+  <li>
+    <p>Core - Tracing</p>
+  </li>
+  <li>
+    <p>Identity</p>
+  </li>
+  <li>
+    <p>Key Vault - Administration</p>
+  </li>
+  <li>
+    <p>Key Vault - Keys</p>
+  </li>
+  <li>
+    <p>Monitor Query</p>
+  </li>
+  <li>
+    <p>Resource Management - App Service</p>
+  </li>
+  <li>
+    <p>Resource Management - Compute</p>
+  </li>
+  <li>
+    <p>Resource Management - Features</p>
+  </li>
+  <li>
+    <p>Resource Management - Key Vault</p>
+  </li>
+  <li>
+    <p>Resource Management - Links</p>
+  </li>
+  <li>
+    <p>Resource Management - Locks</p>
+  </li>
+  <li>
+    <p>Resource Management - Managed Applications</p>
+  </li>
+  <li>
+    <p>Resource Management - Network</p>
+  </li>
+  <li>
+    <p>Resource Management - Policy</p>
+  </li>
+  <li>
+    <p>Resource Management - Resources</p>
+  </li>
+  <li>
+    <p>Resource Management - SQL</p>
+  </li>
+  <li>
+    <p>Resource Management - Storage</p>
+  </li>
+  <li>
+    <p>Resource Management - WebPubSub</p>
+  </li>
+  <li>
+    <p>Storage - Blobs</p>
+  </li>
+  <li>
+    <p>Storage - Files Data Lake</p>
+  </li>
+  <li>
+    <p>Storage - Files Shares</p>
+  </li>
+  <li>
+    <p>Synapse - AccessControl</p>
+  </li>
+  <li>
+    <p>Synapse - Artifacts</p>
+  </li>
+  <li>
+    <p>Synapse - Managed Private Endpoints</p>
+  </li>
+  <li>
+    <p>Synapse - Spark</p>
+  </li>
+  <li>
+    <p>Text Analytics</p>
+  </li>
+  <li>
+    <p>Web PubSub CloudEvents Handlers for Express</p>
+  </li>
+</ul>
+
+<h2 id="release-highlights">Release highlights</h2>
+
+<h3 id="app-configuration-130-changelog">App Configuration 1.3.0 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/app-configuration_1.3.0/sdk/appconfiguration/app-configuration/CHANGELOG.md">Changelog</a></h3>
+<h4 id="features-added">Features Added</h4>
+
+<ul>
+  <li>Added “continuationToken” option for the <code class="language-plaintext highlighter-rouge">byPage</code> APIs of the listing methods (<code class="language-plaintext highlighter-rouge">listConfigurationSettings</code> and the <code class="language-plaintext highlighter-rouge">listRevisions</code>), this lets you keep track of where to continue the iterator from.
+<a href="https://github.com/Azure/azure-sdk-for-js/pull/16472">#16472</a></li>
+  <li>Changed TS compilation target to ES2017 in order to produce smaller bundles and use more native platform features</li>
+  <li>Updated our internal core package dependencies to their latest versions in order to add support for Opentelemetry 1.0.0 which is compatible with the latest versions of our other client libraries.</li>
+</ul>
+
+<h4 id="bugs-fixed">Bugs Fixed</h4>
+
+<ul>
+  <li>Throttling may have resulted in retrying the request indefinitely if the service responded with <code class="language-plaintext highlighter-rouge">retry-after-ms</code> header in the error for each retried request. The behaviour has been changed to retry for a maximum of 3 times by default from <a href="https://github.com/Azure/azure-sdk-for-js/pull/16376">#16376</a>.</li>
+  <li>Additionally, <a href="https://github.com/Azure/azure-sdk-for-js/pull/16376">#16376</a> also exposes retryOptions on the <code class="language-plaintext highlighter-rouge">AppConfigurationClient</code>’s client options, which lets you configure the <code class="language-plaintext highlighter-rouge">maxRetries</code> and the <code class="language-plaintext highlighter-rouge">maxRetryDelayInMs</code>.</li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>More resources - [App Configuration</td>
+          <td>Throttling](https://docs.microsoft.com/azure/azure-app-configuration/rest-api-throttling) and [App Configuration</td>
+          <td>Requests Quota](https://docs.microsoft.com/azure/azure-app-configuration/faq#which-app-configuration-tier-should-i-use)</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+</ul>
+
+<h3 id="cognitive-search-1130-beta2-changelog">Cognitive Search 11.3.0-beta.2 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/search-documents_11.3.0-beta.2/sdk/search/search-documents/CHANGELOG.md">Changelog</a></h3>
+<h4 id="features-added-1">Features Added</h4>
+
+<ul>
+  <li>Added a new parameter <code class="language-plaintext highlighter-rouge">ignoreResetRequirements</code> for the <code class="language-plaintext highlighter-rouge">createOrUpdate</code> operation of Data Sources.</li>
+  <li>Added new parameters <code class="language-plaintext highlighter-rouge">ignoreResetRequirements</code> &amp; <code class="language-plaintext highlighter-rouge">disableCacheReprocessingChangeDetection</code> for the <code class="language-plaintext highlighter-rouge">createOrUpdate</code> operation of Indexers and Skillsets.</li>
+</ul>
+
+<h4 id="bugs-fixed-1">Bugs Fixed</h4>
+
+<ul>
+  <li>Converted the complex fields correctly within the Search Fields. Please refer <a href="https://github.com/Azure/azure-sdk-for-js/issues/16489">#16489</a> for more details.</li>
+  <li>Fixed the typos <code class="language-plaintext highlighter-rouge">anayzerName</code> to <code class="language-plaintext highlighter-rouge">analyzerName</code> and <code class="language-plaintext highlighter-rouge">normalizerNames</code> to <code class="language-plaintext highlighter-rouge">normalizerName</code> in <code class="language-plaintext highlighter-rouge">convertFieldsToPublic</code> method of <code class="language-plaintext highlighter-rouge">serviceUtils.ts</code>.</li>
+</ul>
+
+<h3 id="communication-chat-110-beta1-changelog">Communication Chat 1.1.0-beta.1 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/communication-chat_1.1.0-beta.1/sdk/communication/communication-chat/CHANGELOG.md">Changelog</a></h3>
+<h4 id="features-added-2">Features Added</h4>
+
+<ul>
+  <li>With the dropping of support for Node.js versions that are no longer in LTS, the dependency on <code class="language-plaintext highlighter-rouge">@types/node</code> has been updated to version 12. Read our <a href="https://github.com/Azure/azure-sdk-for-js/blob/main/SUPPORT.md">support policy</a> for more details.</li>
+  <li>Updated our internal core package dependencies to their latest versions in order to add support for Opentelemetry 1.0.0 which is compatible with the latest versions of our other client libraries.</li>
+  <li>Changed TS compilation target to ES2017 in order to produce smaller bundles and use more native platform features</li>
+  <li>Added support to add <code class="language-plaintext highlighter-rouge">metadata</code> for <code class="language-plaintext highlighter-rouge">message</code></li>
+  <li>Added <code class="language-plaintext highlighter-rouge">senderDisplayName</code> in <code class="language-plaintext highlighter-rouge">sendTypingNotification</code> operation.</li>
+  <li>Updated to @azure/communication-signaling@1.0.0-beta.5.</li>
+  <li>Enabled real-time notification for React Native.</li>
+</ul>
+
+<h3 id="communication-common-110-changelog">Communication Common 1.1.0 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/communication-common_1.1.0/sdk/communication/communication-common/CHANGELOG.md">Changelog</a></h3>
+<h4 id="features-added-3">Features Added</h4>
+<ul>
+  <li>With the dropping of support for Node.js versions that are no longer in LTS, the dependency on <code class="language-plaintext highlighter-rouge">@types/node</code> has been updated to version 12. Read our <a href="https://github.com/Azure/azure-sdk-for-js/blob/main/SUPPORT.md">support policy</a> for more details.</li>
+</ul>
+
+<h3 id="communication-network-traversal-100-beta2-changelog">Communication Network Traversal 1.0.0-beta.2 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/communication-network-traversal_1.0.0-beta.2/sdk/communication/communication-network-traversal/CHANGELOG.md">Changelog</a></h3>
+<h4 id="features-added-4">Features Added</h4>
+<ul>
+  <li>With the dropping of support for Node.js versions that are no longer in LTS, the dependency on <code class="language-plaintext highlighter-rouge">@types/node</code> has been updated to version 12. Read our <a href="https://github.com/Azure/azure-sdk-for-js/blob/main/SUPPORT.md">support policy</a> for more details.</li>
+</ul>
+
+<h4 id="breaking-changes">Breaking Changes</h4>
+<ul>
+  <li>Renamed <code class="language-plaintext highlighter-rouge">CommunicationTurnServer</code> to <code class="language-plaintext highlighter-rouge">CommunicationIceServer</code></li>
+  <li>Renamed <code class="language-plaintext highlighter-rouge">turnServers</code> to <code class="language-plaintext highlighter-rouge">iceServers</code></li>
+  <li>Renamed <code class="language-plaintext highlighter-rouge">CommunicationNetworkTraversalIssueTurnCredentialsResponse</code> to <code class="language-plaintext highlighter-rouge">CommunicationNetworkTraversalIssueRelayConfigurationResponse</code></li>
+  <li>Renamed <code class="language-plaintext highlighter-rouge">issueTurnCredentials</code> to <code class="language-plaintext highlighter-rouge">issueRelayConfiguration</code></li>
+</ul>
+
+<h3 id="core---client-122-changelog">Core - Client 1.2.2 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/core-client_1.2.2/sdk/core/core-client/CHANGELOG.md">Changelog</a></h3>
+<h4 id="key-bugs-fixed">Key Bugs Fixed</h4>
+
+<ul>
+  <li>Fixed the return value during the flattening the response for <code class="language-plaintext highlighter-rouge">HEAD</code> HTTP Requests. This will ensure that the return value will indicate the presence/absence of the resource. Please refer <a href="https://github.com/Azure/autorest.typescript/issues/1037">#1037</a> for more details.</li>
+</ul>
+
+<h3 id="core---client-130-changelog">Core - Client 1.3.0 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/core-client_1.3.0/sdk/core/core-client/CHANGELOG.md">Changelog</a></h3>
+<h4 id="key-bugs-fixed-1">Key Bugs Fixed</h4>
+
+<ul>
+  <li>Fixed an issue where APIs that accepted a Blob didn’t work with File objects. See <a href="https://github.com/Azure/azure-sdk-for-js/issues/16754">#16754</a> for more details.</li>
+</ul>
+
+<h4 id="features-added-5">Features Added</h4>
+
+<ul>
+  <li>Updated to use version 1.0.0-preview.13 of <code class="language-plaintext highlighter-rouge">@azure/core-tracing</code>.</li>
+</ul>
+
+<h3 id="core---client-paging-100-beta1-changelog">Core - Client Paging 1.0.0-beta.1 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure-rest/core-client-paging_1.0.0-beta.1/sdk/core/core-client-paging-rest/CHANGELOG.md">Changelog</a></h3>
+<ul>
+  <li>First release of package, see README.md for details.</li>
+</ul>
+
+<h3 id="core---http-210-changelog">Core - HTTP 2.1.0 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/core-http_2.1.0/sdk/core/core-http/CHANGELOG.md">Changelog</a></h3>
+<h4 id="features-added-6">Features Added</h4>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">tracingPolicy</code> will no longer inject invalid traceparent headers if an incorrect tracer implementation is used.</li>
+  <li><code class="language-plaintext highlighter-rouge">proxyPolicy</code> now allows passing in a list of no-proxy patterns to override global ones loaded from NO_PROXY environment variable <a href="https://github.com/Azure/azure-sdk-for-js/pull/16414">PR #16414</a></li>
+</ul>
+
+<h3 id="core---lro-210-changelog">Core - LRO 2.1.0 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/core-lro_2.1.0/sdk/core/core-lro/CHANGELOG.md">Changelog</a></h3>
+<h4 id="features-added-7">Features Added</h4>
+
+<ul>
+  <li>Provides a long-running operation engine.</li>
+</ul>
+
+<h3 id="core---lro-220-changelog">Core - LRO 2.2.0 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/core-lro_2.2.0/sdk/core/core-lro/CHANGELOG.md">Changelog</a></h3>
+<h4 id="features-added-8">Features Added</h4>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">LroEngine</code> supports a new <code class="language-plaintext highlighter-rouge">isDone()</code> function in its options bag which can be used to provide a custom logic for determining when an LRO finished processing.</li>
+</ul>
+
+<h3 id="core---tracing-100-preview13-changelog">Core - Tracing 1.0.0-preview.13 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/core-tracing_1.0.0-preview.13/sdk/core/core-tracing/CHANGELOG.md">Changelog</a></h3>
+<h4 id="features-added-9">Features Added</h4>
+
+<ul>
+  <li>Added support for disabling distributed tracing using the AZURE_TRACING_DISABLED environment variable.</li>
+</ul>
+
+<h4 id="breaking-changes-1">Breaking Changes</h4>
+
+<ul>
+  <li>Removed <code class="language-plaintext highlighter-rouge">TestTracer</code> and <code class="language-plaintext highlighter-rouge">TestSpan</code> from public API and into <code class="language-plaintext highlighter-rouge">@azure/test-utils</code>. <a href="https://github.com/Azure/azure-sdk-for-js/pull/16315">PR #16315</a></li>
+  <li><code class="language-plaintext highlighter-rouge">TestTracer</code> and <code class="language-plaintext highlighter-rouge">TestSpan</code> are intended for test support when used by other Azure packages and not intended for use by end users.</li>
+  <li>Removed <code class="language-plaintext highlighter-rouge">setTracer</code>, @azure/core-tracing will now rely on the <code class="language-plaintext highlighter-rouge">trace</code> API to fetch a tracer from the global tracer provider. <a href="https://github.com/Azure/azure-sdk-for-js/pull/16347">PR #16347</a></li>
+  <li>If you are using <code class="language-plaintext highlighter-rouge">setTracer</code>, please use <code class="language-plaintext highlighter-rouge">trace.setGlobalTracerProvider(provider)</code> instead as described in the OpenTelemetry documentation.</li>
+  <li>Removed <code class="language-plaintext highlighter-rouge">NoOpTracer</code> and <code class="language-plaintext highlighter-rouge">NoOpSpan</code> from the public API. Please use <code class="language-plaintext highlighter-rouge">trace.wrapSpanContext(INVALID_SPAN_CONTEXT)</code> from <code class="language-plaintext highlighter-rouge">@opentelemetry/api</code> instead. <a href="https://github.com/Azure/azure-sdk-for-js/pull/16315">PR #16315</a></li>
+</ul>
+
+<h3 id="core---xml-100-changelog">Core - XML 1.0.0 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/core-xml_1.0.0/sdk/core/core-xml/CHANGELOG.md">Changelog</a></h3>
+<p>GA release of this package.</p>
+
+<h3 id="core-rest-pipeline-111-changelog">Core Rest Pipeline 1.1.1 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/core-rest-pipeline_1.1.1/sdk/core/core-rest-pipeline/CHANGELOG.md">Changelog</a></h3>
+<h4 id="key-bugs-fixed-2">Key Bugs Fixed</h4>
+
+<ul>
+  <li>Fixed an issue with <code class="language-plaintext highlighter-rouge">HEAD</code> HTTP Requests. Destroyed the response before resolving the promise which will ensure that the code does not hang up. Please refer <a href="https://github.com/Azure/autorest.typescript/issues/1037">#1037</a> for more details.</li>
+</ul>
+
+<h3 id="core-rest-pipeline-120-changelog">Core Rest Pipeline 1.2.0 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/core-rest-pipeline_1.2.0/sdk/core/core-rest-pipeline/CHANGELOG.md">Changelog</a></h3>
+<h4 id="features-added-10">Features Added</h4>
+
+<ul>
+  <li>Updated to use version 1.0.0-preview.13 of <code class="language-plaintext highlighter-rouge">@azure/core-tracing</code>.</li>
+  <li><code class="language-plaintext highlighter-rouge">tracingPolicy</code> will no longer inject invalid traceparent headers if an incorrect tracer implementation is used.</li>
+  <li><code class="language-plaintext highlighter-rouge">proxyPolicy</code> now allows passing in a list of no-proxy patterns to override global ones loaded from NO_PROXY environment variable <a href="https://github.com/Azure/azure-sdk-for-js/pull/16414">PR #16414</a></li>
+</ul>
+
+<h3 id="cosmos-db-3120-changelog">Cosmos DB 3.12.0 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/cosmos_3.12.0/sdk/cosmosdb/cosmos/CHANGELOG.md">Changelog</a></h3>
+<h4 id="features-added-11">Features Added</h4>
+<ul>
+  <li>With the dropping of support for Node.js versions that are no longer in LTS, the dependency on <code class="language-plaintext highlighter-rouge">@types/node</code> has been updated to version 12. Read our <a href="https://github.com/Azure/azure-sdk-for-js/blob/main/SUPPORT.md">support policy</a> for more details.</li>
+  <li>Added background refresher for endpoints, and new <code class="language-plaintext highlighter-rouge">ConnectionPolicy</code> options. Refreshing defaults to true, and the default refresh rate is every 5 minutes.
+    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">client</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">CosmosClient</span><span class="p">({</span>
+<span class="nx">endpoint</span><span class="p">,</span>
+<span class="na">key</span><span class="p">:</span> <span class="nx">masterKey</span><span class="p">,</span>
+<span class="na">connectionPolicy</span><span class="p">:</span> <span class="p">{</span>
+<span class="p">...</span><span class="nx">defaultConnectionPolicy</span><span class="p">,</span>
+<span class="na">endpointRefreshRateInMs</span><span class="p">:</span> <span class="mi">700</span><span class="p">,</span>
+<span class="na">enableBackgroundEndpointRefreshing</span><span class="p">:</span> <span class="kc">true</span>
+<span class="p">}</span>
+<span class="p">})</span>
+</code></pre></div>    </div>
+  </li>
+  <li>Added <code class="language-plaintext highlighter-rouge">client.dispose()</code> for closing the endpoint refresher verbosely. Necessary when destroying the CosmosClient inside existing processes like an express web server, or when you want to destroy the client and create a new one in the same process.
+    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">client</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">CosmosClient</span><span class="p">()</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">dispose</span><span class="p">()</span> <span class="c1">// cancels background endpoint refreshing</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="cosmos-db-3121-changelog">Cosmos DB 3.12.1 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/cosmos_3.12.1/sdk/cosmosdb/cosmos/CHANGELOG.md">Changelog</a></h3>
+<h4 id="bugs-fixed-2">Bugs Fixed</h4>
+
+<ul>
+  <li>Returned default retryPolicy option <code class="language-plaintext highlighter-rouge">fixedRetryIntervalInMilliseconds</code> to its original default 0.</li>
+</ul>
+
+<h3 id="cosmos-db-3122-changelog">Cosmos DB 3.12.2 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/cosmos_3.12.2/sdk/cosmosdb/cosmos/CHANGELOG.md">Changelog</a></h3>
+<h4 id="features-added-12">Features Added</h4>
+
+<ul>
+  <li>Adopted target ES2017 to reduce bundle size.</li>
+</ul>
+
+<h3 id="cosmos-db-3123-changelog">Cosmos DB 3.12.3 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/cosmos_3.12.3/sdk/cosmosdb/cosmos/CHANGELOG.md">Changelog</a></h3>
+<h4 id="bugs-fixed-3">Bugs Fixed</h4>
+
+<ul>
+  <li>Fix bulk operations on containers with multiple partitions with nested partition keys</li>
+</ul>
+
+<h3 id="cosmos-db-3130-changelog">Cosmos DB 3.13.0 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/cosmos_3.13.0/sdk/cosmosdb/cosmos/CHANGELOG.md">Changelog</a></h3>
+<h4 id="features-added-13">Features Added</h4>
+
+<ul>
+  <li>Adds TransactionalBatch to items <code class="language-plaintext highlighter-rouge">container.items.batch(operations)</code></li>
+</ul>
+
+<h4 id="bugs-fixed-4">Bugs Fixed</h4>
+
+<ul>
+  <li>Fixed bulk requests which had operations without partitionKey specified.</li>
+</ul>
+
+<h3 id="event-grid-440-changelog">Event Grid 4.4.0 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/eventgrid_4.4.0/sdk/eventgrid/eventgrid/CHANGELOG.md">Changelog</a></h3>
+<h4 id="features-added-14">Features Added</h4>
+
+<ul>
+  <li>
+    <p>With the dropping of support for Node.js versions that are no longer in LTS, the dependency on <code class="language-plaintext highlighter-rouge">@types/node</code> has been updated to version 12. Read our
+<a href="https://github.com/Azure/azure-sdk-for-js/blob/main/SUPPORT.md">support policy</a> for more details.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">EventGridPublisherClient</code> now supports Azure Active Directory (AAD) for authentication. When constructing an <code class="language-plaintext highlighter-rouge">EventGridPublisherClient</code> you may now pass an instance
+of a <code class="language-plaintext highlighter-rouge">TokenCredential</code> as the credential. See the readme for <a href="https://github.com/Azure/azure-sdk-for-js/tree/main/sdk/identity/identity"><code class="language-plaintext highlighter-rouge">@azure/identity</code></a> to learn
+more about using Azure Active Directory for authentication.</p>
+  </li>
+  <li>
+    <p>Added a “metadata” property for the following system events:</p>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">Microsoft.Communication.AcsChatMessageReceived</code></li>
+  <li><code class="language-plaintext highlighter-rouge">Microsoft.Communication.AcsChatMessageEdited</code></li>
+  <li><code class="language-plaintext highlighter-rouge">Microsoft.Communication.AcsChatMessageReceivedInThread</code></li>
+  <li><code class="language-plaintext highlighter-rouge">Microsoft.Communication.AcsChatMessageEditedInThread</code></li>
+</ul>
+
+<h3 id="form-recognizer-320-changelog">Form Recognizer 3.2.0 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/ai-form-recognizer_3.2.0/sdk/formrecognizer/ai-form-recognizer/CHANGELOG.md">Changelog</a></h3>
+<h4 id="key-bugs-fixed-3">Key Bugs Fixed</h4>
+
+<ul>
+  <li>Fixed an issue in which form recognition would sometimes fail due to encountering an element reference pointing to a selection mark, causing an exception to be thrown. These references are now handled correctly.</li>
+</ul>
+
+<h4 id="features-added-15">Features Added</h4>
+
+<ul>
+  <li>With the dropping of support for Node.js versions that are no longer in LTS, the dependency on <code class="language-plaintext highlighter-rouge">@types/node</code> has been updated to version 12. Read our <a href="https://github.com/Azure/azure-sdk-for-js/blob/main/SUPPORT.md">support policy</a> for more details.</li>
+  <li>Updated our internal core package dependencies to their latest versions in order to add support for Opentelemetry 1.0.0 which is compatible with the latest versions of our other client libraries.</li>
+  <li>Changed TS compilation target to
+ES2017 in order to produce smaller bundles and use more native platform features</li>
+</ul>
+
+<h3 id="identity-140-changelog">Identity 1.4.0 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/identity_1.4.0/sdk/identity/identity/CHANGELOG.md">Changelog</a></h3>
+<ul>
+  <li>With this release, we drop support for Node.js versions that have reached the end of life, like Node.js 8. Read our <a href="https://github.com/Azure/azure-sdk-for-js/blob/main/SUPPORT.md">support policy</a> for more details.</li>
+  <li>Updated the default timeout of the first request of the IMDS MSI from half a second to three seconds to compensate for the slowness caused by <code class="language-plaintext highlighter-rouge">node-fetch</code> for initial requests in specific environments, like Kubernetes pods.</li>
+  <li>Upgraded <code class="language-plaintext highlighter-rouge">@azure/core-http</code> to version <code class="language-plaintext highlighter-rouge">^2.0.0</code>, and <code class="language-plaintext highlighter-rouge">@azure/core-tracing</code> to version <code class="language-plaintext highlighter-rouge">1.0.0-preview.12</code>.</li>
+</ul>
+
+<h3 id="identity-150-changelog">Identity 1.5.0 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/identity_1.5.0/sdk/identity/identity/CHANGELOG.md">Changelog</a></h3>
+<ul>
+  <li>With this release, we’ve migrated from using <code class="language-plaintext highlighter-rouge">@azure/core-http</code> to <code class="language-plaintext highlighter-rouge">@azure/core-rest-pipeline</code> for the handling of HTTP requests. See <a href="https://github.com/Azure/azure-sdk-for-js/blob/main/sdk/core/core-rest-pipeline/documentation/core2.md">Azure Core v1 vs v2</a> for more on the difference and benefits of the move. This removes our dependency on <code class="language-plaintext highlighter-rouge">node-fetch</code> and along with it issues we have seen in using this dependency in specific environments like Kubernetes pods.</li>
+</ul>
+
+<h3 id="identity-200-beta5-changelog">Identity 2.0.0-beta.5 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/identity_2.0.0-beta.5/sdk/identity/identity/CHANGELOG.md">Changelog</a></h3>
+<h4 id="breaking-changes-2">Breaking Changes</h4>
+
+<blockquote>
+  <p>These changes do not impact the API of stable versions such as 1.6.0.
+Only code written against a beta version such as 1.7.0b1 may be affected.</p>
+</blockquote>
+
+<ul>
+  <li>Renamed <code class="language-plaintext highlighter-rouge">AZURE_POD_IDENTITY_TOKEN_URL</code> to <code class="language-plaintext highlighter-rouge">AZURE_POD_IDENTITY_AUTHORITY_HOST</code>.</li>
+</ul>
+
+<h4 id="features-added-16">Features Added</h4>
+
+<ul>
+  <li>This release adds support by default for CP1 client capabilities, enabling all credentials to respond to claims challenges that occur due to insufficient claims. Claims challenges, for example, can occur due to requirements of <a href="https://docs.microsoft.com/azure/active-directory/conditional-access/concept-continuous-access-evaluation">Continuous Access Enforcement (CAE)</a> and <a href="https://techcommunity.microsoft.com/t5/azure-active-directory-identity/granular-conditional-access-for-sensitive-data-and-actions/ba-p/1751775">Conditional Access authentication context</a>. You may optionally disable this behavior by setting the environment variable <code class="language-plaintext highlighter-rouge">AZURE_IDENTITY_DISABLE_CP1</code> (to any value). You can read more about client capabilities, CAE, and Conditional Access on <a href="https://docs.microsoft.com/azure/active-directory/develop/claims-challenge">the Microsoft Documentation</a>.</li>
+  <li><code class="language-plaintext highlighter-rouge">ChainedTokenCredential</code> and <code class="language-plaintext highlighter-rouge">DefaultAzureCredential</code> now expose a property named <code class="language-plaintext highlighter-rouge">selectedCredential</code>, which will store the selected credential once any of the available credentials succeeds.</li>
+  <li>Implementation of <code class="language-plaintext highlighter-rouge">ApplicationCredential</code> for use by applications which call into Microsoft Graph APIs and which have issues using <code class="language-plaintext highlighter-rouge">DefaultAzureCredential</code>. This credential is based on <code class="language-plaintext highlighter-rouge">EnvironmentCredential</code> and <code class="language-plaintext highlighter-rouge">ManagedIdentityCredential</code>.</li>
+</ul>
+
+<h4 id="bugs-fixed-5">Bugs Fixed</h4>
+
+<ul>
+  <li>With this release, we’ve migrated from using <code class="language-plaintext highlighter-rouge">@azure/core-http</code> to <code class="language-plaintext highlighter-rouge">@azure/core-rest-pipeline</code> for the handling of HTTP requests. See <a href="https://github.com/Azure/azure-sdk-for-js/blob/main/sdk/core/core-rest-pipeline/documentation/core2.md">Azure Core v1 vs v2</a> for more on the difference and benefits of the move. This removes our dependency on <code class="language-plaintext highlighter-rouge">node-fetch</code> and along with it issues we have seen in using this dependency in specific environments like Kubernetes pods.</li>
+</ul>
+
+<h3 id="identity-151-changelog">Identity 1.5.1 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/identity_1.5.1/sdk/identity/identity/CHANGELOG.md">Changelog</a></h3>
+<ul>
+  <li>Fixed how we verify the IMDS endpoint is available. Now, besides skipping the <code class="language-plaintext highlighter-rouge">Metadata</code> header, we skip the URL query. Both will ensure that all the known IMDS endpoints return as early as possible.</li>
+  <li>Added support for the <code class="language-plaintext highlighter-rouge">AZURE_POD_IDENTITY_AUTHORITY_HOST</code> environment variable. If present, the IMDS endpoint initial verification will be skipped.</li>
+</ul>
+
+<h3 id="key-vault---administration-410-changelog">Key Vault - Administration 4.1.0 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/keyvault-admin_4.1.0/sdk/keyvault/keyvault-admin/CHANGELOG.md">Changelog</a></h3>
+<h4 id="new-features">New Features</h4>
+
+<ul>
+  <li>Support for Node.js 8 and IE 11 has been dropped. Please see our <a href="https://github.com/Azure/azure-sdk-for-js/blob/main/SUPPORT.md">support policy</a> for more details.</li>
+  <li>Changed TS compilation target to ES2017 to produce smaller bundles and use more native platform features.</li>
+  <li>Updated our internal core package dependencies to their latest versions to add support for Opentelemetry 1.0.0, which is compatible with the latest versions of our other client libraries.</li>
+</ul>
+
+<h3 id="key-vault---administration-420-beta1-changelog">Key Vault - Administration 4.2.0-beta.1 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/keyvault-admin_4.2.0-beta.1/sdk/keyvault/keyvault-admin/CHANGELOG.md">Changelog</a></h3>
+<ul>
+  <li>
+    <p>Move generated client to use @azure/core-rest-pipeline. For more information about Core V2, please refer to <a href="https://github.com/Azure/azure-sdk-for-js/tree/main/sdk/core#core-v1-and-core-v2">the documentation</a>.</p>
+  </li>
+  <li>
+    <p>With this change, the response types no longer contain the raw response <code class="language-plaintext highlighter-rouge">_response</code>. To access the raw response, an <code class="language-plaintext highlighter-rouge">onResponse</code> callback has to be passed in the request options bag.</p>
+  </li>
+</ul>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">rawResponse</span><span class="p">:</span> <span class="nx">FullOperationResponse</span> <span class="o">|</span> <span class="kc">undefined</span><span class="p">;</span>
+<span class="k">await</span> <span class="nx">client</span><span class="p">.</span><span class="nx">getRoleDefinition</span><span class="p">(</span><span class="nx">globalScope</span><span class="p">,</span> <span class="dl">"</span><span class="s2">roleDefinitionName</span><span class="dl">"</span><span class="p">,</span> <span class="p">{</span>
+<span class="na">onResponse</span><span class="p">:</span> <span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">(</span><span class="nx">rawResponse</span> <span class="o">=</span> <span class="nx">response</span><span class="p">)</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<h3 id="key-vault---certificates-430-changelog">Key Vault - Certificates 4.3.0 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/keyvault-certificates_4.3.0/sdk/keyvault/keyvault-certificates/CHANGELOG.md">Changelog</a></h3>
+<h4 id="features-added-17">Features Added</h4>
+
+<ul>
+  <li>With the dropping of support for Node.js versions that are no longer in LTS, the dependency on <code class="language-plaintext highlighter-rouge">@types/node</code> has been updated to version 12. Read our <a href="https://github.com/Azure/azure-sdk-for-js/blob/main/SUPPORT.md">support policy</a> for more details.</li>
+  <li>Changed TS compilation target to ES2017 in order to produce smaller bundles and use more native platform features.</li>
+  <li>Updated our internal core package dependencies to their latest versions in order to add support for Opentelemetry 1.0.0 which is compatible with the latest versions of our other client libraries.</li>
+</ul>
+
+<h3 id="key-vault---keys-430-changelog">Key Vault - Keys 4.3.0 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/keyvault-keys_4.3.0/sdk/keyvault/keyvault-keys/CHANGELOG.md">Changelog</a></h3>
+<h4 id="new-features-1">New Features</h4>
+
+<ul>
+  <li>Support for Node.js 8 and IE 11 has been dropped. Please see our <a href="https://github.com/Azure/azure-sdk-for-js/blob/main/SUPPORT.md">support policy</a> for more details.</li>
+  <li>Changed TS compilation target to ES2017 to produce smaller bundles and use more native platform features.</li>
+  <li>Updated our internal core package dependencies to their latest versions to add support for Opentelemetry 1.0.0, which is compatible with the latest versions of our other client libraries.</li>
+</ul>
+
+<h3 id="key-vault---keys-440-beta1-changelog">Key Vault - Keys 4.4.0-beta.1 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/keyvault-keys_4.4.0-beta.1/sdk/keyvault/keyvault-keys/CHANGELOG.md">Changelog</a></h3>
+<h4 id="features-added-18">Features Added</h4>
+
+<ul>
+  <li>Added support for Secure key Release from a Managed HSM.</li>
+  <li>Added <code class="language-plaintext highlighter-rouge">KeyClient.releaseKey</code> to release a key from a Managed HSM.</li>
+  <li>Added <code class="language-plaintext highlighter-rouge">exportable</code> and <code class="language-plaintext highlighter-rouge">releasePolicy</code> to <code class="language-plaintext highlighter-rouge">KeyVaultKey.properties</code>, <code class="language-plaintext highlighter-rouge">createKeyOptions</code>, and <code class="language-plaintext highlighter-rouge">importKeyOptions</code> in order to specify whether the key is exportable and the associated release policy.</li>
+  <li>Added an overload to <code class="language-plaintext highlighter-rouge">KeyClient.updateKeyProperties</code> that allows the version to be omitted, updating the latest key version.</li>
+  <li>Added support for <code class="language-plaintext highlighter-rouge">KeyClient.getRandomBytes</code> which, when connected to a managed HSM, can be used to generate a byte array of a given length with random values.</li>
+  <li>Updated the service version to 7.3-preview.</li>
+</ul>
+
+<h3 id="key-vault---secrets-430-changelog">Key Vault - Secrets 4.3.0 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/keyvault-secrets_4.3.0/sdk/keyvault/keyvault-secrets/CHANGELOG.md">Changelog</a></h3>
+<h4 id="features-added-19">Features Added</h4>
+
+<ul>
+  <li>With the dropping of support for Node.js versions that are no longer in LTS, the dependency on <code class="language-plaintext highlighter-rouge">@types/node</code> has been updated to version 12. Read our <a href="https://github.com/Azure/azure-sdk-for-js/blob/main/SUPPORT.md">support policy</a> for more details.</li>
+  <li>Changed TS compilation target to ES2017 in order to produce smaller bundles and use more native platform features.</li>
+  <li>Updated our internal core package dependencies to their latest versions in order to add support for Opentelemetry 1.0.0 which is compatible with the latest versions of our other client libraries.</li>
+</ul>
+
+<h3 id="monitor-query-100-beta4-changelog">Monitor Query 1.0.0-beta.4 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/monitor-query_1.0.0-beta.4/sdk/monitor/monitor-query/CHANGELOG.md">Changelog</a></h3>
+<h4 id="features-added-20">Features Added</h4>
+
+<ul>
+  <li>Added <code class="language-plaintext highlighter-rouge">additionalWorkspaces</code> as an optional parameter to <code class="language-plaintext highlighter-rouge">QueryLogsOptions</code> and <code class="language-plaintext highlighter-rouge">BatchQuery</code> for the <code class="language-plaintext highlighter-rouge">queryLogs</code> and <code class="language-plaintext highlighter-rouge">queryLogsBatch</code> API to allow multiple workspaces</li>
+  <li>Allow returning statistics and visualization information to user for each query result in <code class="language-plaintext highlighter-rouge">QueryLogsBatchResult</code></li>
+  <li>Adding Error information in <code class="language-plaintext highlighter-rouge">QueryLogsResult</code>.</li>
+</ul>
+
+<h4 id="breaking-changes-3">Breaking Changes</h4>
+
+<ul>
+  <li>Renamed <code class="language-plaintext highlighter-rouge">workspace</code> to <code class="language-plaintext highlighter-rouge">workspaceId</code> in querybatch</li>
+</ul>
+
+<h3 id="resource-management---app-service-3000-beta1-changelog">Resource Management - App Service 30.0.0-beta.1 <a href="https://github.com/Azure/azure-sdk-for-js/tree/main/sdk/appservice/arm-appservice/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---compute-3000-beta1-changelog">Resource Management - Compute 30.0.0-beta.1 <a href="https://github.com/Azure/azure-sdk-for-js/tree/main/sdk/compute/arm-compute/CHANGELOG.md">Changelog</a></h3>
+<p>This is the first preview for the new version of the <code class="language-plaintext highlighter-rouge">@azure/arm-compute</code> package that follows the new <a href="https://azure.github.io/azure-sdk/typescript_introduction.html">guidelines for TypeScript SDKs</a> for Azure services.</p>
+
+<p>While this package remains auto generated, the SDK generator itself has undergone changes to comply with the above guidelines in order to generate packages that are idiomatic to the JavaScript/TypeScript ecosystem and consistent with other packages for Azure services. For more on this, please see <a href="https://devblogs.microsoft.com/azure-sdk/state-of-the-azure-sdk-2021/">State of the Azure SDK 2021</a>.</p>
+
+<p>Please note that this version has breaking changes, all of which were made after careful consideration during the authoring of the guidelines and user studies.</p>
+
+<p><strong>Noteworthy changes and features</strong></p>
+<ul>
+  <li>Authentication: The packages <code class="language-plaintext highlighter-rouge">@azure/ms-rest-nodeauth</code> or <code class="language-plaintext highlighter-rouge">@azure/ms-rest-browserauth</code> are no longer supported. Use package <a href="https://www.npmjs.com/package/@azure/identity">@azure/identity</a> instead. Select a credential from Azure Identity examples based on the authentication method of your choice.</li>
+  <li>Callbacks: Method overloads that used callbacks have been removed and the use of promises is encouraged instead.</li>
+  <li>List operations now return an iterable result that follows the <code class="language-plaintext highlighter-rouge">PagedAsyncIterableIterator</code> interface as opposed to the previous model where you had to make a new request using the link to the next page.</li>
+  <li>Long running operations i.e. the Lro related object returned by methods whose names started with <code class="language-plaintext highlighter-rouge">begin</code>, now uses <code class="language-plaintext highlighter-rouge">pollUntilDone</code> to check whether the request is finished, instead of <code class="language-plaintext highlighter-rouge">pollUntilFinished</code>. To get the final result, use the corresponding method that will have the suffix <code class="language-plaintext highlighter-rouge">AndWait</code>.</li>
+  <li>The SDK only supports ECMAScript 2015 (ES6) and beyond, all projects that referenced this SDK should be upgraded to use ES6.</li>
+</ul>
+
+<h3 id="resource-management---compute-3000-beta2-changelog">Resource Management - Compute 30.0.0-beta.2 <a href="https://github.com/Azure/azure-sdk-for-js/tree/main/sdk/compute/arm-compute/CHANGELOG.md">Changelog</a></h3>
+<p><strong>Features</strong></p>
+
+<ul>
+  <li>Added operation group CapacityReservationGroups</li>
+  <li>Added operation group CapacityReservations</li>
+  <li>Added Interface CapacityReservationGroupInstanceView</li>
+  <li>Added Interface CapacityReservationGroupListResult</li>
+  <li>Added Interface CapacityReservationGroupsCreateOrUpdateOptionalParams</li>
+  <li>Added Interface CapacityReservationGroupsDeleteOptionalParams</li>
+  <li>Added Interface CapacityReservationGroupsGetOptionalParams</li>
+  <li>Added Interface CapacityReservationGroupsListByResourceGroupNextOptionalParams</li>
+  <li>Added Interface CapacityReservationGroupsListByResourceGroupOptionalParams</li>
+  <li>Added Interface CapacityReservationGroupsListBySubscriptionNextOptionalParams</li>
+  <li>Added Interface CapacityReservationGroupsListBySubscriptionOptionalParams</li>
+  <li>Added Interface CapacityReservationGroupsUpdateOptionalParams</li>
+  <li>Added Interface CapacityReservationInstanceView</li>
+  <li>Added Interface CapacityReservationListResult</li>
+  <li>Added Interface CapacityReservationProfile</li>
+  <li>Added Interface CapacityReservationsCreateOrUpdateOptionalParams</li>
+  <li>Added Interface CapacityReservationsDeleteOptionalParams</li>
+  <li>Added Interface CapacityReservationsGetOptionalParams</li>
+  <li>Added Interface CapacityReservationsListByCapacityReservationGroupNextOptionalParams</li>
+  <li>Added Interface CapacityReservationsListByCapacityReservationGroupOptionalParams</li>
+  <li>Added Interface CapacityReservationsUpdateOptionalParams</li>
+  <li>Added Interface CapacityReservationUtilization</li>
+  <li>Added Interface SpotRestorePolicy</li>
+  <li>Added Type Alias CapacityReservation</li>
+  <li>Added Type Alias CapacityReservationGroup</li>
+  <li>Added Type Alias CapacityReservationGroupInstanceViewTypes</li>
+  <li>Added Type Alias CapacityReservationGroupsCreateOrUpdateResponse</li>
+  <li>Added Type Alias CapacityReservationGroupsGetResponse</li>
+  <li>Added Type Alias CapacityReservationGroupsListByResourceGroupNextResponse</li>
+  <li>Added Type Alias CapacityReservationGroupsListByResourceGroupResponse</li>
+  <li>Added Type Alias CapacityReservationGroupsListBySubscriptionNextResponse</li>
+  <li>Added Type Alias CapacityReservationGroupsListBySubscriptionResponse</li>
+  <li>Added Type Alias CapacityReservationGroupsUpdateResponse</li>
+  <li>Added Type Alias CapacityReservationGroupUpdate</li>
+  <li>Added Type Alias CapacityReservationInstanceViewTypes</li>
+  <li>Added Type Alias CapacityReservationInstanceViewWithName</li>
+  <li>Added Type Alias CapacityReservationsCreateOrUpdateResponse</li>
+  <li>Added Type Alias CapacityReservationsGetResponse</li>
+  <li>Added Type Alias CapacityReservationsListByCapacityReservationGroupNextResponse</li>
+  <li>Added Type Alias CapacityReservationsListByCapacityReservationGroupResponse</li>
+  <li>Added Type Alias CapacityReservationsUpdateResponse</li>
+  <li>Added Type Alias CapacityReservationUpdate</li>
+  <li>Added Type Alias ExpandTypesForGetCapacityReservationGroups</li>
+  <li>Interface VirtualMachineScaleSetVMProfile has a new optional parameter capacityReservation</li>
+  <li>Type Alias VirtualMachine has a new parameter capacityReservation</li>
+  <li>Type Alias VirtualMachineScaleSet has a new parameter spotRestorePolicy</li>
+  <li>Type Alias VirtualMachineUpdate has a new parameter capacityReservation</li>
+  <li>Added Enum KnownCapacityReservationGroupInstanceViewTypes</li>
+  <li>Added Enum KnownCapacityReservationInstanceViewTypes</li>
+  <li>Added Enum KnownExpandTypesForGetCapacityReservationGroups</li>
+</ul>
+
+<p><strong>Breaking Changes</strong></p>
+
+<ul>
+  <li>Class ComputeManagementClient has a new required parameter capacityReservationGroups</li>
+  <li>Class ComputeManagementClient has a new required parameter capacityReservations</li>
+</ul>
+
+<h3 id="resource-management---features-3000-beta2-changelog">Resource Management - Features 30.0.0-beta.2 <a href="https://github.com/Azure/azure-sdk-for-js/tree/main/sdk/features/arm-features/CHANGELOG.md">Changelog</a></h3>
+<p>This is the first preview for the new version of the <code class="language-plaintext highlighter-rouge">@azure/arm-features</code> package that follows the new <a href="https://azure.github.io/azure-sdk/typescript_introduction.html">guidelines for TypeScript SDKs</a> for Azure services.</p>
+
+<p>While this package remains auto generated, the SDK generator itself has undergone changes to comply with the above guidelines in order to generate packages that are idiomatic to the JavaScript/TypeScript ecosystem and consistent with other packages for Azure services. For more on this, please see <a href="https://devblogs.microsoft.com/azure-sdk/state-of-the-azure-sdk-2021/">State of the Azure SDK 2021</a>.</p>
+
+<p>Please note that this version has breaking changes, all of which were made after careful consideration during the authoring of the guidelines and user studies.</p>
+
+<p><strong>Noteworthy changes and features</strong></p>
+<ul>
+  <li>Authentication: The packages <code class="language-plaintext highlighter-rouge">@azure/ms-rest-nodeauth</code> or <code class="language-plaintext highlighter-rouge">@azure/ms-rest-browserauth</code> are no longer supported. Use package <a href="https://www.npmjs.com/package/@azure/identity">@azure/identity</a> instead. Select a credential from Azure Identity examples based on the authentication method of your choice.</li>
+  <li>Callbacks: Method overloads that used callbacks have been removed and the use of promises is encouraged instead.</li>
+  <li>List operations now return an iterable result that follows the <code class="language-plaintext highlighter-rouge">PagedAsyncIterableIterator</code> interface as opposed to the previous model where you had to make a new request using the link to the next page.</li>
+  <li>Long running operations i.e. the Lro related object returned by methods whose names started with <code class="language-plaintext highlighter-rouge">begin</code>, now uses <code class="language-plaintext highlighter-rouge">pollUntilDone</code> to check whether the request is finished, instead of <code class="language-plaintext highlighter-rouge">pollUntilFinished</code>. To get the final result, use the corresponding method that will have the suffix <code class="language-plaintext highlighter-rouge">AndWait</code>.</li>
+  <li>The SDK only supports ECMAScript 2015 (ES6) and beyond, all projects that referenced this SDK should be upgraded to use ES6.</li>
+</ul>
+
+<h3 id="resource-management---features-3000-beta3-changelog">Resource Management - Features 30.0.0-beta.3 <a href="https://github.com/Azure/azure-sdk-for-js/tree/main/sdk/features/arm-features/CHANGELOG.md">Changelog</a></h3>
+<p><strong>Features</strong></p>
+
+<ul>
+  <li>Added operation group SubscriptionFeatureRegistrations</li>
+  <li>Added Interface AuthorizationProfile</li>
+  <li>Added Interface ErrorDefinition</li>
+  <li>Added Interface ErrorResponse</li>
+  <li>Added Interface ProxyResource</li>
+  <li>Added Interface SubscriptionFeatureRegistrationList</li>
+  <li>Added Interface SubscriptionFeatureRegistrationProperties</li>
+  <li>Added Interface SubscriptionFeatureRegistrationsCreateOrUpdateOptionalParams</li>
+  <li>Added Interface SubscriptionFeatureRegistrationsDeleteOptionalParams</li>
+  <li>Added Interface SubscriptionFeatureRegistrationsGetOptionalParams</li>
+  <li>Added Interface SubscriptionFeatureRegistrationsListAllBySubscriptionNextOptionalParams</li>
+  <li>Added Interface SubscriptionFeatureRegistrationsListAllBySubscriptionOptionalParams</li>
+  <li>Added Interface SubscriptionFeatureRegistrationsListBySubscriptionNextOptionalParams</li>
+  <li>Added Interface SubscriptionFeatureRegistrationsListBySubscriptionOptionalParams</li>
+  <li>Added Type Alias SubscriptionFeatureRegistration</li>
+  <li>Added Type Alias SubscriptionFeatureRegistrationApprovalType</li>
+  <li>Added Type Alias SubscriptionFeatureRegistrationsCreateOrUpdateResponse</li>
+  <li>Added Type Alias SubscriptionFeatureRegistrationsGetResponse</li>
+  <li>Added Type Alias SubscriptionFeatureRegistrationsListAllBySubscriptionNextResponse</li>
+  <li>Added Type Alias SubscriptionFeatureRegistrationsListAllBySubscriptionResponse</li>
+  <li>Added Type Alias SubscriptionFeatureRegistrationsListBySubscriptionNextResponse</li>
+  <li>Added Type Alias SubscriptionFeatureRegistrationsListBySubscriptionResponse</li>
+  <li>Added Type Alias SubscriptionFeatureRegistrationState</li>
+  <li>Added Enum KnownSubscriptionFeatureRegistrationApprovalType</li>
+  <li>Added Enum KnownSubscriptionFeatureRegistrationState</li>
+</ul>
+
+<p><strong>Breaking Changes</strong></p>
+
+<ul>
+  <li>Removed operation Features.listAllNext</li>
+  <li>Removed operation Features.listNext</li>
+  <li>Class FeatureClient has a new required parameter subscriptionFeatureRegistrations</li>
+</ul>
+
+<h3 id="resource-management---key-vault-3000-beta1-changelog">Resource Management - Key Vault 30.0.0-beta.1 <a href="https://github.com/Azure/azure-sdk-for-js/tree/main/sdk/keyvault/arm-keyvault/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---links-3000-beta1-changelog">Resource Management - Links 30.0.0-beta.1 <a href="https://github.com/Azure/azure-sdk-for-js/tree/main/sdk/links/arm-links/CHANGELOG.md">Changelog</a></h3>
+<p>This is the first preview for the new version of the <code class="language-plaintext highlighter-rouge">@azure/arm-links</code> package that follows the new <a href="https://azure.github.io/azure-sdk/typescript_introduction.html">guidelines for TypeScript SDKs</a> for Azure services.</p>
+
+<p>While this package remains auto generated, the SDK generator itself has undergone changes to comply with the above guidelines in order to generate packages that are idiomatic to the JavaScript/TypeScript ecosystem and consistent with other packages for Azure services. For more on this, please see <a href="https://devblogs.microsoft.com/azure-sdk/state-of-the-azure-sdk-2021/">State of the Azure SDK 2021</a>.</p>
+
+<p>Please note that this version has breaking changes, all of which were made after careful consideration during the authoring of the guidelines and user studies.</p>
+
+<p><strong>Noteworthy changes and features</strong></p>
+<ul>
+  <li>Authentication: The packages <code class="language-plaintext highlighter-rouge">@azure/ms-rest-nodeauth</code> or <code class="language-plaintext highlighter-rouge">@azure/ms-rest-browserauth</code> are no longer supported. Use package <a href="https://www.npmjs.com/package/@azure/identity">@azure/identity</a> instead. Select a credential from Azure Identity examples based on the authentication method of your choice.</li>
+  <li>Callbacks: Method overloads that used callbacks have been removed and the use of promises is encouraged instead.</li>
+  <li>List operations now return an iterable result that follows the <code class="language-plaintext highlighter-rouge">PagedAsyncIterableIterator</code> interface as opposed to the previous model where you had to make a new request using the link to the next page.</li>
+  <li>Long running operations i.e. the Lro related object returned by methods whose names started with <code class="language-plaintext highlighter-rouge">begin</code>, now uses <code class="language-plaintext highlighter-rouge">pollUntilDone</code> to check whether the request is finished, instead of <code class="language-plaintext highlighter-rouge">pollUntilFinished</code>. To get the final result, use the corresponding method that will have the suffix <code class="language-plaintext highlighter-rouge">AndWait</code>.</li>
+  <li>The SDK only supports ECMAScript 2015 (ES6) and beyond, all projects that referenced this SDK should be upgraded to use ES6.</li>
+</ul>
+
+<h3 id="resource-management---locks-3000-beta1-changelog">Resource Management - Locks 30.0.0-beta.1 <a href="https://github.com/Azure/azure-sdk-for-js/tree/main/sdk/locks/arm-locks/CHANGELOG.md">Changelog</a></h3>
+<p>This is the first preview for the new version of the <code class="language-plaintext highlighter-rouge">@azure/arm-locks</code> package that follows the new <a href="https://azure.github.io/azure-sdk/typescript_introduction.html">guidelines for TypeScript SDKs</a> for Azure services.</p>
+
+<p>While this package remains auto generated, the SDK generator itself has undergone changes to comply with the above guidelines in order to generate packages that are idiomatic to the JavaScript/TypeScript ecosystem and consistent with other packages for Azure services. For more on this, please see <a href="https://devblogs.microsoft.com/azure-sdk/state-of-the-azure-sdk-2021/">State of the Azure SDK 2021</a>.</p>
+
+<p>Please note that this version has breaking changes, all of which were made after careful consideration during the authoring of the guidelines and user studies.</p>
+
+<p><strong>Noteworthy changes and features</strong></p>
+<ul>
+  <li>Authentication: The packages <code class="language-plaintext highlighter-rouge">@azure/ms-rest-nodeauth</code> or <code class="language-plaintext highlighter-rouge">@azure/ms-rest-browserauth</code> are no longer supported. Use package <a href="https://www.npmjs.com/package/@azure/identity">@azure/identity</a> instead. Select a credential from Azure Identity examples based on the authentication method of your choice.</li>
+  <li>Callbacks: Method overloads that used callbacks have been removed and the use of promises is encouraged instead.</li>
+  <li>List operations now return an iterable result that follows the <code class="language-plaintext highlighter-rouge">PagedAsyncIterableIterator</code> interface as opposed to the previous model where you had to make a new request using the link to the next page.</li>
+  <li>Long running operations i.e. the Lro related object returned by methods whose names started with <code class="language-plaintext highlighter-rouge">begin</code>, now uses <code class="language-plaintext highlighter-rouge">pollUntilDone</code> to check whether the request is finished, instead of <code class="language-plaintext highlighter-rouge">pollUntilFinished</code>. To get the final result, use the corresponding method that will have the suffix <code class="language-plaintext highlighter-rouge">AndWait</code>.</li>
+  <li>The SDK only supports ECMAScript 2015 (ES6) and beyond, all projects that referenced this SDK should be upgraded to use ES6.</li>
+</ul>
+
+<h3 id="resource-management---managed-applications-3000-beta1-changelog">Resource Management - Managed Applications 30.0.0-beta.1 <a href="https://github.com/Azure/azure-sdk-for-js/tree/main/sdk/managedapplications/arm-managedapplications/CHANGELOG.md">Changelog</a></h3>
+<p>This is the first preview for the new version of the <code class="language-plaintext highlighter-rouge">@azure/arm-managedapplications</code> package that follows the new <a href="https://azure.github.io/azure-sdk/typescript_introduction.html">guidelines for TypeScript SDKs</a> for Azure services.</p>
+
+<p>While this package remains auto generated, the SDK generator itself has undergone changes to comply with the above guidelines in order to generate packages that are idiomatic to the JavaScript/TypeScript ecosystem and consistent with other packages for Azure services. For more on this, please see <a href="https://devblogs.microsoft.com/azure-sdk/state-of-the-azure-sdk-2021/">State of the Azure SDK 2021</a>.</p>
+
+<p>Please note that this version has breaking changes, all of which were made after careful consideration during the authoring of the guidelines and user studies.</p>
+
+<p><strong>Noteworthy changes and features</strong></p>
+<ul>
+  <li>Authentication: The packages <code class="language-plaintext highlighter-rouge">@azure/ms-rest-nodeauth</code> or <code class="language-plaintext highlighter-rouge">@azure/ms-rest-browserauth</code> are no longer supported. Use package <a href="https://www.npmjs.com/package/@azure/identity">@azure/identity</a> instead. Select a credential from Azure Identity examples based on the authentication method of your choice.</li>
+  <li>Callbacks: Method overloads that used callbacks have been removed and the use of promises is encouraged instead.</li>
+  <li>List operations now return an iterable result that follows the <code class="language-plaintext highlighter-rouge">PagedAsyncIterableIterator</code> interface as opposed to the previous model where you had to make a new request using the link to the next page.</li>
+  <li>Long running operations i.e. the Lro related object returned by methods whose names started with <code class="language-plaintext highlighter-rouge">begin</code>, now uses <code class="language-plaintext highlighter-rouge">pollUntilDone</code> to check whether the request is finished, instead of <code class="language-plaintext highlighter-rouge">pollUntilFinished</code>. To get the final result, use the corresponding method that will have the suffix <code class="language-plaintext highlighter-rouge">AndWait</code>.</li>
+  <li>The SDK only supports ECMAScript 2015 (ES6) and beyond, all projects that referenced this SDK should be upgraded to use ES6.</li>
+</ul>
+
+<h3 id="resource-management---network-3000-beta1-changelog">Resource Management - Network 30.0.0-beta.1 <a href="https://github.com/Azure/azure-sdk-for-js/tree/main/sdk/network/arm-network/CHANGELOG.md">Changelog</a></h3>
+<p>This is the first preview for the new version of the <code class="language-plaintext highlighter-rouge">@azure/arm-network</code> package that follows the new <a href="https://azure.github.io/azure-sdk/typescript_introduction.html">guidelines for TypeScript SDKs</a> for Azure services.</p>
+
+<p>While this package remains auto generated, the SDK generator itself has undergone changes to comply with the above guidelines in order to generate packages that are idiomatic to the JavaScript/TypeScript ecosystem and consistent with other packages for Azure services. For more on this, please see <a href="https://devblogs.microsoft.com/azure-sdk/state-of-the-azure-sdk-2021/">State of the Azure SDK 2021</a>.</p>
+
+<p>Please note that this version has breaking changes, all of which were made after careful consideration during the authoring of the guidelines and user studies.</p>
+
+<p><strong>Noteworthy changes and features</strong></p>
+<ul>
+  <li>Authentication: The packages <code class="language-plaintext highlighter-rouge">@azure/ms-rest-nodeauth</code> or <code class="language-plaintext highlighter-rouge">@azure/ms-rest-browserauth</code> are no longer supported. Use package <a href="https://www.npmjs.com/package/@azure/identity">@azure/identity</a> instead. Select a credential from Azure Identity examples based on the authentication method of your choice.</li>
+  <li>Callbacks: Method overloads that used callbacks have been removed and the use of promises is encouraged instead.</li>
+  <li>List operations now return an iterable result that follows the <code class="language-plaintext highlighter-rouge">PagedAsyncIterableIterator</code> interface as opposed to the previous model where you had to make a new request using the link to the next page.</li>
+  <li>Long running operations i.e. the Lro related object returned by methods whose names started with <code class="language-plaintext highlighter-rouge">begin</code>, now uses <code class="language-plaintext highlighter-rouge">pollUntilDone</code> to check whether the request is finished, instead of <code class="language-plaintext highlighter-rouge">pollUntilFinished</code>. To get the final result, use the corresponding method that will have the suffix <code class="language-plaintext highlighter-rouge">AndWait</code>.</li>
+  <li>The SDK only supports ECMAScript 2015 (ES6) and beyond, all projects that referenced this SDK should be upgraded to use ES6.</li>
+</ul>
+
+<h3 id="resource-management---policy-3000-beta1-changelog">Resource Management - Policy 30.0.0-beta.1 <a href="https://github.com/Azure/azure-sdk-for-js/tree/main/sdk/policy/arm-policy/CHANGELOG.md">Changelog</a></h3>
+<p>This is the first preview for the new version of the <code class="language-plaintext highlighter-rouge">@azure/arm-policy</code> package that follows the new <a href="https://azure.github.io/azure-sdk/typescript_introduction.html">guidelines for TypeScript SDKs</a> for Azure services.</p>
+
+<p>While this package remains auto generated, the SDK generator itself has undergone changes to comply with the above guidelines in order to generate packages that are idiomatic to the JavaScript/TypeScript ecosystem and consistent with other packages for Azure services. For more on this, please see <a href="https://devblogs.microsoft.com/azure-sdk/state-of-the-azure-sdk-2021/">State of the Azure SDK 2021</a>.</p>
+
+<p>Please note that this version has breaking changes, all of which were made after careful consideration during the authoring of the guidelines and user studies.</p>
+
+<p><strong>Noteworthy changes and features</strong></p>
+<ul>
+  <li>Authentication: The packages <code class="language-plaintext highlighter-rouge">@azure/ms-rest-nodeauth</code> or <code class="language-plaintext highlighter-rouge">@azure/ms-rest-browserauth</code> are no longer supported. Use package <a href="https://www.npmjs.com/package/@azure/identity">@azure/identity</a> instead. Select a credential from Azure Identity examples based on the authentication method of your choice.</li>
+  <li>Callbacks: Method overloads that used callbacks have been removed and the use of promises is encouraged instead.</li>
+  <li>List operations now return an iterable result that follows the <code class="language-plaintext highlighter-rouge">PagedAsyncIterableIterator</code> interface as opposed to the previous model where you had to make a new request using the link to the next page.</li>
+  <li>Long running operations i.e. the Lro related object returned by methods whose names started with <code class="language-plaintext highlighter-rouge">begin</code>, now uses <code class="language-plaintext highlighter-rouge">pollUntilDone</code> to check whether the request is finished, instead of <code class="language-plaintext highlighter-rouge">pollUntilFinished</code>. To get the final result, use the corresponding method that will have the suffix <code class="language-plaintext highlighter-rouge">AndWait</code>.</li>
+  <li>The SDK only supports ECMAScript 2015 (ES6) and beyond, all projects that referenced this SDK should be upgraded to use ES6.</li>
+</ul>
+
+<h3 id="resource-management---resources-3000-beta1-changelog">Resource Management - Resources 30.0.0-beta.1 <a href="https://github.com/Azure/azure-sdk-for-js/tree/main/sdk/resources/arm-resources/CHANGELOG.md">Changelog</a></h3>
+<p>This is the first preview for the new version of the <code class="language-plaintext highlighter-rouge">@azure/arm-resources</code> package that follows the new <a href="https://azure.github.io/azure-sdk/typescript_introduction.html">guidelines for TypeScript SDKs</a> for Azure services.</p>
+
+<p>While this package remains auto generated, the SDK generator itself has undergone changes to comply with the above guidelines in order to generate packages that are idiomatic to the JavaScript/TypeScript ecosystem and consistent with other packages for Azure services. For more on this, please see <a href="https://devblogs.microsoft.com/azure-sdk/state-of-the-azure-sdk-2021/">State of the Azure SDK 2021</a>.</p>
+
+<p>Please note that this version has breaking changes, all of which were made after careful consideration during the authoring of the guidelines and user studies.</p>
+
+<p><strong>Noteworthy changes and features</strong></p>
+<ul>
+  <li>Authentication: The packages <code class="language-plaintext highlighter-rouge">@azure/ms-rest-nodeauth</code> or <code class="language-plaintext highlighter-rouge">@azure/ms-rest-browserauth</code> are no longer supported. Use package <a href="https://www.npmjs.com/package/@azure/identity">@azure/identity</a> instead. Select a credential from Azure Identity examples based on the authentication method of your choice.</li>
+  <li>Callbacks: Method overloads that used callbacks have been removed and the use of promises is encouraged instead.</li>
+  <li>List operations now return an iterable result that follows the <code class="language-plaintext highlighter-rouge">PagedAsyncIterableIterator</code> interface as opposed to the previous model where you had to make a new request using the link to the next page.</li>
+  <li>Long running operations i.e. the Lro related object returned by methods whose names started with <code class="language-plaintext highlighter-rouge">begin</code>, now uses <code class="language-plaintext highlighter-rouge">pollUntilDone</code> to check whether the request is finished, instead of <code class="language-plaintext highlighter-rouge">pollUntilFinished</code>. To get the final result, use the corresponding method that will have the suffix <code class="language-plaintext highlighter-rouge">AndWait</code>.</li>
+  <li>The SDK only supports ECMAScript 2015 (ES6) and beyond, all projects that referenced this SDK should be upgraded to use ES6.</li>
+</ul>
+
+<h3 id="resource-management---sql-3000-beta1-changelog">Resource Management - SQL 30.0.0-beta.1 <a href="https://github.com/Azure/azure-sdk-for-js/tree/main/sdk/sql/arm-sql/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="resource-management---storage-3000-beta1-changelog">Resource Management - Storage 30.0.0-beta.1 <a href="https://github.com/Azure/azure-sdk-for-js/tree/main/sdk/storage/arm-storage/CHANGELOG.md">Changelog</a></h3>
+<p>This is the first preview for the new version of the <code class="language-plaintext highlighter-rouge">@azure/arm-storage</code> package that follows the new <a href="https://azure.github.io/azure-sdk/typescript_introduction.html">guidelines for TypeScript SDKs</a> for Azure services.</p>
+
+<p>While this package remains auto generated, the SDK generator itself has undergone changes to comply with the above guidelines in order to generate packages that are idiomatic to the JavaScript/TypeScript ecosystem and consistent with other packages for Azure services. For more on this, please see <a href="https://devblogs.microsoft.com/azure-sdk/state-of-the-azure-sdk-2021/">State of the Azure SDK 2021</a>.</p>
+
+<p>Please note that this version has breaking changes, all of which were made after careful consideration during the authoring of the guidelines and user studies.</p>
+
+<p><strong>Noteworthy changes and features</strong></p>
+<ul>
+  <li>Authentication: The packages <code class="language-plaintext highlighter-rouge">@azure/ms-rest-nodeauth</code> or <code class="language-plaintext highlighter-rouge">@azure/ms-rest-browserauth</code> are no longer supported. Use package <a href="https://www.npmjs.com/package/@azure/identity">@azure/identity</a> instead. Select a credential from Azure Identity examples based on the authentication method of your choice.</li>
+  <li>Callbacks: Method overloads that used callbacks have been removed and the use of promises is encouraged instead.</li>
+  <li>List operations now return an iterable result that follows the <code class="language-plaintext highlighter-rouge">PagedAsyncIterableIterator</code> interface as opposed to the previous model where you had to make a new request using the link to the next page.</li>
+  <li>Long running operations i.e. the Lro related object returned by methods whose names started with <code class="language-plaintext highlighter-rouge">begin</code>, now uses <code class="language-plaintext highlighter-rouge">pollUntilDone</code> to check whether the request is finished, instead of <code class="language-plaintext highlighter-rouge">pollUntilFinished</code>. To get the final result, use the corresponding method that will have the suffix <code class="language-plaintext highlighter-rouge">AndWait</code>.</li>
+  <li>The SDK only supports ECMAScript 2015 (ES6) and beyond, all projects that referenced this SDK should be upgraded to use ES6.</li>
+</ul>
+
+<h3 id="resource-management---webpubsub-010-beta1-changelog">Resource Management - WebPubSub 0.1.0-beta.1 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/arm-webpubsub_0.1.0-beta.1/sdk/web-pubsub/arm-webpubsub/CHANGELOG.md">Changelog</a></h3>
+
+<h3 id="storage---blobs-1280-beta1-changelog">Storage - Blobs 12.8.0-beta.1 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/storage-blob_12.8.0-beta.1/sdk/storage/storage-blob/CHANGELOG.md">Changelog</a></h3>
+<h4 id="features-added-21">Features Added</h4>
+
+<ul>
+  <li>Added support for service version 2020-10-02.</li>
+  <li>Added support for Immutable Storage with Versioning</li>
+  <li>Added BlobClient.setImmutibilityPolicy()</li>
+  <li>Added BlobClient.seleteImmutabilityPolicy()</li>
+  <li>Added BlobClient.setLegalHold()</li>
+  <li>Added support for listing deleted root blobs with versions <code class="language-plaintext highlighter-rouge">ContainerClient.listBlobFlat()</code> and <code class="language-plaintext highlighter-rouge">ContainerClient.listBlobHierarchy()</code>.</li>
+  <li>Added support for OAuth copy sources for synchronous copy operations.</li>
+  <li>Added support for Parquet as an input format in <code class="language-plaintext highlighter-rouge">BlockBlobClient.query()</code>.</li>
+  <li>With the dropping of support for Node.js versions that are no longer in LTS, the dependency on <code class="language-plaintext highlighter-rouge">@types/node</code> has been updated to version 12. Read our <a href="https://github.com/Azure/azure-sdk-for-js/blob/main/SUPPORT.md">support policy</a> for more details.</li>
+  <li>Changed TS compilation target to ES2017 in order to produce smaller bundles and use more native platform features</li>
+</ul>
+
+<h3 id="storage---blobs-1270-changelog">Storage - Blobs 12.7.0 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/storage-blob_12.7.0/sdk/storage/storage-blob/CHANGELOG.md">Changelog</a></h3>
+<ul>
+  <li>Support for Node.js 8 and IE 11 has been dropped. Please see our <a href="https://github.com/Azure/azure-sdk-for-js/blob/main/SUPPORT.md">support policy</a> for more details.</li>
+  <li>Changed TS compilation target to ES2017 in order to produce smaller bundles and use more native platform features</li>
+  <li>Updated our internal core package dependencies to their latest versions in order to add support for Opentelemetry 1.0.0 which is compatible with the latest versions of our other client libraries.</li>
+</ul>
+
+<h3 id="storage---files-data-lake-1270-beta1-changelog">Storage - Files Data Lake 12.7.0-beta.1 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/storage-file-datalake_12.7.0-beta.1/sdk/storage/storage-file-datalake/CHANGELOG.md">Changelog</a></h3>
+<h4 id="features-added-22">Features Added</h4>
+
+<ul>
+  <li>Added support for service version 2020-10-02.</li>
+  <li>Added support for Parquet as an input format in <code class="language-plaintext highlighter-rouge">DataLakeFileClient.query()</code>.</li>
+  <li>With the dropping of support for Node.js versions that are no longer in LTS, the dependency on <code class="language-plaintext highlighter-rouge">@types/node</code> has been updated to version 12. Read our <a href="https://github.com/Azure/azure-sdk-for-js/blob/main/SUPPORT.md">support policy</a> for more details.</li>
+  <li>Changed TS compilation target to ES2017 in order to produce smaller bundles and use more native platform features</li>
+</ul>
+
+<h3 id="storage---files-data-lake-1260-changelog">Storage - Files Data Lake 12.6.0 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/storage-file-datalake_12.6.0/sdk/storage/storage-file-datalake/CHANGELOG.md">Changelog</a></h3>
+<ul>
+  <li>Support for Node.js 8 and IE 11 has been dropped. Please see our <a href="https://github.com/Azure/azure-sdk-for-js/blob/main/SUPPORT.md">support policy</a> for more details.</li>
+  <li>Changed TS compilation target to ES2017 in order to produce smaller bundles and use more native platform features</li>
+  <li>Updated our internal core package dependencies to their latest versions in order to add support for Opentelemetry 1.0.0 which is compatible with the latest versions of our other client libraries.</li>
+</ul>
+
+<h3 id="storage---files-shares-1280-beta1-changelog">Storage - Files Shares 12.8.0-beta.1 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/storage-file-share_12.8.0-beta.1/sdk/storage/storage-file-share/CHANGELOG.md">Changelog</a></h3>
+<h4 id="features-added-23">Features Added</h4>
+
+<ul>
+  <li>Added support for service version 2020-10-02.</li>
+  <li>Added support for including additional information in <code class="language-plaintext highlighter-rouge">ShareDirectoryClient.listFilesAndDirectories()</code>.</li>
+  <li>Added support for OAuth in copying source in <code class="language-plaintext highlighter-rouge">ShareFileClient.uploadRangeFromURL()</code> when source is a Blob.</li>
+  <li>With the dropping of support for Node.js versions that are no longer in LTS, the dependency on <code class="language-plaintext highlighter-rouge">@types/node</code> has been updated to version 12. Read our <a href="https://github.com/Azure/azure-sdk-for-js/blob/main/SUPPORT.md">support policy</a> for more details.</li>
+  <li>Changed TS compilation target to ES2017 in order to produce smaller bundles and use more native platform features</li>
+</ul>
+
+<h3 id="storage---files-shares-1270-changelog">Storage - Files Shares 12.7.0 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/storage-file-share_12.7.0/sdk/storage/storage-file-share/CHANGELOG.md">Changelog</a></h3>
+<ul>
+  <li>Support for Node.js 8 and IE 11 has been dropped. Please see our <a href="https://github.com/Azure/azure-sdk-for-js/blob/main/SUPPORT.md">support policy</a> for more details.</li>
+  <li>Changed TS compilation target to ES2017 in order to produce smaller bundles and use more native platform features</li>
+  <li>Updated our internal core package dependencies to their latest versions in order to add support for Opentelemetry 1.0.0 which is compatible with the latest versions of our other client libraries.</li>
+</ul>
+
+<h3 id="storage---queues-1260-changelog">Storage - Queues 12.6.0 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/storage-queue_12.6.0/sdk/storage/storage-queue/CHANGELOG.md">Changelog</a></h3>
+<ul>
+  <li>Support for Node.js 8 and IE 11 has been dropped. Please see our <a href="https://github.com/Azure/azure-sdk-for-js/blob/main/SUPPORT.md">support policy</a> for more details.</li>
+  <li>Changed TS compilation target to ES2017 in order to produce smaller bundles and use more native platform features</li>
+  <li>Updated our internal core package dependencies to their latest versions in order to add support for Opentelemetry 1.0.0 which is compatible with the latest versions of our other client libraries.</li>
+</ul>
+
+<h3 id="synapse---accesscontrol-100-beta3-changelog">Synapse - AccessControl 1.0.0-beta.3 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/synapse-access-control_1.0.0-beta.3/sdk/synapse/synapse-access-control/CHANGELOG.md">Changelog</a></h3>
+<h4 id="other-changes">Other Changes</h4>
+
+<ul>
+  <li>Migrate to CoreV2</li>
+  <li>Re-generate with swagger <code class="language-plaintext highlighter-rouge">2020-12-01</code></li>
+</ul>
+
+<h3 id="synapse---artifacts-100-beta5-changelog">Synapse - Artifacts 1.0.0-beta.5 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/synapse-artifacts_1.0.0-beta.5/sdk/synapse/synapse-artifacts/CHANGELOG.md">Changelog</a></h3>
+<h4 id="other-changes-1">Other Changes</h4>
+
+<ul>
+  <li>Migrate to CoreV2</li>
+  <li>Re-generate with swagger <code class="language-plaintext highlighter-rouge">2021-06-01-preview</code></li>
+</ul>
+
+<h3 id="synapse---managed-private-endpoints-100-beta3-changelog">Synapse - Managed Private Endpoints 1.0.0-beta.3 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/synapse-managed-private-endpoints_1.0.0-beta.3/sdk/synapse/synapse-managed-private-endpoints/CHANGELOG.md">Changelog</a></h3>
+<h4 id="other-changes-2">Other Changes</h4>
+
+<ul>
+  <li>Migrate to CoreV2</li>
+  <li>Re-generate with swagger <code class="language-plaintext highlighter-rouge">2021-06-01-preview</code></li>
+</ul>
+
+<h3 id="synapse---spark-100-beta3-changelog">Synapse - Spark 1.0.0-beta.3 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/synapse-spark_1.0.0-beta.3/sdk/synapse/synapse-spark/CHANGELOG.md">Changelog</a></h3>
+<h4 id="other-changes-3">Other Changes</h4>
+
+<ul>
+  <li>Migrate to CoreV2</li>
+  <li>Re-generate with swagger <code class="language-plaintext highlighter-rouge">2020-12-01</code></li>
+</ul>
+
+<h3 id="tables-1211-changelog">Tables 12.1.1 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/data-tables_12.1.1/sdk/tables/data-tables/CHANGELOG.md">Changelog</a></h3>
+<h4 id="bugs-fixed-6">Bugs Fixed</h4>
+
+<ul>
+  <li>Fixed inconsistent return type for number and strings when setting <code class="language-plaintext highlighter-rouge">disableTypeConversion</code> option. <a href="https://github.com/Azure/azure-sdk-for-js/pull/16736">#16736</a></li>
+  <li>Fix <a href="https://github.com/Azure/azure-sdk-for-js/issues/15701">#15854</a> when submitting transactions by ensuring the <code class="language-plaintext highlighter-rouge">allowInsecureConnection</code> client option is respected. <a href="https://github.com/Azure/azure-sdk-for-js/pull/16587">#16587</a></li>
+</ul>
+
+<h3 id="text-analytics-520-beta1-changelog">Text Analytics 5.2.0-beta.1 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/ai-text-analytics_5.2.0-beta.1/sdk/textanalytics/ai-text-analytics/CHANGELOG.md">Changelog</a></h3>
+<h4 id="features-added-24">Features Added</h4>
+
+<ul>
+  <li>We are now targeting the service’s v3.2-preview.1 API as the default instead of v3.1.</li>
+  <li><code class="language-plaintext highlighter-rouge">beginAnalyzeActions</code> now supports extract summary actions.</li>
+</ul>
+
+<h3 id="web-pubsub-cloudevents-handlers-for-express-100-beta3-changelog">Web PubSub CloudEvents Handlers for Express 1.0.0-beta.3 <a href="https://github.com/Azure/azure-sdk-for-js/tree/@azure/web-pubsub-express_1.0.0-beta.3/sdk/web-pubsub/web-pubsub-express/CHANGELOG.md">Changelog</a></h3>
+<ul>
+  <li>Support reading and setting connection states, sample usage:
+    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">handler</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">WebPubSubEventHandler</span><span class="p">(</span><span class="dl">"</span><span class="s2">chat</span><span class="dl">"</span><span class="p">,</span> <span class="p">[</span><span class="dl">"</span><span class="s2">https://xxx.webpubsub.azure.com</span><span class="dl">"</span><span class="p">],</span> <span class="p">{</span>
+<span class="nx">handleConnect</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+<span class="c1">// You can set the state for the connection, it lasts throughout the lifetime of the connection</span>
+<span class="nx">res</span><span class="p">.</span><span class="nx">setState</span><span class="p">(</span><span class="dl">"</span><span class="s2">calledTime</span><span class="dl">"</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+<span class="nx">res</span><span class="p">.</span><span class="nx">success</span><span class="p">();</span>
+<span class="p">},</span>
+<span class="nx">handleUserEvent</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+<span class="kd">var</span> <span class="nx">calledTime</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">context</span><span class="p">.</span><span class="nx">states</span><span class="p">.</span><span class="nx">calledTime</span><span class="o">++</span><span class="p">;</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">calledTime</span><span class="p">);</span>
+<span class="c1">// You can also set the state here</span>
+<span class="nx">res</span><span class="p">.</span><span class="nx">setState</span><span class="p">(</span><span class="dl">"</span><span class="s2">calledTime</span><span class="dl">"</span><span class="p">,</span> <span class="nx">calledTime</span><span class="p">);</span>
+<span class="nx">res</span><span class="p">.</span><span class="nx">success</span><span class="p">();</span>
+<span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h2 id="latest-releases">Latest Releases</h2>
+
+<p>View all the latest versions of JavaScript packages <a href="/azure-sdk/releases/latest/js.html">here</a>.</p>
+
+<h2 id="installation-instructions">Installation Instructions</h2>
+
+<p>To install the packages, copy and paste the below into a terminal.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure-rest/core-client-paging@1.0.0-beta.1
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/ai-form-recognizer@3.2.0
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/ai-text-analytics@5.2.0-beta.1
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/app-configuration@1.3.0
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/arm-appservice@30.0.0-beta.1
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/arm-compute@30.0.0-beta.1
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/arm-compute@30.0.0-beta.2
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/arm-features@30.0.0-beta.2
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/arm-features@30.0.0-beta.3
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/arm-keyvault@30.0.0-beta.1
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/arm-links@30.0.0-beta.1
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/arm-locks@30.0.0-beta.1
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/arm-managedapplications@30.0.0-beta.1
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/arm-network@30.0.0-beta.1
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/arm-policy@30.0.0-beta.1
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/arm-resources@30.0.0-beta.1
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/arm-sql@30.0.0-beta.1
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/arm-storage@30.0.0-beta.1
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/arm-webpubsub@0.1.0-beta.1
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/communication-chat@1.1.0-beta.1
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/communication-common@1.1.0
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/communication-network-traversal@1.0.0-beta.2
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/core-client@1.2.2
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/core-client@1.3.0
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/core-http@2.1.0
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/core-lro@2.1.0
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/core-lro@2.2.0
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/core-rest-pipeline@1.1.1
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/core-rest-pipeline@1.2.0
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/core-tracing@1.0.0-preview.13
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/core-xml@1.0.0
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/cosmos@3.12.0
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/cosmos@3.12.1
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/cosmos@3.12.2
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/cosmos@3.12.3
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/cosmos@3.13.0
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/data-tables@12.1.1
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/eventgrid@4.4.0
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/identity@1.4.0
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/identity@1.5.0
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/identity@2.0.0-beta.5
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/identity@1.5.1
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/keyvault-admin@4.1.0
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/keyvault-admin@4.2.0-beta.1
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/keyvault-certificates@4.3.0
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/keyvault-keys@4.3.0
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/keyvault-keys@4.4.0-beta.1
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/keyvault-secrets@4.3.0
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/monitor-query@1.0.0-beta.4
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/search-documents@11.3.0-beta.2
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/storage-blob@12.8.0-beta.1
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/storage-blob@12.7.0
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/storage-file-datalake@12.7.0-beta.1
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/storage-file-datalake@12.6.0
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/storage-file-share@12.8.0-beta.1
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/storage-file-share@12.7.0
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/storage-queue@12.6.0
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/synapse-access-control@1.0.0-beta.3
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/synapse-artifacts@1.0.0-beta.5
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/synapse-managed-private-endpoints@1.0.0-beta.3
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/synapse-spark@1.0.0-beta.3
+<span class="nv">$&gt;</span> npm <span class="nb">install</span> @azure/web-pubsub-express@1.0.0-beta.3
+</code></pre></div></div>
+
+<h2 id="feedback">Feedback</h2>
+
+<p>If you have a bug or feature request for one of the libraries, please post an issue at the <a href="https://github.com/azure/azure-sdk-for-js/issues">azure-sdk-for-js repository</a></p>
+
+
+            </div>
+        </article>
+        
+        
+
+    </div>
+</div>
+
+                </div>
+                <!-- /.row -->
+
+            </div>
+            <!-- /.container -->
+        </div>
+        <!-- /#main -->
+    </div>
+    
+    <!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-62780441-46"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-62780441-46');
+</script>
+
+<!-- OLD SCRIPT
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-62780441-46','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+-->
+
+    
+    
+    <!-- the app_insights gets auto inserted from the config file -->
+<!-- For other configuration elements, see https://docs.microsoft.com/azure/azure-monitor/app/javascript#snippet-based-setup -->
+
+<script type="text/javascript">
+var sdkInstance="appInsightsSDK";window[sdkInstance]="appInsights";var aiName=window[sdkInstance],aisdk=window[aiName]||function(n){var o={config:n,initialize:!0},t=document,e=window,i="script";setTimeout(function(){var e=t.createElement(i);e.src=n.url||"https://az416426.vo.msecnd.net/scripts/b/ai.2.min.js",t.getElementsByTagName(i)[0].parentNode.appendChild(e)});try{o.cookie=t.cookie}catch(e){}function a(n){o[n]=function(){var e=arguments;o.queue.push(function(){o[n].apply(o,e)})}}o.queue=[],o.version=2;for(var s=["Event","PageView","Exception","Trace","DependencyData","Metric","PageViewPerformance"];s.length;)a("track"+s.pop());var r="Track",c=r+"Page";a("start"+c),a("stop"+c);var u=r+"Event";if(a("start"+u),a("stop"+u),a("addTelemetryInitializer"),a("setAuthenticatedUserContext"),a("clearAuthenticatedUserContext"),a("flush"),o.SeverityLevel={Verbose:0,Information:1,Warning:2,Error:3,Critical:4},!(!0===n.disableExceptionTracking||n.extensionConfig&&n.extensionConfig.ApplicationInsightsAnalytics&&!0===n.extensionConfig.ApplicationInsightsAnalytics.disableExceptionTracking)){a("_"+(s="onerror"));var p=e[s];e[s]=function(e,n,t,i,a){var r=p&&p(e,n,t,i,a);return!0!==r&&o["_"+s]({message:e,url:n,lineNumber:t,columnNumber:i,error:a}),r},n.autoExceptionInstrumented=!0}return o}(
+{
+    instrumentationKey:"5e03f19a-f5b4-4620-97d5-35707cec7fcb",
+    autoTrackPageVisitTime:true,
+    isCookieUseDisabled:true
+}
+);(window[aiName]=aisdk).queue&&0===aisdk.queue.length&&aisdk.trackPageView({});
+</script>
+
+    
+</body>
+<hr class="shaded"/>
+<footer>
+    <div class="container-fluid">
+        <div class="row footer">
+            <div class="col-lg-6 text-left pb-1">
+           &copy;2024 Microsoft Azure. All rights reserved. 
+ Site last generated: May 30, 2024
+            </div>
+            <div class="col-lg-6 text-right">
+                <p><img src="/azure-sdk/images/company_logo.png" width="100px" alt="Microsoft logo"/></p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+</html>

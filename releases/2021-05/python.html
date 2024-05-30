@@ -1,0 +1,1688 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="keywords" content="python azure,  ">
+<title>Azure SDK for Python (May 2021) | Azure SDKs</title>
+<link rel="stylesheet" href="/azure-sdk/css/syntax.css" />
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/azure-sdk/css/modern-business.css" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="/azure-sdk/css/boxshadowproperties.css" />
+<link rel="stylesheet" href="/azure-sdk/css/theme-azure.css" />
+<link rel="stylesheet" href="/azure-sdk/css/customstyles.css" />
+<link rel="stylesheet" href="/azure-sdk/css/normalize.css">
+<link rel="stylesheet" href="/azure-sdk/css/tipuesearch.css">
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="/azure-sdk/js/jquery.navgoco.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.2.0/anchor.min.js"></script>
+<script src="/azure-sdk/js/toc.js"></script>
+<script src="/azure-sdk/js/customscripts.js"></script>
+
+<link rel="shortcut icon" href="/azure-sdk/images/azure-sdk-glyph.svg"/>
+<link rel="alternate" type="application/rss+xml" title="Azure SDKs" href="/azure-sdk/feed.xml" />
+
+    <script>
+        $(document).ready(function () {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function (e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function (e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+
+        });
+
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function () {
+            $("#tg-sb-link").click(function () {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+    <!-- Due to the page header height, all anchors uses top padding to offset the top possion and appear below the main header.
+        If one requirement icon is just below another, the padding of the icon overlaps the one on top of it and block the clicking surface.
+        The script below finds all requirements icons and adds z-index decrementally to place any previous icon on top of the next ones.
+        The script runs after the page is completelly load (all content is downloaded).
+      -->
+    <script>
+        $(window).bind("load", function () {
+            let requeriments = $('.requirement');
+            requeriments.each(function (index, element) {
+                $(element).css("z-index", requeriments.length - index);
+            });
+        });
+    </script>
+
+</head>
+
+<body>
+    <!-- Navigation -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/azure-sdk/releases/latest/index.html"/>
+                <span class="projectTitle"><img style="margin-top: -8px;" class="d-inline-block align-top" src="/azure-sdk/images/azure-sdk-glyph.svg" width="35" height="35" alt=""/> Azure SDKs</span>
+            </a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <!-- toggle sidebar button -->
+                <!-- <li><a id="tg-sb-link" href="#"><i id="tg-sb-icon" class="fa fa-toggle-on"></i> Nav</a></li> -->
+                <!-- entries without drop-downs appear here -->
+
+
+
+
+
+                
+                
+                
+                <li><a href="https://aka.ms/azsdk/blog" rel="noopener">Blog</a></li>
+                
+                
+                
+                <li><a href="/azure-sdk/releases/latest/">Releases</a></li>
+                
+                
+                
+                <!-- entries with drop-downs appear here -->
+                <!-- conditional logic to control which topnav appears for the audience defined in the configuration file.-->
+                
+                
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Guidelines<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        
+                        
+                        <li><a href="/azure-sdk/general_introduction.html" rel="noopener">General Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/dotnet_introduction.html" rel="noopener">.NET Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/java_introduction.html" rel="noopener">Java Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/python_design.html" rel="noopener">Python Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/typescript_introduction.html" rel="noopener">TypeScript Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/android_design.html" rel="noopener">Android Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/ios_design.html" rel="noopener">iOS Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/clang_design.html" rel="noopener">C Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/cpp_introduction.html" rel="noopener">C++ Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/golang_introduction.html" rel="noopener">Go Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/rust_introduction.html" rel="noopener">Rust Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/policies_adoption.html" rel="noopener">GitHub Repos</a></li>
+                        
+                        <li><a href="/azure-sdk/policies_reviewprocess.html" rel="noopener">Policies</a></li>
+                        
+                        
+                    </ul>
+                </li>
+                
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">API References<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        
+                        
+                        
+                        <li><a href="https://aka.ms/net-docs" rel="noopener">.NET</a></li>
+                        
+                        
+                        
+                        <li><a href="https://aka.ms/java-docs" rel="noopener">Java</a></li>
+                        
+                        
+                        
+                        <li><a href="https://aka.ms/python-docs" rel="noopener">Python</a></li>
+                        
+                        
+                        
+                        <li><a href="https://aka.ms/js-docs" rel="noopener">TypeScript</a></li>
+                        
+                        
+                        
+                    </ul>
+                </li>
+                
+                
+                
+                <li>
+                    
+                        <a style="font-size: 1.666em !important" class="fa fa-github fa-2x" title="GitHub Link" href="https://github.com/azure/azure-sdk-for-python"></a>
+                    
+                </li>
+                <li>
+                    <a style="font-size: 1.666em !important" class="fa fa-twitter fa-2x" title="Twitter Link" href="https://twitter.com/AzureSDK"></a>
+                </li>
+            </ul>
+        </div>
+        </div>
+        <!-- /.container -->
+</nav>
+
+    <!-- Page Content -->
+    <div class="container-fluid" style="margin-top: 60px; min-height: calc(100vh - 50px);">
+        <div id="main">
+            <!-- Content Row -->
+            <div class="row">
+                
+                
+                <!-- Sidebar Column -->
+                <div class="col-md-2 col-xs-12" id="tg-sb-sidebar">
+                    
+
+<div id="mysidebar" class="nav">
+
+  <script src="/azure-sdk/js/tipuesearch_content.js"></script>
+  <script src="/azure-sdk/js/tipuesearch_set.js"></script>
+  <script src="/azure-sdk/js/tipuesearch.min.js"></script>
+
+<p>
+<form action="/azure-sdk/search.html" >
+    <div class=" tipue_search_left"><img src="/azure-sdk/images/search.png" alt="Search Icon" class="tipue_search_icon"></div>
+    <input type="text" class="form-control tipue_search_right" name="q" id="tipue_search_input" pattern=".{3,}" title="At least 3 characters" required placeholder="Search website">
+</form>
+</p>
+<div style="clear: both;"></div>
+  <ol>
+    <li class="sidebarTitle"> </li>
+    
+      
+        
+        <li>
+        
+          
+          <a title="Latest" href="/azure-sdk/releases/latest/index.html">Latest</a>
+          
+          <ul>
+            
+              
+                <li><a title=".NET" href="/azure-sdk/releases/latest/dotnet.html">.NET</a></li>
+              
+              
+            
+              
+                <li><a title="Java" href="/azure-sdk/releases/latest/java.html">Java</a></li>
+              
+              
+            
+              
+                <li><a title="JavaScript/TypeScript" href="/azure-sdk/releases/latest/js.html">JavaScript/TypeScript</a></li>
+              
+              
+            
+              
+                <li><a title="Python" href="/azure-sdk/releases/latest/python.html">Python</a></li>
+              
+              
+            
+              
+                <li><a title="Go" href="/azure-sdk/releases/latest/go.html">Go</a></li>
+              
+              
+            
+              
+                <li><a title="C++" href="/azure-sdk/releases/latest/cpp.html">C++</a></li>
+              
+              
+            
+              
+                <li><a title="Embedded C" href="/azure-sdk/releases/latest/c.html">Embedded C</a></li>
+              
+              
+            
+              
+                <li><a title="Android" href="/azure-sdk/releases/latest/android.html">Android</a></li>
+              
+              
+            
+              
+                <li><a title="iOS" href="/azure-sdk/releases/latest/ios.html">iOS</a></li>
+              
+              
+            
+              
+                <li><a title="Specs" href="/azure-sdk/releases/latest/specs.html">Specs</a></li>
+              
+              
+            
+          </ul>
+        </li>
+      
+        
+        <li>
+        
+          
+          <a title="2024 Releases" href="#">2024 Releases</a>
+          
+          <ul>
+            
+              
+                <li><a title="May" href="/azure-sdk/releases/2024-05/index.html">May</a></li>
+              
+              
+            
+              
+                <li><a title="April" href="/azure-sdk/releases/2024-04/index.html">April</a></li>
+              
+              
+            
+              
+                <li><a title="March" href="/azure-sdk/releases/2024-03/index.html">March</a></li>
+              
+              
+            
+              
+                <li><a title="February" href="/azure-sdk/releases/2024-02/index.html">February</a></li>
+              
+              
+            
+              
+                <li><a title="January" href="/azure-sdk/releases/2024-01/index.html">January</a></li>
+              
+              
+            
+          </ul>
+        </li>
+      
+        
+        <li>
+        
+          
+          <a title="2023 Releases" href="#">2023 Releases</a>
+          
+          <ul>
+            
+              
+                <li><a title="December" href="/azure-sdk/releases/2023-12/index.html">December</a></li>
+              
+              
+            
+              
+                <li><a title="November" href="/azure-sdk/releases/2023-11/index.html">November</a></li>
+              
+              
+            
+              
+                <li><a title="October" href="/azure-sdk/releases/2023-10/index.html">October</a></li>
+              
+              
+            
+              
+                <li><a title="September" href="/azure-sdk/releases/2023-09/index.html">September</a></li>
+              
+              
+            
+              
+                <li><a title="August" href="/azure-sdk/releases/2023-08/index.html">August</a></li>
+              
+              
+            
+              
+                <li><a title="July" href="/azure-sdk/releases/2023-07/index.html">July</a></li>
+              
+              
+            
+              
+                <li><a title="June" href="/azure-sdk/releases/2023-06/index.html">June</a></li>
+              
+              
+            
+              
+                <li><a title="May" href="/azure-sdk/releases/2023-05/index.html">May</a></li>
+              
+              
+            
+              
+                <li><a title="April" href="/azure-sdk/releases/2023-04/index.html">April</a></li>
+              
+              
+            
+              
+                <li><a title="March" href="/azure-sdk/releases/2023-03/index.html">March</a></li>
+              
+              
+            
+              
+                <li><a title="February" href="/azure-sdk/releases/2023-02/index.html">February</a></li>
+              
+              
+            
+              
+                <li><a title="January" href="/azure-sdk/releases/2023-01/index.html">January</a></li>
+              
+              
+            
+          </ul>
+        </li>
+      
+        
+        <li>
+        
+          
+          <a title="2022 Releases" href="#">2022 Releases</a>
+          
+          <ul>
+            
+              
+                <li><a title="December" href="/azure-sdk/releases/2022-12/index.html">December</a></li>
+              
+              
+            
+              
+                <li><a title="November" href="/azure-sdk/releases/2022-11/index.html">November</a></li>
+              
+              
+            
+              
+                <li><a title="October" href="/azure-sdk/releases/2022-10/index.html">October</a></li>
+              
+              
+            
+              
+                <li><a title="September" href="/azure-sdk/releases/2022-09/index.html">September</a></li>
+              
+              
+            
+              
+                <li><a title="August" href="/azure-sdk/releases/2022-08/index.html">August</a></li>
+              
+              
+            
+              
+                <li><a title="July" href="/azure-sdk/releases/2022-07/index.html">July</a></li>
+              
+              
+            
+              
+                <li><a title="June" href="/azure-sdk/releases/2022-06/index.html">June</a></li>
+              
+              
+            
+              
+                <li><a title="May" href="/azure-sdk/releases/2022-05/index.html">May</a></li>
+              
+              
+            
+              
+                <li><a title="April" href="/azure-sdk/releases/2022-04/index.html">April</a></li>
+              
+              
+            
+              
+                <li><a title="March" href="/azure-sdk/releases/2022-03/index.html">March</a></li>
+              
+              
+            
+              
+                <li><a title="February" href="/azure-sdk/releases/2022-02/index.html">February</a></li>
+              
+              
+            
+              
+                <li><a title="January" href="/azure-sdk/releases/2022-01/index.html">January</a></li>
+              
+              
+            
+          </ul>
+        </li>
+      
+        
+        <li>
+        
+          
+          <a title="2021 Releases" href="#">2021 Releases</a>
+          
+          <ul>
+            
+              
+                <li><a title="December" href="/azure-sdk/releases/2021-12/index.html">December</a></li>
+              
+              
+            
+              
+                <li><a title="November" href="/azure-sdk/releases/2021-11/index.html">November</a></li>
+              
+              
+            
+              
+                <li><a title="October" href="/azure-sdk/releases/2021-10/index.html">October</a></li>
+              
+              
+            
+              
+                <li><a title="September" href="/azure-sdk/releases/2021-09/index.html">September</a></li>
+              
+              
+            
+              
+                <li><a title="August" href="/azure-sdk/releases/2021-08/index.html">August</a></li>
+              
+              
+            
+              
+                <li><a title="July" href="/azure-sdk/releases/2021-07/index.html">July</a></li>
+              
+              
+            
+              
+                <li><a title="June" href="/azure-sdk/releases/2021-06/index.html">June</a></li>
+              
+              
+            
+              
+                <li><a title="May" href="/azure-sdk/releases/2021-05/index.html">May</a></li>
+              
+              
+            
+              
+                <li><a title="April" href="/azure-sdk/releases/2021-04/index.html">April</a></li>
+              
+              
+            
+              
+                <li><a title="March" href="/azure-sdk/releases/2021-03/index.html">March</a></li>
+              
+              
+            
+              
+                <li><a title="February" href="/azure-sdk/releases/2021-02/index.html">February</a></li>
+              
+              
+            
+              
+                <li><a title="January" href="/azure-sdk/releases/2021-01/index.html">January</a></li>
+              
+              
+            
+          </ul>
+        </li>
+      
+        
+        <li>
+        
+          
+          <a title="2020 Releases" href="#">2020 Releases</a>
+          
+          <ul>
+            
+              
+                <li><a title="December" href="/azure-sdk/releases/2020-12/index.html">December</a></li>
+              
+              
+            
+              
+                <li><a title="November" href="/azure-sdk/releases/2020-11/index.html">November</a></li>
+              
+              
+            
+              
+                <li><a title="October" href="/azure-sdk/releases/2020-10/index.html">October</a></li>
+              
+              
+            
+              
+                <li><a title="September" href="/azure-sdk/releases/2020-09/index.html">September</a></li>
+              
+              
+            
+              
+                <li><a title="August" href="/azure-sdk/releases/2020-08/index.html">August</a></li>
+              
+              
+            
+              
+                <li><a title="July" href="/azure-sdk/releases/2020-07/index.html">July</a></li>
+              
+              
+            
+              
+                <li><a title="June" href="/azure-sdk/releases/2020-06/index.html">June</a></li>
+              
+              
+            
+              
+                <li><a title="May" href="/azure-sdk/releases/2020-05/index.html">May</a></li>
+              
+              
+            
+              
+                <li><a title="April" href="/azure-sdk/releases/2020-04/index.html">April</a></li>
+              
+              
+            
+              
+                <li><a title="March" href="/azure-sdk/releases/2020-03/index.html">March</a></li>
+              
+              
+            
+              
+                <li><a title="February" href="/azure-sdk/releases/2020-02/index.html">February</a></li>
+              
+              
+            
+              
+                <li><a title="January" href="/azure-sdk/releases/2020-01/index.html">January</a></li>
+              
+              
+            
+          </ul>
+        </li>
+      
+        
+        <li>
+        
+          
+          <a title="2019 Releases" href="#">2019 Releases</a>
+          
+          <ul>
+            
+              
+                <li><a title="December" href="/azure-sdk/releases/2019-12/index.html">December</a></li>
+              
+              
+            
+              
+                <li><a title="November" href="/azure-sdk/releases/2019-11/index.html">November</a></li>
+              
+              
+            
+              
+                <li><a title="October" href="/azure-sdk/releases/2019-10-11/index.html">October</a></li>
+              
+              
+            
+              
+                <li><a title="September" href="/azure-sdk/releases/2019-09-17/index.html">September</a></li>
+              
+              
+            
+              
+                <li><a title="August" href="/azure-sdk/releases/2019-08-06/index.html">August</a></li>
+              
+              
+            
+              
+                <li><a title="July" href="/azure-sdk/releases/2019-07-10/index.html">July</a></li>
+              
+              
+            
+          </ul>
+        </li>
+      
+        
+        <li>
+        
+          
+          <a title="Deprecated" href="/azure-sdk/releases/deprecated/index.html">Deprecated</a>
+          
+          <ul>
+            
+              
+                <li><a title=".NET" href="/azure-sdk/releases/deprecated/dotnet.html">.NET</a></li>
+              
+              
+            
+              
+                <li><a title="Java" href="/azure-sdk/releases/deprecated/java.html">Java</a></li>
+              
+              
+            
+              
+                <li><a title="JavaScript/TypeScript" href="/azure-sdk/releases/deprecated/js.html">JavaScript/TypeScript</a></li>
+              
+              
+            
+              
+                <li><a title="Python" href="/azure-sdk/releases/deprecated/python.html">Python</a></li>
+              
+              
+            
+              
+                <li><a title="Go" href="/azure-sdk/releases/deprecated/go.html">Go</a></li>
+              
+              
+            
+          </ul>
+        </li>
+      
+    
+  </ol>
+</div>
+
+<script>$("li.active").parents('li').toggleClass("active");</script>
+
+                </div>
+                
+                
+
+                <!-- Content Column -->
+                <div class="col-md-10 col-xs-12" id="tg-sb-content">
+                    <div class="row">
+    
+    <div class="col-md-2 col-xs-12 content-right pull-right">
+        
+<!-- this handles the automatic toc. use ## for subheads to auto-generate the on-page minitoc. if you use html tags, you must supply an ID for the heading element in order for it to appear in the minitoc. -->
+<script>
+$( document ).ready(function() {
+  // Handler for .ready() called.
+
+$('#toc').toc({ minimumHeaders: 0, listType: 'ul', showSpeed: 0, headers: 'h2,h3,h4' });
+
+/* this offset helps account for the space taken up by the floating toolbar. */
+$('#toc').on('click', 'a', function() {
+  var target = $(this.getAttribute('href'))
+    , scroll_target = target.offset().top
+
+  $(window).scrollTop(scroll_target - 60);
+  return false
+})
+  
+});
+</script>
+
+<div id="toc"></div>
+
+    </div>
+    
+    <div class="col-md-10  col-xs-12 content-center pull-left">
+        <article class="post" itemscope itemtype="https://schema.org/BlogPosting">
+
+            <header class="post-header">
+                <h1 class="post-title" itemprop="name headline">Azure SDK for Python (May 2021)</h1>
+                <p class="post-meta">
+                    <time datetime="" itemprop="datePublished"></time> 
+        <!--
+                    
+                    /
+                    
+                    
+                    
+                    
+                    
+        -->
+                </p>
+        
+        
+            </header>
+        
+            <div class="post-content" itemprop="articleBody">
+        
+                
+        
+                
+<p>The Azure SDK team is pleased to announce our May 2021 client library releases.</p>
+
+<p>29 packages released this month.</p>
+
+<h4 id="stable-packages-14">Stable Packages (14)</h4>
+
+<ul>
+  <li>
+    <p>Core</p>
+  </li>
+  <li>
+    <p>Event Grid</p>
+  </li>
+  <li>
+    <p>Event Hubs</p>
+  </li>
+  <li>
+    <p>Identity</p>
+  </li>
+  <li>
+    <p>Resource Management - Billing</p>
+  </li>
+  <li>
+    <p>Resource Management - Cosmos DB</p>
+  </li>
+  <li>
+    <p>Resource Management - Log Analytics</p>
+  </li>
+  <li>
+    <p>Resource Management - Maintenance</p>
+  </li>
+  <li>
+    <p>Resource Management - Maps</p>
+  </li>
+  <li>
+    <p>Resource Management - Resources</p>
+  </li>
+  <li>
+    <p>Resource Management - SQL</p>
+  </li>
+  <li>
+    <p>Resource Management - Storage</p>
+  </li>
+  <li>
+    <p>Service Bus</p>
+  </li>
+  <li>
+    <p>azure-agrifood-nspkg</p>
+  </li>
+</ul>
+
+<h4 id="beta-packages-14">Beta Packages (14)</h4>
+
+<ul>
+  <li>
+    <p>Attestation</p>
+  </li>
+  <li>
+    <p>Cognitive Search</p>
+  </li>
+  <li>
+    <p>Confidential Ledger</p>
+  </li>
+  <li>
+    <p>Purview Catalog</p>
+  </li>
+  <li>
+    <p>Purview Scanning</p>
+  </li>
+  <li>
+    <p>Resource Management - Cosmos DB</p>
+  </li>
+  <li>
+    <p>Storage - Files Data Lake</p>
+  </li>
+  <li>
+    <p>Storage - Files Shares</p>
+  </li>
+  <li>
+    <p>Synapse - Artifacts</p>
+  </li>
+  <li>
+    <p>Tables</p>
+  </li>
+  <li>
+    <p>azure-containerregistry</p>
+  </li>
+  <li>
+    <p>azure-mgmt-elastic</p>
+  </li>
+  <li>
+    <p>azure-mgmt-extendedlocation</p>
+  </li>
+  <li>
+    <p>azure-mgmt-videoanalyzer</p>
+  </li>
+</ul>
+
+<h2 id="release-highlights">Release highlights</h2>
+
+<h3 id="attestation-100b2-changelog">Attestation 1.0.0b2 <a href="https://github.com/Azure/azure-sdk-for-python/blob/azure-security-attestation_1.0.0b2/sdk/attestation/azure-security-attestation/CHANGELOG.md#100b2-2021-05-11">Changelog</a></h3>
+<p><strong>New features</strong></p>
+
+<ul>
+  <li>Preliminary implementation of a Track 2 SDK for the attestation service.</li>
+</ul>
+
+<p><strong>Breaking changes</strong></p>
+
+<ul>
+  <li>Complete reimplementation of the API surface, follows the API patterns already
+established for the attestation service.</li>
+</ul>
+
+<h3 id="attestation-100b3-changelog">Attestation 1.0.0b3 <a href="https://github.com/Azure/azure-sdk-for-python/blob/azure-security-attestation_1.0.0b3/sdk/attestation/azure-security-attestation/CHANGELOG.md#100b3-2021-05-12">Changelog</a></h3>
+<p><strong>New features</strong></p>
+
+<ul>
+  <li>Added reset_policy API which was missed in the previous API.</li>
+  <li>Added models for all the generated API types.</li>
+  <li>Documentation cleanup for several APIs.</li>
+</ul>
+
+<p><strong>Breaking changes</strong></p>
+
+<ul>
+  <li>Creating the <code class="language-plaintext highlighter-rouge">StoredAttestationPolicy</code> model type means that the <code class="language-plaintext highlighter-rouge">attestation_policy</code>
+  kwargs parameter for the constructor has been replaced with a positional <code class="language-plaintext highlighter-rouge">policy</code> parameter. As a result of this change, this code:</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">StoredAttestationPolicy</span><span class="p">(</span><span class="n">attestation_policy</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">attestation_policy</span><span class="p">).</span><span class="n">encode</span><span class="p">(</span><span class="s">'utf-8'</span><span class="p">)))</span>
+</code></pre></div></div>
+
+<p>changes to:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">StoredAttestationPolicy</span><span class="p">(</span><span class="n">attestation_policy</span><span class="p">)</span>
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p>Several parameters for the <code class="language-plaintext highlighter-rouge">AttestationResult</code> type have been renamed, and
+  several parameters which were shared with <code class="language-plaintext highlighter-rouge">AttestationToken</code> have been
+  removed. In general, the naming changes removed some protocol specific
+  elements and replaced them with friendlier names. Finally, the deprecated
+  attributes have been removed from the <code class="language-plaintext highlighter-rouge">AttestationResult</code></p>
+
+    <p>Full set of changes:</p>
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">iss</code> renamed to <code class="language-plaintext highlighter-rouge">issuer</code></li>
+      <li><code class="language-plaintext highlighter-rouge">cnf</code> renamed to <code class="language-plaintext highlighter-rouge">confirmation</code></li>
+      <li><code class="language-plaintext highlighter-rouge">jti</code> renamed to <code class="language-plaintext highlighter-rouge">unique_identifier</code></li>
+      <li><code class="language-plaintext highlighter-rouge">iat</code> removed</li>
+      <li><code class="language-plaintext highlighter-rouge">exp</code> removed</li>
+      <li><code class="language-plaintext highlighter-rouge">nbf</code> removed</li>
+      <li><code class="language-plaintext highlighter-rouge">deprecated_version</code> removed</li>
+      <li><code class="language-plaintext highlighter-rouge">deprecated_is_debuggable</code> removed</li>
+      <li><code class="language-plaintext highlighter-rouge">deprecated_sgx_collateral</code> removed</li>
+      <li><code class="language-plaintext highlighter-rouge">deprecated_enclave_held_data</code> removed</li>
+      <li><code class="language-plaintext highlighter-rouge">deprecated_enclave_held_data2</code> removed</li>
+      <li><code class="language-plaintext highlighter-rouge">deprecated_product_id</code> removed</li>
+      <li><code class="language-plaintext highlighter-rouge">deprecated_mr_enclave</code> removed</li>
+      <li><code class="language-plaintext highlighter-rouge">deprecated_mr_signer</code> removed</li>
+      <li><code class="language-plaintext highlighter-rouge">deprecated_svn</code> removed</li>
+      <li><code class="language-plaintext highlighter-rouge">deprecated_tee</code> removed</li>
+      <li><code class="language-plaintext highlighter-rouge">deprecated_policy_signer</code> removed</li>
+      <li><code class="language-plaintext highlighter-rouge">deprecated_policy_hash</code> removed</li>
+      <li><code class="language-plaintext highlighter-rouge">deprecated_rp_data</code> removed</li>
+    </ul>
+
+    <p>If customers need to access the removed or renamed fields directly, they can
+use the <code class="language-plaintext highlighter-rouge">get_body</code> method of the <code class="language-plaintext highlighter-rouge">AttestationResponse</code> object:</p>
+
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">if</span> <span class="n">response</span><span class="p">.</span><span class="n">token</span><span class="p">.</span><span class="n">get_body</span><span class="p">().</span><span class="n">deprecated_tee</span> <span class="o">!=</span> <span class="s">'sgx'</span><span class="p">:</span>
+      <span class="k">print</span><span class="p">(</span><span class="s">"Unexpected tee claim in token"</span><span class="p">)</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="cognitive-search-1120b3-changelog">Cognitive Search 11.2.0b3 <a href="https://github.com/Azure/azure-sdk-for-python/blob/azure-search-documents_11.2.0b3/sdk/search/azure-search-documents/CHANGELOG.md#1120b3-2021-05-11">Changelog</a></h3>
+<p><strong>New features</strong></p>
+
+<ul>
+  <li>Added support for knowledge store    #18461</li>
+</ul>
+
+<h3 id="confidential-ledger-100b1-changelog">Confidential Ledger 1.0.0b1 <a href="https://github.com/Azure/azure-sdk-for-python/blob/azure-confidentialledger_1.0.0b1/sdk/confidentialledger/azure-confidentialledger/CHANGELOG.md#100b1-2021-05-12">Changelog</a></h3>
+<ul>
+  <li>This is the initial release of the Azure Confidential Ledger library.</li>
+</ul>
+
+<h3 id="core-1140-changelog">Core 1.14.0 <a href="https://github.com/Azure/azure-sdk-for-python/blob/azure-core_1.14.0/sdk/core/azure-core/CHANGELOG.md#1140-2021-05-13">Changelog</a></h3>
+<p><strong>New features</strong></p>
+
+<ul>
+  <li>Added <code class="language-plaintext highlighter-rouge">azure.core.credentials.AzureNamedKeyCredential</code> credential #17548.</li>
+  <li>Added <code class="language-plaintext highlighter-rouge">decompress</code> parameter for <code class="language-plaintext highlighter-rouge">stream_download</code> method. If it is set to <code class="language-plaintext highlighter-rouge">False</code>, will not do decompression upon the stream.    #17920</li>
+</ul>
+
+<h3 id="event-grid-420-changelog">Event Grid 4.2.0 <a href="https://github.com/Azure/azure-sdk-for-python/blob/azure-eventgrid_4.2.0/sdk/eventgrid/azure-eventgrid/CHANGELOG.md#420-2021-05-12">Changelog</a></h3>
+<p><strong>New features</strong></p>
+<ul>
+  <li>Added new event names to the <code class="language-plaintext highlighter-rouge">SystemEventNames</code> enum.</li>
+</ul>
+
+<h3 id="event-hubs-550-changelog">Event Hubs 5.5.0 <a href="https://github.com/Azure/azure-sdk-for-python/blob/azure-eventhub_5.5.0/sdk/eventhub/azure-eventhub/CHANGELOG.md#550-2021-05-13">Changelog</a></h3>
+<p><strong>New features</strong></p>
+
+<ul>
+  <li>Added support for using <code class="language-plaintext highlighter-rouge">azure.core.credentials.AzureNamedKeyCredential</code> as credential for authenticating producer and consumer clients.</li>
+</ul>
+
+<p><strong>Bug fixes</strong></p>
+
+<ul>
+  <li>Fixed bug that custom user agent string should be put in front of the built-in user agent string instead of being appended.</li>
+  <li>Updated uAMQP dependency to 1.4.0.
+    <ul>
+      <li>Fixed memory leaks in the process of link attach where source and target cython objects are not properly deallocated (#15747).</li>
+      <li>Improved management operation callback not to parse description value of non AMQP_TYPE_STRING type as string (#18361).</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>Notes</strong></p>
+
+<ul>
+  <li>Updated azure-core dependency to 1.14.0.</li>
+</ul>
+
+<h3 id="identity-160-changelog">Identity 1.6.0 <a href="https://github.com/Azure/azure-sdk-for-python/blob/azure-identity_1.6.0/sdk/identity/azure-identity/CHANGELOG.md#160-2021-05-13">Changelog</a></h3>
+<p>This is the last version to support Python 3.5. The next version will require
+Python 2.7 or 3.6+.</p>
+
+<p><strong>New features</strong></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">AzurePowerShellCredential</code> authenticates as the identity logged in to Azure
+PowerShell. This credential is part of <code class="language-plaintext highlighter-rouge">DefaultAzureCredential</code> by default
+but can be disabled by a keyword argument:
+<code class="language-plaintext highlighter-rouge">DefaultAzureCredential(exclude_powershell_credential=True)</code>
+(<a href="https://github.com/Azure/azure-sdk-for-python/issues/17341">#17341</a>)</li>
+</ul>
+
+<p><strong>Bug fixes</strong></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">AzureCliCredential</code> raises <code class="language-plaintext highlighter-rouge">CredentialUnavailableError</code> when the CLI times out,
+and kills timed out subprocesses</li>
+  <li>Reduced retry delay for <code class="language-plaintext highlighter-rouge">ManagedIdentityCredential</code> on Azure VMs</li>
+</ul>
+
+<h3 id="purview-catalog-100b1-changelog">Purview Catalog 1.0.0b1 <a href="https://github.com/Azure/azure-sdk-for-python/blob/azure-purview-catalog_1.0.0b1/sdk/purview/azure-purview-catalog/CHANGELOG.md#100b1-2021-05-11">Changelog</a></h3>
+<ul>
+  <li>This is the initial release of the Azure Purview Catalog library.</li>
+</ul>
+
+<h3 id="purview-scanning-100b1-changelog">Purview Scanning 1.0.0b1 <a href="https://github.com/Azure/azure-sdk-for-python/blob/azure-purview-scanning_1.0.0b1/sdk/purview/azure-purview-scanning/CHANGELOG.md#100b1-2021-05-11">Changelog</a></h3>
+<ul>
+  <li>This is the initial release of the Azure Purview Scanning library.</li>
+</ul>
+
+<h3 id="resource-management---billing-600-changelog">Resource Management - Billing 6.0.0 <a href="https://github.com/Azure/azure-sdk-for-python/blob/azure-mgmt-billing_6.0.0/sdk/billing/azure-mgmt-billing/CHANGELOG.md#600-2021-05-12">Changelog</a></h3>
+<p><strong>New features</strong></p>
+
+<ul>
+  <li>Model InvoiceSectionListResult has a new parameter total_count</li>
+  <li>Model OperationDisplay has a new parameter description</li>
+  <li>Model BillingSubscriptionsListResult has a new parameter total_count</li>
+  <li>Model BillingAccountUpdateRequest has a new parameter notification_email_address</li>
+  <li>Model EnrollmentAccount has a new parameter account_owner_email</li>
+  <li>Model CustomerListResult has a new parameter total_count</li>
+  <li>Model Operation has a new parameter is_data_action</li>
+  <li>Model BillingAccount has a new parameter notification_email_address</li>
+  <li>Model AddressDetails has a new parameter middle_name</li>
+  <li>Model BillingProfile has a new parameter tags</li>
+  <li>Model EnrollmentPolicies has a new parameter marketplace_enabled</li>
+  <li>Added operation group ReservationsOperations</li>
+</ul>
+
+<p><strong>Breaking changes</strong></p>
+
+<ul>
+  <li>Model EnrollmentPolicies no longer has parameter marketplaces_enabled</li>
+</ul>
+
+<h3 id="resource-management---cosmos-db-630b1-changelog">Resource Management - Cosmos DB 6.3.0b1 <a href="https://github.com/Azure/azure-sdk-for-python/blob/azure-mgmt-cosmosdb_6.3.0b1/sdk/cosmos/azure-mgmt-cosmosdb/CHANGELOG.md#630b1-2021-05-10">Changelog</a></h3>
+<p><strong>New features</strong></p>
+
+<ul>
+  <li>Model CassandraKeyspaceGetResults has a new parameter identity</li>
+  <li>Model TableCreateUpdateParameters has a new parameter identity</li>
+  <li>Model CassandraTableGetResults has a new parameter identity</li>
+  <li>Model MongoDBDatabaseGetResults has a new parameter identity</li>
+  <li>Model SqlStoredProcedureGetResults has a new parameter identity</li>
+  <li>Model TableGetResults has a new parameter identity</li>
+  <li>Model SqlTriggerGetResults has a new parameter identity</li>
+  <li>Model SqlTriggerCreateUpdateParameters has a new parameter identity</li>
+  <li>Model SqlContainerGetResults has a new parameter identity</li>
+  <li>Model SqlUserDefinedFunctionCreateUpdateParameters has a new parameter identity</li>
+  <li>Model SqlContainerCreateUpdateParameters has a new parameter identity</li>
+  <li>Model PeriodicModeProperties has a new parameter backup_storage_redundancy</li>
+  <li>Model MongoDBCollectionCreateUpdateParameters has a new parameter identity</li>
+  <li>Model SqlDatabaseCreateUpdateParameters has a new parameter identity</li>
+  <li>Model GremlinGraphCreateUpdateParameters has a new parameter identity</li>
+  <li>Model GremlinGraphGetResults has a new parameter identity</li>
+  <li>Model GremlinDatabaseCreateUpdateParameters has a new parameter identity</li>
+  <li>Model ThroughputSettingsUpdateParameters has a new parameter identity</li>
+  <li>Model MongoDBDatabaseCreateUpdateParameters has a new parameter identity</li>
+  <li>Model ThroughputSettingsGetResults has a new parameter identity</li>
+  <li>Model CassandraKeyspaceCreateUpdateParameters has a new parameter identity</li>
+  <li>Model SqlStoredProcedureCreateUpdateParameters has a new parameter identity</li>
+  <li>Model MongoDBCollectionGetResults has a new parameter identity</li>
+  <li>Model CassandraTableCreateUpdateParameters has a new parameter identity</li>
+  <li>Model SqlUserDefinedFunctionGetResults has a new parameter identity</li>
+  <li>Model SqlDatabaseGetResults has a new parameter identity</li>
+  <li>Model ARMResourceProperties has a new parameter identity</li>
+  <li>Model GremlinDatabaseGetResults has a new parameter identity</li>
+  <li>Model DatabaseAccountGetResults has a new parameter instance_id</li>
+  <li>Model DatabaseAccountGetResults has a new parameter restore_parameters</li>
+  <li>Model DatabaseAccountGetResults has a new parameter system_data</li>
+  <li>Model DatabaseAccountGetResults has a new parameter create_mode</li>
+  <li>Added operation SqlResourcesOperations.begin_create_update_sql_role_assignment</li>
+  <li>Added operation SqlResourcesOperations.begin_retrieve_continuous_backup_information</li>
+  <li>Added operation SqlResourcesOperations.begin_delete_sql_role_assignment</li>
+  <li>Added operation SqlResourcesOperations.begin_create_update_sql_role_definition</li>
+  <li>Added operation SqlResourcesOperations.list_sql_role_definitions</li>
+  <li>Added operation SqlResourcesOperations.begin_delete_sql_role_definition</li>
+  <li>Added operation SqlResourcesOperations.list_sql_role_assignments</li>
+  <li>Added operation SqlResourcesOperations.get_sql_role_assignment</li>
+  <li>Added operation SqlResourcesOperations.get_sql_role_definition</li>
+  <li>Added operation group CassandraDataCentersOperations</li>
+  <li>Added operation group RestorableSqlContainersOperations</li>
+  <li>Added operation group CassandraClustersOperations</li>
+  <li>Added operation group RestorableMongodbResourcesOperations</li>
+  <li>Added operation group RestorableMongodbDatabasesOperations</li>
+  <li>Added operation group RestorableDatabaseAccountsOperations</li>
+  <li>Added operation group RestorableMongodbCollectionsOperations</li>
+  <li>Added operation group CosmosDBManagementClientOperationsMixin</li>
+  <li>Added operation group RestorableSqlResourcesOperations</li>
+  <li>Added operation group ServiceOperations</li>
+  <li>Added operation group RestorableSqlDatabasesOperations</li>
+</ul>
+
+<p><strong>Breaking changes</strong></p>
+
+<ul>
+  <li>Model DatabaseAccountCreateUpdateParameters has a new signature</li>
+</ul>
+
+<h3 id="resource-management---cosmos-db-630-changelog">Resource Management - Cosmos DB 6.3.0 <a href="https://github.com/Azure/azure-sdk-for-python/blob/azure-mgmt-cosmosdb_6.3.0/sdk/cosmos/azure-mgmt-cosmosdb/CHANGELOG.md#630-2021-05-14">Changelog</a></h3>
+<p><strong>Breaking changes</strong></p>
+
+<ul>
+  <li>Model CassandraKeyspaceCreateUpdateParameters no longer has parameter identity</li>
+  <li>Model ARMResourceProperties no longer has parameter identity</li>
+  <li>Model MongoDBCollectionCreateUpdateParameters no longer has parameter identity</li>
+  <li>Model SqlDatabaseCreateUpdateParameters no longer has parameter identity</li>
+  <li>Model SqlStoredProcedureCreateUpdateParameters no longer has parameter identity</li>
+  <li>Model SqlTriggerGetResults no longer has parameter identity</li>
+  <li>Model MongoDBDatabaseCreateUpdateParameters no longer has parameter identity</li>
+  <li>Model SqlDatabaseGetResults no longer has parameter identity</li>
+  <li>Model TableGetResults no longer has parameter identity</li>
+  <li>Model CassandraTableCreateUpdateParameters no longer has parameter identity</li>
+  <li>Model GremlinGraphCreateUpdateParameters no longer has parameter identity</li>
+  <li>Model GremlinDatabaseGetResults no longer has parameter identity</li>
+  <li>Model ThroughputSettingsUpdateParameters no longer has parameter identity</li>
+  <li>Model CassandraKeyspaceGetResults no longer has parameter identity</li>
+  <li>Model SqlContainerGetResults no longer has parameter identity</li>
+  <li>Model SqlUserDefinedFunctionGetResults no longer has parameter identity</li>
+  <li>Model SqlTriggerCreateUpdateParameters no longer has parameter identity</li>
+  <li>Model MongoDBCollectionGetResults no longer has parameter identity</li>
+  <li>Model MongoDBDatabaseGetResults no longer has parameter identity</li>
+  <li>Model PeriodicModeProperties no longer has parameter backup_storage_redundancy</li>
+  <li>Model ThroughputSettingsGetResults no longer has parameter identity</li>
+  <li>Model GremlinGraphGetResults no longer has parameter identity</li>
+  <li>Model GremlinDatabaseCreateUpdateParameters no longer has parameter identity</li>
+  <li>Model CassandraTableGetResults no longer has parameter identity</li>
+  <li>Model SqlStoredProcedureGetResults no longer has parameter identity</li>
+  <li>Model TableCreateUpdateParameters no longer has parameter identity</li>
+  <li>Model DatabaseAccountGetResults no longer has parameter create_mode</li>
+  <li>Model DatabaseAccountGetResults no longer has parameter restore_parameters</li>
+  <li>Model DatabaseAccountGetResults no longer has parameter instance_id</li>
+  <li>Model DatabaseAccountGetResults no longer has parameter system_data</li>
+  <li>Model SqlUserDefinedFunctionCreateUpdateParameters no longer has parameter identity</li>
+  <li>Model SqlContainerCreateUpdateParameters no longer has parameter identity</li>
+  <li>Removed operation SqlResourcesOperations.begin_retrieve_continuous_backup_information</li>
+  <li>Model DatabaseAccountCreateUpdateParameters has a new signature</li>
+  <li>Removed operation group RestorableDatabaseAccountsOperations</li>
+  <li>Removed operation group RestorableMongodbCollectionsOperations</li>
+  <li>Removed operation group CosmosDBManagementClientOperationsMixin</li>
+  <li>Removed operation group RestorableSqlResourcesOperations</li>
+  <li>Removed operation group RestorableMongodbDatabasesOperations</li>
+  <li>Removed operation group CassandraClustersOperations</li>
+  <li>Removed operation group RestorableMongodbResourcesOperations</li>
+  <li>Removed operation group RestorableSqlContainersOperations</li>
+  <li>Removed operation group CassandraDataCentersOperations</li>
+  <li>Removed operation group RestorableSqlDatabasesOperations</li>
+  <li>Removed operation group ServiceOperations</li>
+</ul>
+
+<h3 id="resource-management---log-analytics-1000-changelog">Resource Management - Log Analytics 10.0.0 <a href="https://github.com/Azure/azure-sdk-for-python/blob/azure-mgmt-loganalytics_10.0.0/sdk/loganalytics/azure-mgmt-loganalytics/CHANGELOG.md#1000-2021-05-13">Changelog</a></h3>
+<p><strong>New features</strong></p>
+
+<ul>
+  <li>Model WorkspacePatch has a new parameter cluster_resource_id</li>
+  <li>Model WorkspacePatch has a new parameter immediate_purge_data_on30_days</li>
+  <li>Model WorkspacePatch has a new parameter enable_data_export</li>
+  <li>Model WorkspacePatch has a new parameter enable_log_access_using_only_resource_permissions</li>
+  <li>Model Workspace has a new parameter cluster_resource_id</li>
+  <li>Model Workspace has a new parameter immediate_purge_data_on30_days</li>
+  <li>Model Workspace has a new parameter enable_data_export</li>
+  <li>Model Workspace has a new parameter enable_log_access_using_only_resource_permissions</li>
+</ul>
+
+<p><strong>Breaking changes</strong></p>
+
+<ul>
+  <li>Model WorkspacePatch no longer has parameter features</li>
+  <li>Model Table no longer has parameter is_troubleshooting_allowed</li>
+  <li>Model Table no longer has parameter is_troubleshoot_enabled</li>
+  <li>Model Table no longer has parameter last_troubleshoot_date</li>
+  <li>Model WorkspaceSku no longer has parameter max_capacity_reservation_level</li>
+  <li>Model Workspace no longer has parameter features</li>
+</ul>
+
+<h3 id="resource-management---maintenance-200-changelog">Resource Management - Maintenance 2.0.0 <a href="https://github.com/Azure/azure-sdk-for-python/blob/azure-mgmt-maintenance_2.0.0/sdk/maintenance/azure-mgmt-maintenance/CHANGELOG.md#200-2021-05-08">Changelog</a></h3>
+<p><strong>Breaking changes</strong></p>
+
+<ul>
+  <li>Model MaintenanceConfiguration no longer has parameter install_patches</li>
+  <li>Removed operation ConfigurationAssignmentsOperations.get</li>
+  <li>Removed operation ConfigurationAssignmentsOperations.get_parent</li>
+  <li>Removed operation group ConfigurationAssignmentsWithinSubscriptionOperations</li>
+</ul>
+
+<h3 id="resource-management---maps-200-changelog">Resource Management - Maps 2.0.0 <a href="https://github.com/Azure/azure-sdk-for-python/blob/azure-mgmt-maps_2.0.0/sdk/maps/azure-mgmt-maps/CHANGELOG.md#200-2021-05-08">Changelog</a></h3>
+<p><strong>New features</strong></p>
+
+<ul>
+  <li>Model CreatorUpdateParameters has a new parameter storage_units</li>
+  <li>Model CreatorUpdateParameters has a new parameter provisioning_state</li>
+  <li>Model MapsOperations has a new parameter next_link</li>
+  <li>Model CreatorList has a new parameter next_link</li>
+  <li>Model MapsAccountKeys has a new parameter secondary_key_last_updated</li>
+  <li>Model MapsAccountKeys has a new parameter primary_key_last_updated</li>
+  <li>Model MapsAccount has a new parameter kind</li>
+  <li>Model MapsAccounts has a new parameter next_link</li>
+</ul>
+
+<p><strong>Breaking changes</strong></p>
+
+<ul>
+  <li>Operation AccountsOperations.create_or_update has a new signature</li>
+  <li>Operation CreatorsOperations.create_or_update has a new signature</li>
+  <li>Parameter properties of model Creator is now required</li>
+  <li>Parameter sku of model MapsAccount is now required</li>
+  <li>Model CreatorProperties has a new required parameter storage_units</li>
+  <li>Model MapsAccountKeys no longer has parameter id</li>
+  <li>Model MapsAccountUpdateParameters has a new signature</li>
+  <li>Model MapsAccountProperties has a new signature</li>
+  <li>Removed operation group PrivateAtlasesOperations</li>
+</ul>
+
+<h3 id="resource-management---resources-1700-changelog">Resource Management - Resources 17.0.0 <a href="https://github.com/Azure/azure-sdk-for-python/blob/azure-mgmt-resource_17.0.0/sdk/resources/azure-mgmt-resource/CHANGELOG.md#1700-2021-05-13">Changelog</a></h3>
+<p><strong>New features</strong></p>
+
+<ul>
+  <li>Model Provider has a new parameter provider_authorization_consent_state</li>
+  <li>Model TemplateSpec has a new parameter metadata</li>
+  <li>Model GenericResourceExpanded has a new parameter extended_location</li>
+  <li>Model Resource has a new parameter extended_location</li>
+  <li>Model TemplateSpecVersion has a new parameter ui_form_definition</li>
+  <li>Model TemplateSpecVersion has a new parameter metadata</li>
+  <li>Model TemplateSpecVersion has a new parameter linked_templates</li>
+  <li>Model TemplateSpecVersion has a new parameter main_template</li>
+  <li>Model WhatIfChange has a new parameter unsupported_reason</li>
+  <li>Model GenericResource has a new parameter extended_location</li>
+  <li>Added operation ProvidersOperations.provider_permissions</li>
+</ul>
+
+<p><strong>Breaking changes</strong></p>
+
+<ul>
+  <li>Operation ProvidersOperations.register has a new signature</li>
+  <li>Model TemplateSpecVersion no longer has parameter template</li>
+  <li>Model TemplateSpecVersion no longer has parameter artifacts</li>
+</ul>
+
+<h3 id="resource-management---sql-200-changelog">Resource Management - SQL 2.0.0 <a href="https://github.com/Azure/azure-sdk-for-python/blob/azure-mgmt-sql_2.0.0/sdk/sql/azure-mgmt-sql/CHANGELOG.md#200-2021-05-13">Changelog</a></h3>
+<p>** New features**</p>
+
+<ul>
+  <li>Model LongTermRetentionBackup has a new parameter requested_backup_storage_redundancy</li>
+  <li>Model LongTermRetentionBackup has a new parameter backup_storage_redundancy</li>
+  <li>Model ManagedInstanceKey has a new parameter auto_rotation_enabled</li>
+  <li>Model ManagedInstanceEncryptionProtector has a new parameter auto_rotation_enabled</li>
+  <li>Model Database has a new parameter is_infra_encryption_enabled</li>
+  <li>Model Database has a new parameter is_ledger_on</li>
+  <li>Model Database has a new parameter secondary_type</li>
+  <li>Model Database has a new parameter current_backup_storage_redundancy</li>
+  <li>Model Database has a new parameter high_availability_replica_count</li>
+  <li>Model Database has a new parameter maintenance_configuration_id</li>
+  <li>Model Database has a new parameter requested_backup_storage_redundancy</li>
+  <li>Model ReplicationLink has a new parameter link_type</li>
+  <li>Model ServerUpdate has a new parameter primary_user_assigned_identity_id</li>
+  <li>Model ServerUpdate has a new parameter administrators</li>
+  <li>Model ServerUpdate has a new parameter identity</li>
+  <li>Model ServerUpdate has a new parameter key_id</li>
+  <li>Model ServerUpdate has a new parameter workspace_feature</li>
+  <li>Model DatabaseUpdate has a new parameter is_infra_encryption_enabled</li>
+  <li>Model DatabaseUpdate has a new parameter is_ledger_on</li>
+  <li>Model DatabaseUpdate has a new parameter secondary_type</li>
+  <li>Model DatabaseUpdate has a new parameter current_backup_storage_redundancy</li>
+  <li>Model DatabaseUpdate has a new parameter high_availability_replica_count</li>
+  <li>Model DatabaseUpdate has a new parameter maintenance_configuration_id</li>
+  <li>Model DatabaseUpdate has a new parameter requested_backup_storage_redundancy</li>
+  <li>Model ManagedInstance has a new parameter primary_user_assigned_identity_id</li>
+  <li>Model ManagedInstance has a new parameter administrators</li>
+  <li>Model ManagedInstance has a new parameter key_id</li>
+  <li>Model ManagedInstance has a new parameter zone_redundant</li>
+  <li>Model ManagedInstance has a new parameter private_endpoint_connections</li>
+  <li>Model ServerKey has a new parameter auto_rotation_enabled</li>
+  <li>Model ExtendedServerBlobAuditingPolicy has a new parameter is_devops_audit_enabled</li>
+  <li>Model ServiceObjectiveCapability has a new parameter supported_maintenance_configurations</li>
+  <li>Model EncryptionProtector has a new parameter auto_rotation_enabled</li>
+  <li>Model FirewallRuleListResult has a new parameter next_link</li>
+  <li>Model ManagedInstanceUpdate has a new parameter primary_user_assigned_identity_id</li>
+  <li>Model ManagedInstanceUpdate has a new parameter administrators</li>
+  <li>Model ManagedInstanceUpdate has a new parameter identity</li>
+  <li>Model ManagedInstanceUpdate has a new parameter key_id</li>
+  <li>Model ManagedInstanceUpdate has a new parameter private_endpoint_connections</li>
+  <li>Model ManagedInstanceUpdate has a new parameter zone_redundant</li>
+  <li>Model ElasticPoolUpdate has a new parameter maintenance_configuration_id</li>
+  <li>Model SyncMember has a new parameter private_endpoint_name</li>
+  <li>Model ElasticPool has a new parameter maintenance_configuration_id</li>
+  <li>Model ManagedInstanceVcoresCapability has a new parameter supported_maintenance_configurations</li>
+  <li>Model ManagedInstanceLongTermRetentionBackup has a new parameter backup_storage_redundancy</li>
+  <li>Model ServerSecurityAlertPolicy has a new parameter system_data</li>
+  <li>Model ManagedInstanceEditionCapability has a new parameter supported_storage_capabilities</li>
+  <li>Model ManagedInstanceEditionCapability has a new parameter zone_redundant</li>
+  <li>Model ServerBlobAuditingPolicy has a new parameter is_devops_audit_enabled</li>
+  <li>Model ElasticPoolPerformanceLevelCapability has a new parameter supported_maintenance_configurations</li>
+  <li>Model RestorableDroppedDatabase has a new parameter backup_storage_redundancy</li>
+  <li>Model RestorableDroppedDatabase has a new parameter tags</li>
+  <li>Model RestorableDroppedDatabase has a new parameter sku</li>
+  <li>Model RestorableDroppedDatabase has a new parameter elastic_pool_id</li>
+  <li>Model DatabaseSecurityAlertPolicy has a new parameter creation_time</li>
+  <li>Model DatabaseSecurityAlertPolicy has a new parameter system_data</li>
+  <li>Model SyncGroup has a new parameter conflict_logging_retention_in_days</li>
+  <li>Model SyncGroup has a new parameter private_endpoint_name</li>
+  <li>Model SyncGroup has a new parameter sku</li>
+  <li>Model SyncGroup has a new parameter enable_conflict_logging</li>
+  <li>Model VirtualClusterUpdate has a new parameter maintenance_configuration_id</li>
+  <li>Model PrivateLinkResourceProperties has a new parameter required_zone_names</li>
+  <li>Model VirtualCluster has a new parameter maintenance_configuration_id</li>
+  <li>Model ManagedServerSecurityAlertPolicy has a new parameter system_data</li>
+  <li>Model DatabaseUsage has a new parameter type</li>
+  <li>Model DatabaseUsage has a new parameter id</li>
+  <li>Model Server has a new parameter primary_user_assigned_identity_id</li>
+  <li>Model Server has a new parameter key_id</li>
+  <li>Model Server has a new parameter administrators</li>
+  <li>Model Server has a new parameter workspace_feature</li>
+  <li>Model SensitivityLabel has a new parameter column_name</li>
+  <li>Model SensitivityLabel has a new parameter schema_name</li>
+  <li>Model SensitivityLabel has a new parameter managed_by</li>
+  <li>Model SensitivityLabel has a new parameter table_name</li>
+  <li>Added operation VirtualClustersOperations.update_dns_servers</li>
+  <li>Added operation ServersOperations.begin_import_database</li>
+  <li>Added operation DatabasesOperations.list_inaccessible_by_server</li>
+  <li>Added operation FirewallRulesOperations.replace</li>
+  <li>Added operation ReplicationLinksOperations.list_by_server</li>
+  <li>Added operation SensitivityLabelsOperations.update</li>
+  <li>Added operation ManagedInstancesOperations.list_by_managed_instance</li>
+  <li>Added operation ManagedDatabaseSensitivityLabelsOperations.update</li>
+  <li>Added operation LongTermRetentionBackupsOperations.begin_update</li>
+  <li>Added operation LongTermRetentionBackupsOperations.begin_copy</li>
+  <li>Added operation LongTermRetentionBackupsOperations.begin_copy_by_resource_group</li>
+  <li>Added operation LongTermRetentionBackupsOperations.begin_update_by_resource_group</li>
+  <li>Added operation group DatabaseSchemasOperations</li>
+  <li>Added operation group DatabaseExtensionsOperations</li>
+  <li>Added operation group ManagedInstancePrivateEndpointConnectionsOperations</li>
+  <li>Added operation group DeletedServersOperations</li>
+  <li>Added operation group ManagedDatabaseTablesOperations</li>
+  <li>Added operation group MaintenanceWindowOptionsOperations</li>
+  <li>Added operation group DatabaseSecurityAlertPoliciesOperations</li>
+  <li>Added operation group ServerTrustGroupsOperations</li>
+  <li>Added operation group ManagedInstanceAzureADOnlyAuthenticationsOperations</li>
+  <li>Added operation group SqlAgentOperations</li>
+  <li>Added operation group TimeZonesOperations</li>
+  <li>Added operation group ManagedInstancePrivateLinkResourcesOperations</li>
+  <li>Added operation group RecommendedSensitivityLabelsOperations</li>
+  <li>Added operation group DatabaseTablesOperations</li>
+  <li>Added operation group ServerAdvisorsOperations</li>
+  <li>Added operation group ManagedDatabaseSecurityEventsOperations</li>
+  <li>Added operation group ServerOperationsOperations</li>
+  <li>Added operation group DatabaseAdvisorsOperations</li>
+  <li>Added operation group DatabaseColumnsOperations</li>
+  <li>Added operation group DataWarehouseUserActivitiesOperations</li>
+  <li>Added operation group OutboundFirewallRulesOperations</li>
+  <li>Added operation group ManagedDatabaseSchemasOperations</li>
+  <li>Added operation group DatabaseRecommendedActionsOperations</li>
+  <li>Added operation group LongTermRetentionPoliciesOperations</li>
+  <li>Added operation group ManagedDatabaseQueriesOperations</li>
+  <li>Added operation group ManagedDatabaseRecommendedSensitivityLabelsOperations</li>
+  <li>Added operation group ManagedDatabaseTransparentDataEncryptionOperations</li>
+  <li>Added operation group ServerDevOpsAuditSettingsOperations</li>
+  <li>Added operation group OperationsHealthOperations</li>
+  <li>Added operation group LedgerDigestUploadsOperations</li>
+  <li>Added operation group MaintenanceWindowsOperations</li>
+  <li>Added operation group ManagedDatabaseColumnsOperations</li>
+</ul>
+
+<p><strong>Breaking changes</strong></p>
+
+<ul>
+  <li>Operation RestorableDroppedDatabasesOperations.get has a new signature</li>
+  <li>Operation ReplicationLinksOperations.get has a new signature</li>
+  <li>Parameter old_server_dns_alias_id of model ServerDnsAliasAcquisition is now required</li>
+  <li>Operation SensitivityLabelsOperations.list_recommended_by_database has a new signature</li>
+  <li>Operation ManagedDatabaseSensitivityLabelsOperations.list_recommended_by_database has a new signature</li>
+  <li>Operation DatabasesOperations.begin_import_method has a new signature</li>
+  <li>Operation DatabasesOperations.list_by_server has a new signature</li>
+  <li>Operation ManagedDatabaseSensitivityLabelsOperations.list_current_by_database has a new signature</li>
+  <li>Operation ManagedDatabaseSensitivityLabelsOperations.list_current_by_database has a new signature</li>
+  <li>Operation ManagedDatabaseSensitivityLabelsOperations.list_recommended_by_database has a new signature</li>
+  <li>Operation ManagedInstanceAdministratorsOperations.begin_create_or_update has a new signature</li>
+  <li>Operation ManagedInstanceAdministratorsOperations.begin_delete has a new signature</li>
+  <li>Operation ManagedInstanceAdministratorsOperations.get has a new signature</li>
+  <li>Operation ManagedInstancesOperations.get has a new signature</li>
+  <li>Operation ManagedInstancesOperations.list has a new signature</li>
+  <li>Operation ManagedInstancesOperations.list_by_instance_pool has a new signature</li>
+  <li>Operation ManagedInstancesOperations.list_by_resource_group has a new signature</li>
+  <li>Operation SensitivityLabelsOperations.list_current_by_database has a new signature</li>
+  <li>Operation SensitivityLabelsOperations.list_current_by_database has a new signature</li>
+  <li>Operation SensitivityLabelsOperations.list_recommended_by_database has a new signature</li>
+  <li>Operation ServersOperations.get has a new signature</li>
+  <li>Operation ServersOperations.list has a new signature</li>
+  <li>Operation ServersOperations.list_by_resource_group has a new signature</li>
+  <li>Model BackupShortTermRetentionPolicy no longer has parameter diff_backup_interval_in_hours</li>
+  <li>Model Database no longer has parameter read_replica_count</li>
+  <li>Model ReplicationLink no longer has parameter location</li>
+  <li>Model DatabaseUpdate no longer has parameter read_replica_count</li>
+  <li>Model FirewallRule no longer has parameter kind</li>
+  <li>Model FirewallRule no longer has parameter location</li>
+  <li>Model RestorableDroppedDatabase no longer has parameter service_level_objective</li>
+  <li>Model RestorableDroppedDatabase no longer has parameter edition</li>
+  <li>Model RestorableDroppedDatabase no longer has parameter elastic_pool_name</li>
+  <li>Model DatabaseSecurityAlertPolicy no longer has parameter use_server_default</li>
+  <li>Model DatabaseSecurityAlertPolicy no longer has parameter kind</li>
+  <li>Model DatabaseSecurityAlertPolicy no longer has parameter location</li>
+  <li>Model DatabaseUsage no longer has parameter resource_name</li>
+  <li>Model DatabaseUsage no longer has parameter next_reset_time</li>
+  <li>Removed operation DatabasesOperations.begin_create_import_operation</li>
+  <li>Model DatabaseUsageListResult has a new signature</li>
+  <li>Model RestorableDroppedDatabaseListResult has a new signature</li>
+  <li>Removed operation group RecommendedElasticPoolsOperations</li>
+  <li>Removed operation group BackupLongTermRetentionPoliciesOperations</li>
+  <li>Removed operation group DatabaseThreatDetectionPoliciesOperations</li>
+  <li>Removed operation group ServiceTierAdvisorsOperations</li>
+</ul>
+
+<h3 id="resource-management---storage-1800-changelog">Resource Management - Storage 18.0.0 <a href="https://github.com/Azure/azure-sdk-for-python/blob/azure-mgmt-storage_18.0.0/sdk/storage/azure-mgmt-storage/CHANGELOG.md#1800-2021-05-13">Changelog</a></h3>
+<p><strong>New features</strong></p>
+
+<ul>
+  <li>Model StorageAccountUpdateParameters has a new parameter allow_cross_tenant_replication</li>
+  <li>Model BlobContainer has a new parameter immutable_storage_with_versioning</li>
+  <li>Model FileShareItem has a new parameter lease_state</li>
+  <li>Model FileShareItem has a new parameter lease_duration</li>
+  <li>Model FileShareItem has a new parameter lease_status</li>
+  <li>Model FileShareItem has a new parameter signed_identifiers</li>
+  <li>Model FileShare has a new parameter lease_state</li>
+  <li>Model FileShare has a new parameter lease_duration</li>
+  <li>Model FileShare has a new parameter lease_status</li>
+  <li>Model FileShare has a new parameter signed_identifiers</li>
+  <li>Model StorageAccountCreateParameters has a new parameter allow_cross_tenant_replication</li>
+  <li>Model AzureFilesIdentityBasedAuthentication has a new parameter default_share_permission</li>
+  <li>Model StorageAccount has a new parameter allow_cross_tenant_replication</li>
+  <li>Model ListContainerItem has a new parameter immutable_storage_with_versioning</li>
+  <li>Added operation BlobContainersOperations.begin_object_level_worm</li>
+  <li>Added operation FileSharesOperations.lease</li>
+</ul>
+
+<p><strong>Breaking changes</strong></p>
+
+<ul>
+  <li>Operation FileSharesOperations.delete has a new signature</li>
+  <li>Model BlobInventoryPolicySchema no longer has parameter destination</li>
+  <li>Model BlobInventoryPolicyRule has a new required parameter destination</li>
+  <li>Model BlobInventoryPolicyDefinition has a new signature</li>
+</ul>
+
+<h3 id="service-bus-720-changelog">Service Bus 7.2.0 <a href="https://github.com/Azure/azure-sdk-for-python/blob/azure-servicebus_7.2.0/sdk/servicebus/azure-servicebus/CHANGELOG.md#720-2021-05-13">Changelog</a></h3>
+<p>The preview features related to AMQPAnnotatedMessage introduced in 7.2.0b1 are not included in this version.</p>
+
+<p><strong>New features</strong></p>
+
+<ul>
+  <li>Added support for using <code class="language-plaintext highlighter-rouge">azure.core.credentials.AzureNamedKeyCredential</code> as credential for authenticating the clients.</li>
+  <li>Support for using <code class="language-plaintext highlighter-rouge">azure.core.credentials.AzureSasCredential</code> as credential for authenticating the clients is now GA.</li>
+  <li><code class="language-plaintext highlighter-rouge">ServiceBusAdministrationClient.update_*</code> methods now accept keyword arguments to override the properties specified in the model instance.</li>
+</ul>
+
+<p><strong>Bug fixes</strong></p>
+
+<ul>
+  <li>Fixed a bug where <code class="language-plaintext highlighter-rouge">update_queue</code> and <code class="language-plaintext highlighter-rouge">update_subscription</code> methods were mutating the properties <code class="language-plaintext highlighter-rouge">forward_to</code> and <code class="language-plaintext highlighter-rouge">forward_dead_lettered_messages_to</code> of the model instance when those properties are entities instead of full paths.</li>
+  <li>Improved the <code class="language-plaintext highlighter-rouge">repr</code> on <code class="language-plaintext highlighter-rouge">ServiceBusMessage</code> and <code class="language-plaintext highlighter-rouge">ServiceBusReceivedMessage</code> to show more meaningful text.</li>
+  <li>Updated uAMQP dependency to 1.4.0.
+    <ul>
+      <li>Fixed memory leaks in the process of link attach where source and target cython objects are not properly deallocated (#15747).</li>
+      <li>Improved management operation callback not to parse description value of non AMQP_TYPE_STRING type as string (#18361).</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>Notes</strong></p>
+
+<ul>
+  <li>Updated azure-core dependency to 1.14.0.</li>
+</ul>
+
+<h3 id="storage---files-data-lake-1240b1-changelog">Storage - Files Data Lake 12.4.0b1 <a href="https://github.com/Azure/azure-sdk-for-python/blob/azure-storage-file-datalake_12.4.0b1/sdk/storage/azure-storage-file-datalake/CHANGELOG.md#1240b1-2021-05-12">Changelog</a></h3>
+<p><strong>New features</strong></p>
+<ul>
+  <li>Added support <code class="language-plaintext highlighter-rouge">set_service_properties()</code>,<code class="language-plaintext highlighter-rouge">get_service_properties()</code> on <code class="language-plaintext highlighter-rouge">DataLakeServiceClient</code></li>
+  <li>Added support for <code class="language-plaintext highlighter-rouge">list_deleted_paths()</code> on <code class="language-plaintext highlighter-rouge">FileSystemClient</code></li>
+</ul>
+
+<p><strong>Bug fixes</strong></p>
+<ul>
+  <li>Fixed initiating <code class="language-plaintext highlighter-rouge">PathProperties</code> problem (#18490)</li>
+</ul>
+
+<h3 id="storage---files-shares-1250b1-changelog">Storage - Files Shares 12.5.0b1 <a href="https://github.com/Azure/azure-sdk-for-python/blob/azure-storage-file-share_12.5.0b1/sdk/storage/azure-storage-file-share/CHANGELOG.md#1250b1-2021-05-12">Changelog</a></h3>
+<p><strong>New features</strong></p>
+<ul>
+  <li>Added support for lease operation on a share, eg. acquire_lease</li>
+</ul>
+
+<h3 id="synapse---artifacts-070-changelog">Synapse - Artifacts 0.7.0 <a href="https://github.com/Azure/azure-sdk-for-python/blob/azure-synapse-artifacts_0.7.0/sdk/synapse/azure-synapse-artifacts/CHANGELOG.md#070-2021-05-11">Changelog</a></h3>
+<p><strong>Bug fixes</strong></p>
+
+<ul>
+  <li>Enable poller when starting a long running operation    #18184</li>
+</ul>
+
+<h3 id="tables-1200b7-changelog">Tables 12.0.0b7 <a href="https://github.com/Azure/azure-sdk-for-python/blob/azure-data-tables_12.0.0b7/sdk/tables/azure-data-tables/CHANGELOG.md#1200b7-2021-05-11">Changelog</a></h3>
+<p><strong>Breaking changes</strong></p>
+
+<ul>
+  <li>The <code class="language-plaintext highlighter-rouge">account_url</code> parameter in the client constructors has been renamed to <code class="language-plaintext highlighter-rouge">endpoint</code>.</li>
+  <li>The <code class="language-plaintext highlighter-rouge">TableEntity</code> object now acts exclusively like a dictionary, and no longer supports key access via attributes.</li>
+  <li>Metadata of an entity is now accessed via <code class="language-plaintext highlighter-rouge">TableEntity.metadata</code> attribute rather than a method.</li>
+  <li>Removed explicit <code class="language-plaintext highlighter-rouge">LinearRetry</code> and <code class="language-plaintext highlighter-rouge">ExponentialRetry</code> in favor of keyword parameter.</li>
+  <li>Renamed <code class="language-plaintext highlighter-rouge">filter</code> parameter in query APIs to <code class="language-plaintext highlighter-rouge">query_filter</code>.</li>
+  <li>The <code class="language-plaintext highlighter-rouge">location_mode</code> attribute on clients is now read-only. This has been added as a keyword parameter to the constructor.</li>
+  <li>The <code class="language-plaintext highlighter-rouge">TableItem.table_name</code> has been renamed to <code class="language-plaintext highlighter-rouge">TableItem.name</code>.</li>
+  <li>Removed the <code class="language-plaintext highlighter-rouge">TableClient.create_batch</code> method along with the <code class="language-plaintext highlighter-rouge">TableBatchOperations</code> object. The transactional batching is now supported via a simple Python list of tuples.</li>
+  <li><code class="language-plaintext highlighter-rouge">TableClient.send_batch</code> has been renamed to <code class="language-plaintext highlighter-rouge">TableClient.submit_transaction</code>.</li>
+  <li>Removed <code class="language-plaintext highlighter-rouge">BatchTransactionResult</code> object in favor of returning an iterable of batched entities with returned metadata.</li>
+  <li>Removed Batching context-manager behavior</li>
+  <li><code class="language-plaintext highlighter-rouge">EntityProperty</code> is now a NampedTuple, and can be represented by a tuple of <code class="language-plaintext highlighter-rouge">(entity, EdmType)</code>.</li>
+  <li>Renamed <code class="language-plaintext highlighter-rouge">EntityProperty.type</code> to <code class="language-plaintext highlighter-rouge">EntityProperty.edm_type</code>.</li>
+  <li><code class="language-plaintext highlighter-rouge">BatchErrorException</code> has been renamed to <code class="language-plaintext highlighter-rouge">TableTransactionError</code>.</li>
+  <li>The <code class="language-plaintext highlighter-rouge">location_mode</code> is no longer a public attribute on the Clients.</li>
+  <li>The only supported credentials are <code class="language-plaintext highlighter-rouge">AzureNamedKeyCredential</code>, <code class="language-plaintext highlighter-rouge">AzureSasCredential</code>, or authentication by connection string</li>
+  <li>Removed <code class="language-plaintext highlighter-rouge">date</code> and <code class="language-plaintext highlighter-rouge">api_version</code> from the <code class="language-plaintext highlighter-rouge">TableItem</code> class.</li>
+</ul>
+
+<p><strong>Bug fixes</strong></p>
+
+<ul>
+  <li>Fixed issue with Cosmos merge operations.</li>
+  <li>Removed legacy Storage policies from pipeline.</li>
+  <li>Removed unused legacy client-side encryption attributes from client classes.</li>
+  <li>Fixed sharing of pipeline between service/table clients.</li>
+  <li>Added support for Azurite storage emulator</li>
+  <li>Throws a <code class="language-plaintext highlighter-rouge">RequestTooLargeError</code> on transaction requests that return a 413 error code</li>
+  <li>Added support for Int64 and Binary types in query filters</li>
+  <li>Added support for <code class="language-plaintext highlighter-rouge">select</code> keyword parameter to <code class="language-plaintext highlighter-rouge">TableClient.get_entity()</code>.</li>
+  <li>On <code class="language-plaintext highlighter-rouge">update_entity</code> and <code class="language-plaintext highlighter-rouge">delete_entity</code> if no <code class="language-plaintext highlighter-rouge">etag</code> is supplied via kwargs, the <code class="language-plaintext highlighter-rouge">etag</code> in the entity will be used if it is in the entity.</li>
+</ul>
+
+<h3 id="azure-agrifood-nspkg-100-changelog">azure-agrifood-nspkg 1.0.0 <a href="https://github.com/Azure/azure-sdk-for-python/blob/azure-agrifood-nspkg_1.0.0/sdk/nspkg/azure-agrifood-nspkg/CHANGELOG.md#100-2021-05-07">Changelog</a></h3>
+<ul>
+  <li>Initial Release</li>
+</ul>
+
+<h3 id="azure-containerregistry-100b2-changelog">azure-containerregistry 1.0.0b2 <a href="https://github.com/Azure/azure-sdk-for-python/blob/azure-containerregistry_1.0.0b2/sdk/containerregistry/azure-containerregistry/CHANGELOG.md#100b2-2021-05-11">Changelog</a></h3>
+<ul>
+  <li>Rename <code class="language-plaintext highlighter-rouge">DeletedRepositoryResult</code> to <code class="language-plaintext highlighter-rouge">DeleteRepositoryResult</code></li>
+  <li>Rename <code class="language-plaintext highlighter-rouge">DeletedRepositoryResult.deleted_registry_artifact_digests</code> to <code class="language-plaintext highlighter-rouge">deleted_manifests</code></li>
+  <li>Rename <code class="language-plaintext highlighter-rouge">TagProperties</code> to <code class="language-plaintext highlighter-rouge">ArtifactTagProperties</code></li>
+  <li>Rename <code class="language-plaintext highlighter-rouge">ContentPermissions</code> to <code class="language-plaintext highlighter-rouge">ContentProperties</code></li>
+  <li>Rename <code class="language-plaintext highlighter-rouge">content_permissions</code> attributes on <code class="language-plaintext highlighter-rouge">TagProperties</code>, <code class="language-plaintext highlighter-rouge">RepositoryProperties</code>, and <code class="language-plaintext highlighter-rouge">RegistryArtifactProperties</code> to <code class="language-plaintext highlighter-rouge">writeable_properties</code>.</li>
+  <li>Adds anonymous access capabilities to client by passing in <code class="language-plaintext highlighter-rouge">None</code> to credential.</li>
+</ul>
+
+<h3 id="azure-mgmt-elastic-100b1-changelog">azure-mgmt-elastic 1.0.0b1 <a href="https://github.com/Azure/azure-sdk-for-python/blob/azure-mgmt-elastic_1.0.0b1/sdk/elastic/azure-mgmt-elastic/CHANGELOG.md#100b1-2021-05-08">Changelog</a></h3>
+<ul>
+  <li>Initial Release</li>
+</ul>
+
+<h3 id="azure-mgmt-extendedlocation-100b2-changelog">azure-mgmt-extendedlocation 1.0.0b2 <a href="https://github.com/Azure/azure-sdk-for-python/blob/azure-mgmt-extendedlocation_1.0.0b2/sdk/extendedlocation/azure-mgmt-extendedlocation/CHANGELOG.md#100b2-2021-05-06">Changelog</a></h3>
+<ul>
+  <li>Remove v2020_07_15_privatepreview</li>
+</ul>
+
+<h3 id="azure-mgmt-videoanalyzer-100b1-changelog">azure-mgmt-videoanalyzer 1.0.0b1 <a href="https://github.com/Azure/azure-sdk-for-python/blob/azure-mgmt-videoanalyzer_1.0.0b1/sdk/videoanalyzer/azure-mgmt-videoanalyzer/CHANGELOG.md#100b1-2021-05-11">Changelog</a></h3>
+<ul>
+  <li>Initial Release</li>
+</ul>
+
+<h2 id="latest-releases">Latest Releases</h2>
+
+<p>View all the latest versions of Python packages <a href="/azure-sdk/releases/latest/python.html">here</a>.</p>
+
+<h2 id="installation-instructions">Installation Instructions</h2>
+
+<p>To install the latest beta version of the packages, copy and paste the following commands into a terminal:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$&gt;</span> pip <span class="nb">install </span>azure-agrifood-nspkg<span class="o">==</span>1.0.0
+<span class="nv">$&gt;</span> pip <span class="nb">install </span>azure-confidentialledger<span class="o">==</span>1.0.0b1
+<span class="nv">$&gt;</span> pip <span class="nb">install </span>azure-containerregistry<span class="o">==</span>1.0.0b2
+<span class="nv">$&gt;</span> pip <span class="nb">install </span>azure-core<span class="o">==</span>1.14.0
+<span class="nv">$&gt;</span> pip <span class="nb">install </span>azure-data-tables<span class="o">==</span>12.0.0b7
+<span class="nv">$&gt;</span> pip <span class="nb">install </span>azure-eventgrid<span class="o">==</span>4.2.0
+<span class="nv">$&gt;</span> pip <span class="nb">install </span>azure-eventhub<span class="o">==</span>5.5.0
+<span class="nv">$&gt;</span> pip <span class="nb">install </span>azure-identity<span class="o">==</span>1.6.0
+<span class="nv">$&gt;</span> pip <span class="nb">install </span>azure-mgmt-billing<span class="o">==</span>6.0.0
+<span class="nv">$&gt;</span> pip <span class="nb">install </span>azure-mgmt-cosmosdb<span class="o">==</span>6.3.0b1
+<span class="nv">$&gt;</span> pip <span class="nb">install </span>azure-mgmt-cosmosdb<span class="o">==</span>6.3.0
+<span class="nv">$&gt;</span> pip <span class="nb">install </span>azure-mgmt-elastic<span class="o">==</span>1.0.0b1
+<span class="nv">$&gt;</span> pip <span class="nb">install </span>azure-mgmt-extendedlocation<span class="o">==</span>1.0.0b2
+<span class="nv">$&gt;</span> pip <span class="nb">install </span>azure-mgmt-loganalytics<span class="o">==</span>10.0.0
+<span class="nv">$&gt;</span> pip <span class="nb">install </span>azure-mgmt-maintenance<span class="o">==</span>2.0.0
+<span class="nv">$&gt;</span> pip <span class="nb">install </span>azure-mgmt-maps<span class="o">==</span>2.0.0
+<span class="nv">$&gt;</span> pip <span class="nb">install </span>azure-mgmt-resource<span class="o">==</span>17.0.0
+<span class="nv">$&gt;</span> pip <span class="nb">install </span>azure-mgmt-sql<span class="o">==</span>2.0.0
+<span class="nv">$&gt;</span> pip <span class="nb">install </span>azure-mgmt-storage<span class="o">==</span>18.0.0
+<span class="nv">$&gt;</span> pip <span class="nb">install </span>azure-mgmt-videoanalyzer<span class="o">==</span>1.0.0b1
+<span class="nv">$&gt;</span> pip <span class="nb">install </span>azure-purview-catalog<span class="o">==</span>1.0.0b1
+<span class="nv">$&gt;</span> pip <span class="nb">install </span>azure-purview-scanning<span class="o">==</span>1.0.0b1
+<span class="nv">$&gt;</span> pip <span class="nb">install </span>azure-search-documents<span class="o">==</span>11.2.0b3
+<span class="nv">$&gt;</span> pip <span class="nb">install </span>azure-security-attestation<span class="o">==</span>1.0.0b2
+<span class="nv">$&gt;</span> pip <span class="nb">install </span>azure-security-attestation<span class="o">==</span>1.0.0b3
+<span class="nv">$&gt;</span> pip <span class="nb">install </span>azure-servicebus<span class="o">==</span>7.2.0
+<span class="nv">$&gt;</span> pip <span class="nb">install </span>azure-storage-file-datalake<span class="o">==</span>12.4.0b1
+<span class="nv">$&gt;</span> pip <span class="nb">install </span>azure-storage-file-share<span class="o">==</span>12.5.0b1
+<span class="nv">$&gt;</span> pip <span class="nb">install </span>azure-synapse-artifacts<span class="o">==</span>0.7.0
+</code></pre></div></div>
+
+<h2 id="feedback">Feedback</h2>
+
+<p>If you have a bug or feature request for one of the libraries, please post an issue to <a href="https://github.com/azure/azure-sdk-for-python/issues">GitHub</a>.</p>
+
+
+            </div>
+        </article>
+        
+        
+
+    </div>
+</div>
+
+                </div>
+                <!-- /.row -->
+
+            </div>
+            <!-- /.container -->
+        </div>
+        <!-- /#main -->
+    </div>
+    
+    <!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-62780441-46"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-62780441-46');
+</script>
+
+<!-- OLD SCRIPT
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-62780441-46','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+-->
+
+    
+    
+    <!-- the app_insights gets auto inserted from the config file -->
+<!-- For other configuration elements, see https://docs.microsoft.com/azure/azure-monitor/app/javascript#snippet-based-setup -->
+
+<script type="text/javascript">
+var sdkInstance="appInsightsSDK";window[sdkInstance]="appInsights";var aiName=window[sdkInstance],aisdk=window[aiName]||function(n){var o={config:n,initialize:!0},t=document,e=window,i="script";setTimeout(function(){var e=t.createElement(i);e.src=n.url||"https://az416426.vo.msecnd.net/scripts/b/ai.2.min.js",t.getElementsByTagName(i)[0].parentNode.appendChild(e)});try{o.cookie=t.cookie}catch(e){}function a(n){o[n]=function(){var e=arguments;o.queue.push(function(){o[n].apply(o,e)})}}o.queue=[],o.version=2;for(var s=["Event","PageView","Exception","Trace","DependencyData","Metric","PageViewPerformance"];s.length;)a("track"+s.pop());var r="Track",c=r+"Page";a("start"+c),a("stop"+c);var u=r+"Event";if(a("start"+u),a("stop"+u),a("addTelemetryInitializer"),a("setAuthenticatedUserContext"),a("clearAuthenticatedUserContext"),a("flush"),o.SeverityLevel={Verbose:0,Information:1,Warning:2,Error:3,Critical:4},!(!0===n.disableExceptionTracking||n.extensionConfig&&n.extensionConfig.ApplicationInsightsAnalytics&&!0===n.extensionConfig.ApplicationInsightsAnalytics.disableExceptionTracking)){a("_"+(s="onerror"));var p=e[s];e[s]=function(e,n,t,i,a){var r=p&&p(e,n,t,i,a);return!0!==r&&o["_"+s]({message:e,url:n,lineNumber:t,columnNumber:i,error:a}),r},n.autoExceptionInstrumented=!0}return o}(
+{
+    instrumentationKey:"5e03f19a-f5b4-4620-97d5-35707cec7fcb",
+    autoTrackPageVisitTime:true,
+    isCookieUseDisabled:true
+}
+);(window[aiName]=aisdk).queue&&0===aisdk.queue.length&&aisdk.trackPageView({});
+</script>
+
+    
+</body>
+<hr class="shaded"/>
+<footer>
+    <div class="container-fluid">
+        <div class="row footer">
+            <div class="col-lg-6 text-left pb-1">
+           &copy;2024 Microsoft Azure. All rights reserved. 
+ Site last generated: May 30, 2024
+            </div>
+            <div class="col-lg-6 text-right">
+                <p><img src="/azure-sdk/images/company_logo.png" width="100px" alt="Microsoft logo"/></p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+</html>

@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="keywords" content=" opentelemetry conventions">
+<title>Distributed Tracing Conventions | Azure SDKs</title>
+<link rel="stylesheet" href="/azure-sdk/css/syntax.css" />
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/azure-sdk/css/modern-business.css" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="/azure-sdk/css/boxshadowproperties.css" />
+<link rel="stylesheet" href="/azure-sdk/css/theme-azure.css" />
+<link rel="stylesheet" href="/azure-sdk/css/customstyles.css" />
+<link rel="stylesheet" href="/azure-sdk/css/normalize.css">
+<link rel="stylesheet" href="/azure-sdk/css/tipuesearch.css">
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="/azure-sdk/js/jquery.navgoco.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.2.0/anchor.min.js"></script>
+<script src="/azure-sdk/js/toc.js"></script>
+<script src="/azure-sdk/js/customscripts.js"></script>
+
+<link rel="shortcut icon" href="/azure-sdk/images/azure-sdk-glyph.svg"/>
+<link rel="alternate" type="application/rss+xml" title="Azure SDKs" href="/azure-sdk/feed.xml" />
+
+    <script>
+        $(document).ready(function () {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function (e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function (e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+
+        });
+
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function () {
+            $("#tg-sb-link").click(function () {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+    <!-- Due to the page header height, all anchors uses top padding to offset the top possion and appear below the main header.
+        If one requirement icon is just below another, the padding of the icon overlaps the one on top of it and block the clicking surface.
+        The script below finds all requirements icons and adds z-index decrementally to place any previous icon on top of the next ones.
+        The script runs after the page is completelly load (all content is downloaded).
+      -->
+    <script>
+        $(window).bind("load", function () {
+            let requeriments = $('.requirement');
+            requeriments.each(function (index, element) {
+                $(element).css("z-index", requeriments.length - index);
+            });
+        });
+    </script>
+
+</head>
+
+<body>
+    <!-- Navigation -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/azure-sdk/releases/latest/index.html"/>
+                <span class="projectTitle"><img style="margin-top: -8px;" class="d-inline-block align-top" src="/azure-sdk/images/azure-sdk-glyph.svg" width="35" height="35" alt=""/> Azure SDKs</span>
+            </a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <!-- toggle sidebar button -->
+                <!-- <li><a id="tg-sb-link" href="#"><i id="tg-sb-icon" class="fa fa-toggle-on"></i> Nav</a></li> -->
+                <!-- entries without drop-downs appear here -->
+
+
+
+
+
+                
+                
+                
+                <li><a href="https://aka.ms/azsdk/blog" rel="noopener">Blog</a></li>
+                
+                
+                
+                <li><a href="/azure-sdk/releases/latest/">Releases</a></li>
+                
+                
+                
+                <!-- entries with drop-downs appear here -->
+                <!-- conditional logic to control which topnav appears for the audience defined in the configuration file.-->
+                
+                
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Guidelines<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        
+                        
+                        <li><a href="/azure-sdk/general_introduction.html" rel="noopener">General Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/dotnet_introduction.html" rel="noopener">.NET Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/java_introduction.html" rel="noopener">Java Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/python_design.html" rel="noopener">Python Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/typescript_introduction.html" rel="noopener">TypeScript Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/android_design.html" rel="noopener">Android Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/ios_design.html" rel="noopener">iOS Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/clang_design.html" rel="noopener">C Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/cpp_introduction.html" rel="noopener">C++ Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/golang_introduction.html" rel="noopener">Go Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/rust_introduction.html" rel="noopener">Rust Guidelines</a></li>
+                        
+                        <li><a href="/azure-sdk/policies_adoption.html" rel="noopener">GitHub Repos</a></li>
+                        
+                        <li><a href="/azure-sdk/policies_reviewprocess.html" rel="noopener">Policies</a></li>
+                        
+                        
+                    </ul>
+                </li>
+                
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">API References<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        
+                        
+                        
+                        <li><a href="https://aka.ms/net-docs" rel="noopener">.NET</a></li>
+                        
+                        
+                        
+                        <li><a href="https://aka.ms/java-docs" rel="noopener">Java</a></li>
+                        
+                        
+                        
+                        <li><a href="https://aka.ms/python-docs" rel="noopener">Python</a></li>
+                        
+                        
+                        
+                        <li><a href="https://aka.ms/js-docs" rel="noopener">TypeScript</a></li>
+                        
+                        
+                        
+                    </ul>
+                </li>
+                
+                
+                
+                <li>
+                    
+                        <a style="font-size: 1.666em !important" class="fa fa-github fa-2x" title="GitHub Link" href="https://github.com/azure/azure-sdk"></a>
+                    
+                </li>
+                <li>
+                    <a style="font-size: 1.666em !important" class="fa fa-twitter fa-2x" title="Twitter Link" href="https://twitter.com/AzureSDK"></a>
+                </li>
+            </ul>
+        </div>
+        </div>
+        <!-- /.container -->
+</nav>
+
+    <!-- Page Content -->
+    <div class="container-fluid" style="margin-top: 60px; min-height: calc(100vh - 50px);">
+        <div id="main">
+            <!-- Content Row -->
+            <div class="row">
+                
+                
+                <!-- Sidebar Column -->
+                <div class="col-md-2 col-xs-12" id="tg-sb-sidebar">
+                    
+
+<div id="mysidebar" class="nav">
+
+  <script src="/azure-sdk/js/tipuesearch_content.js"></script>
+  <script src="/azure-sdk/js/tipuesearch_set.js"></script>
+  <script src="/azure-sdk/js/tipuesearch.min.js"></script>
+
+<p>
+<form action="/azure-sdk/search.html" >
+    <div class=" tipue_search_left"><img src="/azure-sdk/images/search.png" alt="Search Icon" class="tipue_search_icon"></div>
+    <input type="text" class="form-control tipue_search_right" name="q" id="tipue_search_input" pattern=".{3,}" title="At least 3 characters" required placeholder="Search website">
+</form>
+</p>
+<div style="clear: both;"></div>
+  <ol>
+    <li class="sidebarTitle"> </li>
+    
+      
+        
+        <li>
+        
+          
+          <a title="General Guidelines" href="#">General Guidelines</a>
+          
+          <ul>
+            
+              
+                <li><a title="Introduction" href="/azure-sdk/general_introduction.html">Introduction</a></li>
+              
+              
+            
+              
+                <li><a title="Terminology" href="/azure-sdk/general_terminology.html">Terminology</a></li>
+              
+              
+            
+              
+                <li><a title="API Design" href="/azure-sdk/general_design.html">API Design</a></li>
+              
+              
+            
+              
+                <li><a title="Implementation" href="/azure-sdk/general_implementation.html">Implementation</a></li>
+              
+              
+            
+              
+                <li><a title="Documentation" href="/azure-sdk/general_documentation.html">Documentation</a></li>
+              
+              
+            
+              
+                <li><a title="Azure Core" href="/azure-sdk/general_azurecore.html">Azure Core</a></li>
+              
+              
+            
+              
+                <li><a title="Contribution Guidelines" href="/azure-sdk/policies_opensource.html">Contribution Guidelines</a></li>
+              
+              
+            
+          </ul>
+        </li>
+      
+        
+        <li>
+        
+          
+          <a title=".NET Guidelines" href="#">.NET Guidelines</a>
+          
+          <ul>
+            
+              
+                <li><a title="Design" href="/azure-sdk/dotnet_introduction.html">Design</a></li>
+              
+              
+            
+              
+                <li><a title="Implementation" href="/azure-sdk/dotnet_implementation.html">Implementation</a></li>
+              
+              
+                <li class="subfolders">
+                  <a title="API Documentation" href="#">API Documentation</a>
+                  <ul>
+                    
+                      
+                        <li><a title="Microsoft.Azure.Cosmos" href="https://docs.microsoft.com/dotnet/api/microsoft.azure.cosmos" target="_blank" rel="noopener">Microsoft.Azure.Cosmos</a></li>
+                      
+                    
+                      
+                        <li><a title="Azure.Messaging.EventHubs" href="https://azure.github.io/azure-sdk-for-net/eventhubs.html#azuremessagingeventhubs" target="_blank" rel="noopener">Azure.Messaging.EventHubs</a></li>
+                      
+                    
+                      
+                        <li><a title="Azure.Security.KeyVault.Keys" href="https://azure.github.io/azure-sdk-for-net/keyvault.html#azuresecuritykeyvaultkeys" target="_blank" rel="noopener">Azure.Security.KeyVault.Keys</a></li>
+                      
+                    
+                      
+                        <li><a title="Azure.Security.KeyVault.Secrets" href="https://azure.github.io/azure-sdk-for-net/keyvault.html#azuresecuritykeyvaultsecrets" target="_blank" rel="noopener">Azure.Security.KeyVault.Secrets</a></li>
+                      
+                    
+                      
+                        <li><a title="Azure.Storage.Blobs" href="https://azure.github.io/azure-sdk-for-net/storage.html#azurestorageblobs" target="_blank" rel="noopener">Azure.Storage.Blobs</a></li>
+                      
+                    
+                      
+                        <li><a title="Azure.Storage.Files.Shares" href="https://azure.github.io/azure-sdk-for-net/storage.html#azurestoragefilesshares" target="_blank" rel="noopener">Azure.Storage.Files.Shares</a></li>
+                      
+                    
+                      
+                        <li><a title="Azure.Storage.Queues" href="https://azure.github.io/azure-sdk-for-net/storage.html#azurestoragequeues" target="_blank" rel="noopener">Azure.Storage.Queues</a></li>
+                      
+                    
+                  </ul>
+                </li>
+              
+            
+          </ul>
+        </li>
+      
+        
+        <li>
+        
+          
+          <a title="Java Guidelines" href="#">Java Guidelines</a>
+          
+          <ul>
+            
+              
+                <li><a title="Design" href="/azure-sdk/java_introduction.html">Design</a></li>
+              
+              
+            
+              
+                <li><a title="Implementation" href="/azure-sdk/java_implementation.html">Implementation</a></li>
+              
+              
+            
+              
+                <li><a title="Spring Guidelines" href="/azure-sdk/java_spring.html">Spring Guidelines</a></li>
+              
+              
+                <li class="subfolders">
+                  <a title="API Documentation" href="#">API Documentation</a>
+                  <ul>
+                    
+                      
+                        <li><a title="azure-data-appconfiguration" href="https://azure.github.io/azure-sdk-for-java/appconfiguration.html#azure-data-appconfiguration" target="_blank" rel="noopener">azure-data-appconfiguration</a></li>
+                      
+                    
+                      
+                        <li><a title="azure-cosmos" href="https://azure.github.io/azure-sdk-for-java/cosmosdb.html#azure-cosmos" target="_blank" rel="noopener">azure-cosmos</a></li>
+                      
+                    
+                      
+                        <li><a title="azure-messaging-eventhubs" href="https://azure.github.io/azure-sdk-for-java/eventhubs.html#azure-messaging-eventhubs" target="_blank" rel="noopener">azure-messaging-eventhubs</a></li>
+                      
+                    
+                      
+                        <li><a title="azure-keyvault-keys" href="https://azure.github.io/azure-sdk-for-java/keyvault.html#azure-security-keyvault-keys" target="_blank" rel="noopener">azure-keyvault-keys</a></li>
+                      
+                    
+                      
+                        <li><a title="azure-keyvault-secrets" href="https://azure.github.io/azure-sdk-for-java/keyvault.html#azure-security-keyvault-secrets" target="_blank" rel="noopener">azure-keyvault-secrets</a></li>
+                      
+                    
+                      
+                        <li><a title="azure-storage-blob" href="https://azure.github.io/azure-sdk-for-java/storage.html#azure-storage-blob" target="_blank" rel="noopener">azure-storage-blob</a></li>
+                      
+                    
+                      
+                        <li><a title="azure-storage-file-share" href="https://azure.github.io/azure-sdk-for-java/storage.html#azure-storage-file-share" target="_blank" rel="noopener">azure-storage-file-share</a></li>
+                      
+                    
+                      
+                        <li><a title="azure-storage-queue" href="https://azure.github.io/azure-sdk-for-java/storage.html#azure-storage-queue" target="_blank" rel="noopener">azure-storage-queue</a></li>
+                      
+                    
+                  </ul>
+                </li>
+              
+            
+          </ul>
+        </li>
+      
+        
+        <li>
+        
+          
+          <a title="Python Guidelines" href="#">Python Guidelines</a>
+          
+          <ul>
+            
+              
+                <li><a title="Design" href="/azure-sdk/python_design.html">Design</a></li>
+              
+              
+            
+              
+                <li><a title="Implementation" href="/azure-sdk/python_implementation.html">Implementation</a></li>
+              
+              
+            
+              
+                <li><a title="Documentation" href="/azure-sdk/python_documentation.html">Documentation</a></li>
+              
+              
+                <li class="subfolders">
+                  <a title="API Documentation" href="#">API Documentation</a>
+                  <ul>
+                    
+                      
+                        <li><a title="azure-cosmos" href="https://azure.github.io/azure-sdk-for-python/cosmosdb.html#azure-cosmos" target="_blank" rel="noopener">azure-cosmos</a></li>
+                      
+                    
+                      
+                        <li><a title="azure-eventhub" href="https://azure.github.io/azure-sdk-for-python/eventhubs.html#azure-eventhub" target="_blank" rel="noopener">azure-eventhub</a></li>
+                      
+                    
+                      
+                        <li><a title="azure-keyvault-keys" href="https://azure.github.io/azure-sdk-for-python/keyvault.html#azure-keyvault-keys" target="_blank" rel="noopener">azure-keyvault-keys</a></li>
+                      
+                    
+                      
+                        <li><a title="azure-keyvault-secrets" href="https://azure.github.io/azure-sdk-for-python/keyvault.html#azure-keyvault-secrets" target="_blank" rel="noopener">azure-keyvault-secrets</a></li>
+                      
+                    
+                      
+                        <li><a title="azure-storage-blob" href="https://azure.github.io/azure-sdk-for-python/storage.html#azure-storage-blob" target="_blank" rel="noopener">azure-storage-blob</a></li>
+                      
+                    
+                      
+                        <li><a title="azure-storage-file-share" href="https://azure.github.io/azure-sdk-for-python/storage.html#azure-storage-file-share" target="_blank" rel="noopener">azure-storage-file-share</a></li>
+                      
+                    
+                      
+                        <li><a title="azure-storage-queue" href="https://azure.github.io/azure-sdk-for-python/storage.html#azure-storage-queue" target="_blank" rel="noopener">azure-storage-queue</a></li>
+                      
+                    
+                  </ul>
+                </li>
+              
+            
+          </ul>
+        </li>
+      
+        
+        <li>
+        
+          
+          <a title="TypeScript Guidelines" href="#">TypeScript Guidelines</a>
+          
+          <ul>
+            
+              
+                <li><a title="Introduction" href="/azure-sdk/typescript_introduction.html">Introduction</a></li>
+              
+              
+            
+              
+                <li><a title="API Design" href="/azure-sdk/typescript_design.html">API Design</a></li>
+              
+              
+            
+              
+                <li><a title="Implementation" href="/azure-sdk/typescript_implementation.html">Implementation</a></li>
+              
+              
+            
+              
+                <li><a title="Documentation" href="/azure-sdk/typescript_documentation.html">Documentation</a></li>
+              
+              
+                <li class="subfolders">
+                  <a title="API Documentation" href="#">API Documentation</a>
+                  <ul>
+                    
+                      
+                        <li><a title="@azure/cosmos" href="https://azure.github.io/azure-cosmos-js/" target="_blank" rel="noopener">@azure/cosmos</a></li>
+                      
+                    
+                      
+                        <li><a title="@azure/event-hubs" href="https://azure.github.io/azure-sdk-for-js/eventhubs.html#azure-event-hubs" target="_blank" rel="noopener">@azure/event-hubs</a></li>
+                      
+                    
+                      
+                        <li><a title="@azure/keyvault-keys" href="https://azure.github.io/azure-sdk-for-js/keyvault.html#azure-keyvault-keys" target="_blank" rel="noopener">@azure/keyvault-keys</a></li>
+                      
+                    
+                      
+                        <li><a title="@azure/keyvault-secrets" href="https://azure.github.io/azure-sdk-for-js/keyvault.html#azure-keyvault-secrets" target="_blank" rel="noopener">@azure/keyvault-secrets</a></li>
+                      
+                    
+                      
+                        <li><a title="@azure/storage-blob" href="https://azure.github.io/azure-sdk-for-js/storage.html#azure-storage-blob" target="_blank" rel="noopener">@azure/storage-blob</a></li>
+                      
+                    
+                      
+                        <li><a title="@azure/storage-file-share" href="https://azure.github.io/azure-sdk-for-js/storage.html#azure-storage-file-share" target="_blank" rel="noopener">@azure/storage-file-share</a></li>
+                      
+                    
+                      
+                        <li><a title="@azure/storage-queue" href="https://azure.github.io/azure-sdk-for-js/storage.html#azure-storage-queue" target="_blank" rel="noopener">@azure/storage-queue</a></li>
+                      
+                    
+                  </ul>
+                </li>
+              
+            
+          </ul>
+        </li>
+      
+        
+        <li>
+        
+          
+          <a title="Android Guidelines" href="#">Android Guidelines</a>
+          
+          <ul>
+            
+              
+                <li><a title="Design" href="/azure-sdk/android_design.html">Design</a></li>
+              
+              
+            
+              
+                <li><a title="Implementation" href="/azure-sdk/android_implementation.html">Implementation</a></li>
+              
+              
+            
+          </ul>
+        </li>
+      
+        
+        <li>
+        
+          
+          <a title="iOS Guidelines" href="#">iOS Guidelines</a>
+          
+          <ul>
+            
+              
+                <li><a title="Design" href="/azure-sdk/ios_design.html">Design</a></li>
+              
+              
+            
+              
+                <li><a title="Implementation" href="/azure-sdk/ios_implementation.html">Implementation</a></li>
+              
+              
+            
+          </ul>
+        </li>
+      
+        
+        <li>
+        
+          
+          <a title="C Guidelines" href="#">C Guidelines</a>
+          
+          <ul>
+            
+              
+                <li><a title="Design" href="/azure-sdk/clang_design.html">Design</a></li>
+              
+              
+            
+              
+                <li><a title="Implementation" href="/azure-sdk/clang_implementation.html">Implementation</a></li>
+              
+              
+                <li class="subfolders">
+                  <a title="API Documentation" href="#">API Documentation</a>
+                  <ul>
+                    
+                      
+                        <li><a title="az_iot" href="https://azuresdkdocs.blob.core.windows.net/$web/c/az_iot/latest/index.html" target="_blank" rel="noopener">az_iot</a></li>
+                      
+                    
+                  </ul>
+                </li>
+              
+            
+          </ul>
+        </li>
+      
+        
+        <li>
+        
+          
+          <a title="C++ Guidelines" href="#">C++ Guidelines</a>
+          
+          <ul>
+            
+              
+                <li><a title="Design" href="/azure-sdk/cpp_introduction.html">Design</a></li>
+              
+              
+            
+              
+                <li><a title="Implementation" href="/azure-sdk/cpp_implementation.html">Implementation</a></li>
+              
+              
+                <li class="subfolders">
+                  <a title="API Documentation" href="#">API Documentation</a>
+                  <ul>
+                    
+                      
+                        <li><a title="azure-storage-blob" href="https://azure.github.io/azure-sdk-for-cpp/storage.html#azure-storage-blob" target="_blank" rel="noopener">azure-storage-blob</a></li>
+                      
+                    
+                      
+                        <li><a title="azure-storage-file-datalake" href="https://azure.github.io/azure-sdk-for-cpp/storage.html#azure-storage-file-datalake" target="_blank" rel="noopener">azure-storage-file-datalake</a></li>
+                      
+                    
+                      
+                        <li><a title="azure-storage-file-share" href="https://azure.github.io/azure-sdk-for-cpp/storage.html#azure-storage-file-shares" target="_blank" rel="noopener">azure-storage-file-share</a></li>
+                      
+                    
+                  </ul>
+                </li>
+              
+            
+          </ul>
+        </li>
+      
+        
+        <li>
+        
+          
+          <a title="Go Guidelines" href="#">Go Guidelines</a>
+          
+          <ul>
+            
+              
+                <li><a title="Design" href="/azure-sdk/golang_introduction.html">Design</a></li>
+              
+              
+            
+              
+                <li><a title="Implementation" href="/azure-sdk/golang_implementation.html">Implementation</a></li>
+              
+              
+            
+          </ul>
+        </li>
+      
+        
+        <li>
+        
+          
+          <a title="Rust Guidelines" href="#">Rust Guidelines</a>
+          
+          <ul>
+            
+              
+                <li><a title="Design" href="/azure-sdk/rust_introduction.html">Design</a></li>
+              
+              
+            
+              
+                <li><a title="Implementation" href="/azure-sdk/rust_implementation.html">Implementation</a></li>
+              
+              
+            
+          </ul>
+        </li>
+      
+        
+        <li>
+        
+          
+          <a title="GitHub Repos" href="#">GitHub Repos</a>
+          
+          <ul>
+            
+              
+                <li><a title="Guidelines Contributions" href="/azure-sdk/policies_adoption.html">Guidelines Contributions</a></li>
+              
+              
+            
+              
+                <li><a title="Repository structure" href="/azure-sdk/policies_repostructure.html">Repository structure</a></li>
+              
+              
+            
+              
+                <li><a title="Repository branching" href="/azure-sdk/policies_repobranching.html">Repository branching</a></li>
+              
+              
+            
+              
+                <li><a title="Pipelines" href="/azure-sdk/policies_pipelines.html">Pipelines</a></li>
+              
+              
+            
+          </ul>
+        </li>
+      
+        
+        <li>
+        
+          
+          <a title="Policies" href="#">Policies</a>
+          
+          <ul>
+            
+              
+                <li><a title="Review Process" href="/azure-sdk/policies_reviewprocess.html">Review Process</a></li>
+              
+              
+            
+              
+                <li><a title="Releases" href="/azure-sdk/policies_releases.html">Releases</a></li>
+              
+              
+            
+              
+                <li><a title="Release notes" href="/azure-sdk/policies_releasenotes.html">Release notes</a></li>
+              
+              
+            
+              
+                <li><a title="Support" href="/azure-sdk/policies_support.html">Support</a></li>
+              
+              
+            
+          </ul>
+        </li>
+      
+    
+  </ol>
+</div>
+
+<script>$("li.active").parents('li').toggleClass("active");</script>
+
+                </div>
+                
+                
+
+                <!-- Content Column -->
+                <div class="col-md-10 col-xs-12" id="tg-sb-content">
+                    <div class="row">
+    
+    <div class="col-md-2 col-xs-12 content-right pull-right">
+        
+<!-- this handles the automatic toc. use ## for subheads to auto-generate the on-page minitoc. if you use html tags, you must supply an ID for the heading element in order for it to appear in the minitoc. -->
+<script>
+$( document ).ready(function() {
+  // Handler for .ready() called.
+
+$('#toc').toc({ minimumHeaders: 0, listType: 'ul', showSpeed: 0, headers: 'h2,h3,h4' });
+
+/* this offset helps account for the space taken up by the floating toolbar. */
+$('#toc').on('click', 'a', function() {
+  var target = $(this.getAttribute('href'))
+    , scroll_target = target.offset().top
+
+  $(window).scrollTop(scroll_target - 60);
+  return false
+})
+  
+});
+</script>
+
+<div id="toc"></div>
+
+    </div>
+    
+
+    <div class="col-md-10  col-xs-12 content-center pull-left">
+        <div class="post-header">
+        <h1 class="post-title-main">Distributed Tracing Conventions</h1>
+        </div>
+        
+        
+        
+        <div class="post-content">
+            
+        
+            
+        
+            <p>Conventions are the contract between Azure SDK and tracing providers such as Azure Monitor, Jaeger, and others.  They describe and standardize attributes, events and relationships for common span types: HTTP, DB, messaging and others.  Observability vendors use conventions to build visualizations and may be very sensitive to them.  Custom Azure SDK conventions are described in <a href="#azure-sdk-semantic-conventions">Azure SDK semantic conventions</a> section below.</p>
+
+<p>When writing instrumentation in Azure SDK or Core:</p>
+
+<p><a href="#general-tracing-convention-use-otel" name="general-tracing-convention-use-otel" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  use existing <a href="https://opentelemetry.io/docs/specs/semconv/general/trace/">OpenTelemetry</a> or <a href="#azure-sdk-semantic-conventions">Azure SDK</a> semantic conventions whenever possible.</p>
+
+<p><a href="#general-tracing-convention-describe-attributes" name="general-tracing-convention-describe-attributes" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  update <a href="#azure-sdk-semantic-conventions">Azure SDK semantic conventions</a> when adding new Azure-specific attributes.</p>
+
+<p><a href="#general-tracing-convention-attribute-naming" name="general-tracing-convention-attribute-naming" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  follow <a href="https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/common/attribute-naming.md">OpenTelemetry attribute naming conventions</a> and use the <code class="language-plaintext highlighter-rouge">az.{service-family}.</code> prefix when adding new Azure-specific attributes.</p>
+
+<p><a href="#general-tracing-convention-set-schema-version" name="general-tracing-convention-set-schema-version" class="requirement" role="img" aria-label="DO">✅</a> <strong>DO</strong>  set OpenTelemetry <a href="https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/schemas/README.md">Schema URL</a> when <a href="https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/trace/api.md#get-a-tracer">creating OpenTelemetry tracer</a>.</p>
+
+<p><a href="#general-tracing-convention-set-library" name="general-tracing-convention-set-library" class="requirement" role="img" aria-label="YOU SHOULD">☑️</a> <strong>YOU SHOULD</strong>  set Azure Client Library name and version <a href="https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/trace/api.md#get-a-tracer">Schema URL</a> when <a href="https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/trace/api.md#get-a-tracer">creating OpenTelemetry tracer</a>.</p>
+
+<p><a href="#general-tracing-convention-new-otel" name="general-tracing-convention-new-otel" class="requirement" role="img" aria-label="YOU SHOULD">☑️</a> <strong>YOU SHOULD</strong>  contribute new conventions (or patch existing ones) to OpenTelemetry when there is no suitable one or some scenarios are missing.</p>
+
+<h1 id="azure-sdk-semantic-conventions">Azure SDK semantic conventions</h1>
+
+<!--TODO: move to https://github.com/open-telemetry/semantic-conventions repo-->
+
+<p>Azure SDK support distributed tracing with OpenTelemetry. Azure client libraries do not report metrics at the moment.</p>
+
+<h2 id="semantic-conventions-for-azure-sdk-spans">Semantic conventions for Azure SDK spans</h2>
+
+<p><strong>Status</strong>: <a href="https://github.com/open-telemetry/opentelemetry-specification/tree/v1.26.0/specification/document-status.md">Mixed</a></p>
+
+<p>This document describes tracing semantic conventions adopted by Azure SDK. Azure client libraries are instrumented natively, so the instrumentation code is a part of each library (but depending on the languages, you may need to install a plugin to enable collection with OpenTelemetry). Check out tracing documentation for your language to get more details.</p>
+
+<ul>
+  <li><a href="https://github.com/Azure/azure-sdk-for-java/tree/main/sdk/core/azure-core-tracing-opentelemetry">Java</a></li>
+  <li><a href="https://github.com/Azure/azure-sdk-for-js/tree/main/sdk/core/core-tracing">JavaScript</a></li>
+  <li><a href="https://github.com/Azure/azure-sdk-for-python/tree/main/sdk/core/azure-core-tracing-opentelemetry">Python</a></li>
+  <li><a href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md#activitysource-support">.NET</a></li>
+  <li><a href="https://github.com/Azure/azure-sdk-for-go/blob/main/sdk/tracing/azotel">Go</a></li>
+  <li><a href="https://github.com/Azure/azure-sdk-for-cpp/tree/main/sdk/core/azure-core-tracing-opentelemetry">C++</a></li>
+</ul>
+
+<p>The Azure SDK produces spans for public API calls and nested HTTP client spans. AMQP transport-level calls are not traced.</p>
+
+<h2 id="versioning">Versioning</h2>
+
+<p>Azure client libraries follow OpenTelemetry semantic conventions when applicable, but adopt new versions of conventions at their own pace. Telemetry consumers MAY use <a href="https://opentelemetry.io/docs/specs/otel/schemas/#schema-url">SchemaUrl</a> to detect which version of semantic conventions are emitted by Azure client libraries.</p>
+
+<h2 id="public-api-calls">Public API calls</h2>
+
+<p><strong>Status</strong>: <a href="https://github.com/open-telemetry/opentelemetry-specification/tree/v1.26.0/specification/document-status.md">Stable</a></p>
+
+<p>Azure SDK SHOULD create a span for each call to public APIs that involve communication with Azure services.</p>
+
+<ul>
+  <li>Spans representing public API calls SHOULD have names following the <code class="language-plaintext highlighter-rouge">client.method</code> pattern and are language-specific. In cases where OpenTelemetry defines a semantic convention for a specific span name (for example, in messaging or database conventions), the standard OpenTelemetry name SHOULD be used instead.</li>
+  <li>For HTTP-based client libraries, public API spans SHOULD have <a href="https://opentelemetry.io/docs/specs/otel/trace/api/#spankind">kind</a> of <code class="language-plaintext highlighter-rouge">INTERNAL</code>.</li>
+</ul>
+
+<p>See <a href="#messaging-libraries">Messaging</a> section below and <a href="https://github.com/open-telemetry/semantic-conventions/blob/main/docs/database/cosmosdb.md">CosmosDB conventions</a> for non-HTTP semantics.</p>
+
+<p>API-level spans produced by Azure SDK have the following attributes:</p>
+
+<!-- semconv azure.sdk.api(full) -->
+<p>| Attribute  | Type | Description  | Examples  | Requirement Level |
+|—|—|—|—|—|
+| <code class="language-plaintext highlighter-rouge">az.namespace</code> | string | <a href="https://docs.microsoft.com/azure/azure-resource-manager/management/azure-services-resource-providers">Namespace</a> of Azure service request is made against. [1] | <code class="language-plaintext highlighter-rouge">Microsoft.Storage</code>; <code class="language-plaintext highlighter-rouge">Microsoft.KeyVault</code>; <code class="language-plaintext highlighter-rouge">Microsoft.ServiceBus</code> | Required |
+| <code class="language-plaintext highlighter-rouge">az.schema_url</code> | string | OpenTelemetry Schema URL including schema version. Only 1.23.0 is supported. | <code class="language-plaintext highlighter-rouge">https://opentelemetry.io/schemas/1.23.0</code> | Conditionally Required: [2] |
+| <code class="language-plaintext highlighter-rouge">error.type</code> | string | Describes a class of error the operation ended with. [3] | <code class="language-plaintext highlighter-rouge">java.net.UnknownHostException</code>; <code class="language-plaintext highlighter-rouge">System.Threading.Tasks.OperationCanceledException</code>; <code class="language-plaintext highlighter-rouge">azure.core.exceptions.ServiceRequestError</code> | Recommended |</p>
+
+<p><strong>[1]:</strong> This SHOULD be set as an instrumentation scope attribute when creating a <code class="language-plaintext highlighter-rouge">Tracer</code> as long as OpenTelemetry in a given language allows to do so.</p>
+
+<p><strong>[2]:</strong> if and only if OpenTelemetry in a given language doesn’t provide a standard way to set <code class="language-plaintext highlighter-rouge">schema_url</code> (.NET)</p>
+
+<p><strong>[3]:</strong> The <code class="language-plaintext highlighter-rouge">error.type</code> SHOULD be predictable and SHOULD have low cardinality.
+Instrumentations SHOULD document the list of errors they report.</p>
+
+<p>The cardinality of <code class="language-plaintext highlighter-rouge">error.type</code> within one instrumentation library SHOULD be low.
+Telemetry consumers that aggregate data from multiple instrumentation libraries and applications
+should be prepared for <code class="language-plaintext highlighter-rouge">error.type</code> to have high cardinality at query time when no
+additional filters are applied.</p>
+
+<p>If the operation has completed successfully, instrumentations SHOULD NOT set <code class="language-plaintext highlighter-rouge">error.type</code>.</p>
+
+<p>If a specific domain defines its own set of error identifiers (such as HTTP or gRPC status codes),
+it’s RECOMMENDED to:</p>
+
+<ul>
+  <li>Use a domain-specific attribute</li>
+  <li>Set <code class="language-plaintext highlighter-rouge">error.type</code> to capture all errors, regardless of whether they are defined within the domain-specific set or not.</li>
+</ul>
+
+<p><code class="language-plaintext highlighter-rouge">error.type</code> has the following list of well-known values. If one of them applies, then the respective value MUST be used, otherwise a custom value MAY be used.</p>
+
+<p>| Value  | Description |
+|—|—|
+| <code class="language-plaintext highlighter-rouge">_OTHER</code> | A fallback error value to be used when the instrumentation doesn’t define a custom value. |
+<!-- endsemconv --></p>
+
+<h2 id="http-client-spans">HTTP Client spans</h2>
+
+<p><strong>Status</strong>: <a href="https://github.com/open-telemetry/opentelemetry-specification/tree/v1.26.0/specification/document-status.md">Stable</a></p>
+
+<p>Azure SDK implements a valid subset of stable part of <a href="https://github.com/open-telemetry/semantic-conventions/blob/main/docs/http/http-spans.md">OpenTelemetry HTTP spans conventions</a> and create a span per HTTP call (attempt).</p>
+
+<!-- semconv azure.sdk.http -->
+<p>| Attribute  | Type | Description  | Examples  | Requirement Level |
+|—|—|—|—|—|
+| <code class="language-plaintext highlighter-rouge">az.client_request_id</code> | string | Value of the [x-ms-client-request-id] header (or other request-id header, depending on the service) sent by the client. | <code class="language-plaintext highlighter-rouge">eb178587-c05a-418c-a695-ae9466c5303c</code> | Conditionally Required: only if present. |
+| <code class="language-plaintext highlighter-rouge">az.namespace</code> | string | <a href="https://docs.microsoft.com/azure/azure-resource-manager/management/azure-services-resource-providers">Namespace</a> of Azure service request is made against. [1] | <code class="language-plaintext highlighter-rouge">Microsoft.Storage</code>; <code class="language-plaintext highlighter-rouge">Microsoft.KeyVault</code>; <code class="language-plaintext highlighter-rouge">Microsoft.ServiceBus</code> | Required |
+| <code class="language-plaintext highlighter-rouge">az.schema_url</code> | string | OpenTelemetry Schema URL including schema version. Only 1.23.0 is supported. | <code class="language-plaintext highlighter-rouge">https://opentelemetry.io/schemas/1.23.0</code> | Conditionally Required: [2] |
+| <code class="language-plaintext highlighter-rouge">az.service_request_id</code> | string | Value of the [x-ms-request-id]  header (or other request-id header, depending on the service) sent by the server in response. | <code class="language-plaintext highlighter-rouge">3f828ae5-ecb9-40ab-88d9-db0420af30c6</code> | Conditionally Required: if and only if one was received |
+| <code class="language-plaintext highlighter-rouge">error.type</code> | string | Describes a class of error the operation ended with. [3] | <code class="language-plaintext highlighter-rouge">timeout</code>; <code class="language-plaintext highlighter-rouge">java.net.UnknownHostException</code>; <code class="language-plaintext highlighter-rouge">server_certificate_invalid</code>; <code class="language-plaintext highlighter-rouge">500</code> | Conditionally Required: If request has ended with an error. |
+| <a href="https://github.com/open-telemetry/semantic-conventions/blob/main/docs/attributes-registry/http.md"><code class="language-plaintext highlighter-rouge">http.request.method</code></a> | string | HTTP request method. [4] | <code class="language-plaintext highlighter-rouge">GET</code>; <code class="language-plaintext highlighter-rouge">POST</code>; <code class="language-plaintext highlighter-rouge">HEAD</code> | Required |
+| <a href="https://github.com/open-telemetry/semantic-conventions/blob/main/docs/attributes-registry/http.md"><code class="language-plaintext highlighter-rouge">http.request.resend_count</code></a> | int | The ordinal number of request resending attempt (for any reason, including redirects). [5] | <code class="language-plaintext highlighter-rouge">3</code> | Recommended |
+| <a href="https://github.com/open-telemetry/semantic-conventions/blob/main/docs/attributes-registry/http.md"><code class="language-plaintext highlighter-rouge">http.response.status_code</code></a> | int | <a href="https://tools.ietf.org/html/rfc7231#section-6">HTTP response status code</a>. | <code class="language-plaintext highlighter-rouge">200</code> | Conditionally Required: If and only if one was received/sent. |
+| <a href="https://github.com/open-telemetry/semantic-conventions/blob/main/docs/attributes-registry/server.md"><code class="language-plaintext highlighter-rouge">server.address</code></a> | string | Host identifier of the <a href="https://www.rfc-editor.org/rfc/rfc9110.html#name-uri-origin">“URI origin”</a> HTTP request is sent to. [6] | <code class="language-plaintext highlighter-rouge">example.com</code>; <code class="language-plaintext highlighter-rouge">10.1.2.80</code>; <code class="language-plaintext highlighter-rouge">/tmp/my.sock</code> | Required |
+| <a href="https://github.com/open-telemetry/semantic-conventions/blob/main/docs/attributes-registry/server.md"><code class="language-plaintext highlighter-rouge">server.port</code></a> | int | Port identifier of the <a href="https://www.rfc-editor.org/rfc/rfc9110.html#name-uri-origin">“URI origin”</a> HTTP request is sent to. [7] | <code class="language-plaintext highlighter-rouge">80</code>; <code class="language-plaintext highlighter-rouge">8080</code>; <code class="language-plaintext highlighter-rouge">443</code> | Required |
+| <a href="https://github.com/open-telemetry/semantic-conventions/blob/main/docs/attributes-registry/url.md"><code class="language-plaintext highlighter-rouge">url.full</code></a> | string | Absolute URL describing a network resource according to <a href="https://www.rfc-editor.org/rfc/rfc3986">RFC3986</a> [8] | <code class="language-plaintext highlighter-rouge">https://www.foo.bar/search?q=OpenTelemetry#SemConv</code>; <code class="language-plaintext highlighter-rouge">//localhost</code> | Recommended |</p>
+
+<p><strong>[1]:</strong> This SHOULD be set as an instrumentation scope attribute when creating a <code class="language-plaintext highlighter-rouge">Tracer</code> as long as OpenTelemetry in a given language allows to do so.</p>
+
+<p><strong>[2]:</strong> if and only if OpenTelemetry in a given language doesn’t provide a standard way to set <code class="language-plaintext highlighter-rouge">schema_url</code> (.NET)</p>
+
+<p><strong>[3]:</strong> If the request fails with an error before response status code was sent or received,
+<code class="language-plaintext highlighter-rouge">error.type</code> SHOULD be set to a component-specific low cardinality error identifier or the fully-qualified type of exception.</p>
+
+<p>If response status code was sent or received and status indicates an error according to <a href="https://github.com/open-telemetry/semantic-conventions/blob/main/docs/http/http-spans.md">HTTP span status definition</a>,
+<code class="language-plaintext highlighter-rouge">error.type</code> SHOULD be set to a component-specific low cardinality error identifier or the fully-qualified type of exception.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">error.type</code> value SHOULD be predictable and SHOULD have low cardinality.
+Instrumentations SHOULD document the list of errors they report.</p>
+
+<p>The cardinality of <code class="language-plaintext highlighter-rouge">error.type</code> within one instrumentation library SHOULD be low, but
+telemetry consumers that aggregate data from multiple instrumentation libraries and applications
+should be prepared for <code class="language-plaintext highlighter-rouge">error.type</code> to have high cardinality at query time, when no
+additional filters are applied.</p>
+
+<p>If the request has completed successfully, instrumentations SHOULD NOT set <code class="language-plaintext highlighter-rouge">error.type</code>.</p>
+
+<p><strong>[4]:</strong> Azure client libraries support HTTP methods listed in <a href="https://www.rfc-editor.org/rfc/rfc9110.html#name-methods">RFC9110</a> and the <code class="language-plaintext highlighter-rouge">PATCH</code>` method defined in <a href="https://www.rfc-editor.org/rfc/rfc5789.html">RFC5789</a></p>
+
+<p><strong>[5]:</strong> The resend count SHOULD be updated each time an HTTP request gets resent by the client, regardless of what was the cause of the resending (e.g. redirection, authorization failure, 503 Server Unavailable, network issues, or any other).</p>
+
+<p><strong>[6]:</strong> Describes host component of Azure service endpoint.</p>
+
+<p><strong>[7]:</strong> Describes port component of Azure service endpoint.</p>
+
+<p><strong>[8]:</strong> For network calls, URL usually has <code class="language-plaintext highlighter-rouge">scheme://host[:port][path][?query][#fragment]</code> format, where the fragment is not transmitted over HTTP, but if it is known, it SHOULD be included nevertheless.
+<code class="language-plaintext highlighter-rouge">url.full</code> MUST NOT contain credentials passed via URL in form of <code class="language-plaintext highlighter-rouge">https://username:password@www.example.com/</code>. In such case username and password SHOULD be redacted and attribute’s value SHOULD be <code class="language-plaintext highlighter-rouge">https://REDACTED:REDACTED@www.example.com/</code>.
+<code class="language-plaintext highlighter-rouge">url.full</code> SHOULD capture the absolute URL when it is available (or can be reconstructed) and SHOULD NOT be validated or modified except for sanitizing purposes.</p>
+
+<p>The following attributes can be important for making sampling decisions and SHOULD be provided <strong>at span creation time</strong> (if provided at all):</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">az.namespace</code></li>
+  <li><code class="language-plaintext highlighter-rouge">az.schema_url</code></li>
+  <li><a href="https://github.com/open-telemetry/semantic-conventions/blob/main/docs/attributes-registry/http.md"><code class="language-plaintext highlighter-rouge">http.request.method</code></a></li>
+  <li><a href="https://github.com/open-telemetry/semantic-conventions/blob/main/docs/attributes-registry/server.md"><code class="language-plaintext highlighter-rouge">server.address</code></a></li>
+  <li><a href="https://github.com/open-telemetry/semantic-conventions/blob/main/docs/attributes-registry/server.md"><code class="language-plaintext highlighter-rouge">server.port</code></a></li>
+  <li><a href="https://github.com/open-telemetry/semantic-conventions/blob/main/docs/attributes-registry/url.md"><code class="language-plaintext highlighter-rouge">url.full</code></a>
+<!-- endsemconv --></li>
+</ul>
+
+<p>Instrumentation supports <a href="https://w3c.github.io/trace-context/">W3C Trace context</a> propagation and Azure legacy correlation protocols. Propagator configuration is not supported.</p>
+
+<h2 id="messaging-libraries">Messaging libraries</h2>
+
+<p><strong>Status</strong>: <a href="https://github.com/open-telemetry/opentelemetry-specification/tree/v1.26.0/specification/document-status.md">Experimental</a></p>
+
+<p>Messaging span semantics apply to Azure Event Hubs and Service Bus and follow <a href="https://github.com/open-telemetry/semantic-conventions/blob/v1.23.0/docs/messaging/messaging-spans.md">OpenTelemetry Messaging spans conventions v1.23.0</a>.</p>
+
+<p>Azure SDK will update messaging semantic conventions as messaging specification evolves.</p>
+
+<p>Messaging libraries produce three kinds of spans:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">PRODUCER</code> - describes message creation and associates unique context with the message to trace them when they are sent in batches.</li>
+  <li><code class="language-plaintext highlighter-rouge">CLIENT</code> - describes message (or batch) publishing.
+    <ul>
+      <li>It has links pointing to each message being sent.</li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">CONSUMER</code> - describes message (or batch) processing.
+    <ul>
+      <li>It is created when user leverages handler APIs that wrap message or batch processing.</li>
+      <li>Processing span has links to each message being processed (when context is present).</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="messaging-attributes">Messaging attributes</h3>
+
+<!-- semconv azure.sdk.messaging -->
+<p>| Attribute  | Type | Description  | Examples  | Requirement Level |
+|—|—|—|—|—|
+| <code class="language-plaintext highlighter-rouge">az.namespace</code> | string | <a href="https://docs.microsoft.com/azure/azure-resource-manager/management/azure-services-resource-providers">Namespace</a> of Azure service request is made against. [1] | <code class="language-plaintext highlighter-rouge">Microsoft.Storage</code>; <code class="language-plaintext highlighter-rouge">Microsoft.KeyVault</code>; <code class="language-plaintext highlighter-rouge">Microsoft.ServiceBus</code> | Required |
+| <code class="language-plaintext highlighter-rouge">az.schema_url</code> | string | OpenTelemetry Schema URL including schema version. Only 1.23.0 is supported. | <code class="language-plaintext highlighter-rouge">https://opentelemetry.io/schemas/1.23.0</code> | Conditionally Required: [2] |
+| <a href="https://github.com/open-telemetry/semantic-conventions/blob/main/docs/attributes-registry/messaging.md"><code class="language-plaintext highlighter-rouge">messaging.batch.message_count</code></a> | int | The number of messages sent, received, or processed in the scope of the batching operation. [3] | <code class="language-plaintext highlighter-rouge">0</code>; <code class="language-plaintext highlighter-rouge">1</code>; <code class="language-plaintext highlighter-rouge">2</code> | Recommended |
+| <a href="https://github.com/open-telemetry/semantic-conventions/blob/main/docs/attributes-registry/messaging.md"><code class="language-plaintext highlighter-rouge">messaging.destination.name</code></a> | string | The message destination name [4] | <code class="language-plaintext highlighter-rouge">MyQueue</code>; <code class="language-plaintext highlighter-rouge">MyTopic</code> | Recommended |
+| <a href="https://github.com/open-telemetry/semantic-conventions/blob/main/docs/attributes-registry/messaging.md"><code class="language-plaintext highlighter-rouge">messaging.message.id</code></a> | string | A value used by the messaging system as an identifier for the message, represented as a string. | <code class="language-plaintext highlighter-rouge">452a7c7c7c7048c2f887f61572b18fc2</code> | Recommended |
+| <a href="https://github.com/open-telemetry/semantic-conventions/blob/main/docs/attributes-registry/messaging.md"><code class="language-plaintext highlighter-rouge">messaging.operation</code></a> | string | A string identifying the kind of messaging operation. [5] | <code class="language-plaintext highlighter-rouge">publish</code> | Recommended |
+| <a href="https://github.com/open-telemetry/semantic-conventions/blob/main/docs/attributes-registry/messaging.md"><code class="language-plaintext highlighter-rouge">messaging.system</code></a> | string | A string identifying the messaging system. | <code class="language-plaintext highlighter-rouge">eventhubs</code>; <code class="language-plaintext highlighter-rouge">servicebus</code> | Recommended |
+| <a href="https://github.com/open-telemetry/semantic-conventions/blob/main/docs/attributes-registry/server.md"><code class="language-plaintext highlighter-rouge">server.address</code></a> | string | Server domain name if available without reverse DNS lookup; otherwise, IP address or Unix domain socket name. [6] | <code class="language-plaintext highlighter-rouge">example.com</code>; <code class="language-plaintext highlighter-rouge">10.1.2.80</code>; <code class="language-plaintext highlighter-rouge">/tmp/my.sock</code> | Recommended |
+| <a href="https://github.com/open-telemetry/semantic-conventions/blob/main/docs/attributes-registry/server.md"><code class="language-plaintext highlighter-rouge">server.port</code></a> | int | Server port number. [7] | <code class="language-plaintext highlighter-rouge">80</code>; <code class="language-plaintext highlighter-rouge">8080</code>; <code class="language-plaintext highlighter-rouge">443</code> | Recommended |</p>
+
+<p><strong>[1]:</strong> This SHOULD be set as an instrumentation scope attribute when creating a <code class="language-plaintext highlighter-rouge">Tracer</code> as long as OpenTelemetry in a given language allows to do so.</p>
+
+<p><strong>[2]:</strong> if and only if OpenTelemetry in a given language doesn’t provide a standard way to set <code class="language-plaintext highlighter-rouge">schema_url</code> (.NET)</p>
+
+<p><strong>[3]:</strong> Instrumentations SHOULD NOT set <code class="language-plaintext highlighter-rouge">messaging.batch.message_count</code> on spans that operate with a single message. When a messaging client library supports both batch and single-message API for the same operation, instrumentations SHOULD use <code class="language-plaintext highlighter-rouge">messaging.batch.message_count</code> for batching APIs and SHOULD NOT use it for single-message APIs.</p>
+
+<p><strong>[4]:</strong> Destination name SHOULD uniquely identify a specific queue, topic or other entity within the broker. If
+the broker doesn’t have such notion, the destination name SHOULD uniquely identify the broker.</p>
+
+<p><strong>[5]:</strong> If a custom value is used, it MUST be of low cardinality.</p>
+
+<p><strong>[6]:</strong> When observed from the client side, and when communicating through an intermediary, <code class="language-plaintext highlighter-rouge">server.address</code> SHOULD represent the server address behind any intermediaries, for example proxies, if it’s available.</p>
+
+<p><strong>[7]:</strong> When observed from the client side, and when communicating through an intermediary, <code class="language-plaintext highlighter-rouge">server.port</code> SHOULD represent the server port behind any intermediaries, for example proxies, if it’s available.</p>
+
+<p>The following attributes can be important for making sampling decisions and SHOULD be provided <strong>at span creation time</strong> (if provided at all):</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">az.namespace</code></li>
+  <li><code class="language-plaintext highlighter-rouge">az.schema_url</code></li>
+  <li><a href="https://github.com/open-telemetry/semantic-conventions/blob/main/docs/attributes-registry/messaging.md"><code class="language-plaintext highlighter-rouge">messaging.destination.name</code></a></li>
+  <li><a href="https://github.com/open-telemetry/semantic-conventions/blob/main/docs/attributes-registry/messaging.md"><code class="language-plaintext highlighter-rouge">messaging.operation</code></a></li>
+  <li><a href="https://github.com/open-telemetry/semantic-conventions/blob/main/docs/attributes-registry/messaging.md"><code class="language-plaintext highlighter-rouge">messaging.system</code></a>
+<!-- endsemconv --></li>
+</ul>
+
+<h2 id="library-specific-attributes">Library-specific attributes</h2>
+
+<p>In addition to common attributes listed in the <a href="#public-api-calls">Public API calls</a> section, certain Azure client libraries in .NET emit other library-specific attributes.</p>
+
+<h3 id="azure-application-configuration-attributes">Azure Application Configuration attributes</h3>
+
+<!-- semconv azure.sdk.appconfiguration -->
+<p>| Attribute  | Type | Description  | Examples  | Requirement Level |
+|—|—|—|—|—|
+| <code class="language-plaintext highlighter-rouge">az.appconfiguration.key</code> | string | Value of the Azure Application Configuration property <a href="https://learn.microsoft.com/azure/azure-app-configuration/concept-key-value">key</a>. | <code class="language-plaintext highlighter-rouge">AppName:Service1:ApiEndpoint</code> | Recommended |
+<!-- endsemconv --></p>
+
+<h3 id="azure-cognitive-language-question-answering-sdk-attributes">Azure Cognitive Language Question Answering SDK attributes</h3>
+
+<!-- semconv azure.sdk.cognitivelanguage -->
+<p>| Attribute  | Type | Description  | Examples  | Requirement Level |
+|—|—|—|—|—|
+| <code class="language-plaintext highlighter-rouge">az.cognitivelanguage.deployment.name</code> | string | Name of the <a href="https://learn.microsoft.com/azure/ai-services/language-service/question-answering/overview">Azure Questions Answering</a> deployment. | <code class="language-plaintext highlighter-rouge">production</code> | Recommended |
+| <code class="language-plaintext highlighter-rouge">az.cognitivelanguage.project.name</code> | string | Name of the <a href="https://learn.microsoft.com/azure/ai-services/language-service/question-answering/overview">Azure Questions Answering</a> project. | <code class="language-plaintext highlighter-rouge">production</code> | Recommended |
+<!-- endsemconv --></p>
+
+<h3 id="azure-digital-twins-attributes">Azure Digital Twins attributes</h3>
+
+<!-- semconv azure.sdk.digitaltwins -->
+<p>| Attribute  | Type | Description  | Examples  | Requirement Level |
+|—|—|—|—|—|
+| <code class="language-plaintext highlighter-rouge">az.digitaltwins.component.name</code> | string | The name of the digital twin component. | <code class="language-plaintext highlighter-rouge">thermostat</code> | Recommended |
+| <code class="language-plaintext highlighter-rouge">az.digitaltwins.event_route.id</code> | string | The <a href="https://learn.microsoft.com/azure/digital-twins/concepts-route-events">event route</a> identifier used by the digital twin. | <code class="language-plaintext highlighter-rouge">6f8741b1</code> | Recommended |
+| <code class="language-plaintext highlighter-rouge">az.digitaltwins.job.id</code> | string | Digital twin job id. | <code class="language-plaintext highlighter-rouge">test-job</code> | Recommended |
+| <code class="language-plaintext highlighter-rouge">az.digitaltwins.message.id</code> | string | A unique message identifier (in the scope of the digital twin id) used to de-duplicate telemetry messages. | <code class="language-plaintext highlighter-rouge">a40896c5ab954ab1</code> | Recommended |
+| <code class="language-plaintext highlighter-rouge">az.digitaltwins.model.id</code> | string | The digital twin model id. | <code class="language-plaintext highlighter-rouge">dtmi:example:Room23;1</code> | Recommended |
+| <code class="language-plaintext highlighter-rouge">az.digitaltwins.query</code> | string | Digital twin graph query. | <code class="language-plaintext highlighter-rouge">SELECT * FROM DIGITALTWINS WHERE Name = "DSouza"</code> | Recommended |
+| <code class="language-plaintext highlighter-rouge">az.digitaltwins.relationship.name</code> | string | The name of the relationship between twins. | <code class="language-plaintext highlighter-rouge">contains</code> | Recommended |
+| <code class="language-plaintext highlighter-rouge">az.digitaltwins.twin.id</code> | string | The unique identifier of the <a href="https://learn.microsoft.com/azure/digital-twins/concepts-twins-graph">digital twin</a>. | <code class="language-plaintext highlighter-rouge">edf41622</code> | Recommended |
+<!-- endsemconv --></p>
+
+<h3 id="azure-keyvault-attributes">Azure KeyVault attributes</h3>
+
+<h4 id="azure-keyvault-certificates-attributes">Azure KeyVault Certificates attributes</h4>
+
+<!-- semconv azure.sdk.keyvault.certificates -->
+<p>| Attribute  | Type | Description  | Examples  | Requirement Level |
+|—|—|—|—|—|
+| <code class="language-plaintext highlighter-rouge">az.keyvault.certificate.issuer.name</code> | string | Azure KeyVault certificate version. | <code class="language-plaintext highlighter-rouge">issuer01</code> | Recommended |
+| <code class="language-plaintext highlighter-rouge">az.keyvault.certificate.name</code> | string | Azure KeyVault certificate name. | <code class="language-plaintext highlighter-rouge">selfSignedCert01</code> | Recommended |
+| <code class="language-plaintext highlighter-rouge">az.keyvault.certificate.version</code> | string | Azure KeyVault certificate version. | <code class="language-plaintext highlighter-rouge">c3d31d7b36c942ad83ef36fc0785a4fc</code> | Recommended |
+<!-- endsemconv --></p>
+
+<h4 id="azure-keyvault-keys-attributes">Azure KeyVault Keys attributes</h4>
+
+<!-- semconv azure.sdk.keyvault.keys -->
+<p>| Attribute  | Type | Description  | Examples  | Requirement Level |
+|—|—|—|—|—|
+| <code class="language-plaintext highlighter-rouge">az.keyvault.key.id</code> | string | Azure KeyVault key id (full URL). | <code class="language-plaintext highlighter-rouge">"https://myvault.vault.azure.net/keys/CreateSoftKeyTest/78deebed173b48e48f55abf87ed4cf71</code> | Recommended |
+| <code class="language-plaintext highlighter-rouge">az.keyvault.key.name</code> | string | Azure KeyVault key name. | <code class="language-plaintext highlighter-rouge">test-key</code> | Recommended |
+| <code class="language-plaintext highlighter-rouge">az.keyvault.key.version</code> | string | Azure KeyVault key version. | <code class="language-plaintext highlighter-rouge">3d31e6e5c4c14eaf9be8d42c00225088</code> | Recommended |
+<!-- endsemconv --></p>
+
+<h4 id="azure-keyvault-secrets-attributes">Azure KeyVault Secrets attributes</h4>
+
+<!-- semconv azure.sdk.keyvault.secrets -->
+<p>| Attribute  | Type | Description  | Examples  | Requirement Level |
+|—|—|—|—|—|
+| <code class="language-plaintext highlighter-rouge">az.keyvault.secret.name</code> | string | Azure KeyVault secret name. | <code class="language-plaintext highlighter-rouge">test-secret</code> | Recommended |
+| <code class="language-plaintext highlighter-rouge">az.keyvault.secret.version</code> | string | Azure KeyVault secret version. | <code class="language-plaintext highlighter-rouge">4387e9f3d6e14c459867679a90fd0f79</code> | Recommended |
+<!-- endsemconv --></p>
+
+<h4 id="azure-mixed-reality-remote-rendering-attributes">Azure Mixed Reality Remote Rendering attributes</h4>
+
+<!-- semconv azure.sdk.remoterendering -->
+<p>| Attribute  | Type | Description  | Examples  | Requirement Level |
+|—|—|—|—|—|
+| <code class="language-plaintext highlighter-rouge">az.remoterendering.conversion.id</code> | string | A conversion id uniquely identifying the conversion for the given <a href="https://learn.microsoft.com/windows/mixed-reality/develop/mixed-reality-cloud-services#azure-remote-rendering">Azure Remote Rendering</a> account. | <code class="language-plaintext highlighter-rouge">contoso-conversion-6fae2bfb754e</code> | Recommended |
+| <code class="language-plaintext highlighter-rouge">az.remoterendering.session.id</code> | string | A session id uniquely identifying the conversion for the given <a href="https://learn.microsoft.com/windows/mixed-reality/develop/mixed-reality-cloud-services#azure-remote-rendering">Azure Remote Rendering</a> account. | <code class="language-plaintext highlighter-rouge">contoso-session-8c28813adc28</code> | Recommended |
+<!-- endsemconv --></p>
+
+
+        
+            <div class="tags">
+                
+            </div>
+        
+            
+
+        </div>
+    </div>
+</div>
+                </div>
+                <!-- /.row -->
+
+            </div>
+            <!-- /.container -->
+        </div>
+        <!-- /#main -->
+    </div>
+    
+    <!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-62780441-46"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-62780441-46');
+</script>
+
+<!-- OLD SCRIPT
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-62780441-46','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+-->
+
+    
+    
+    <!-- the app_insights gets auto inserted from the config file -->
+<!-- For other configuration elements, see https://docs.microsoft.com/azure/azure-monitor/app/javascript#snippet-based-setup -->
+
+<script type="text/javascript">
+var sdkInstance="appInsightsSDK";window[sdkInstance]="appInsights";var aiName=window[sdkInstance],aisdk=window[aiName]||function(n){var o={config:n,initialize:!0},t=document,e=window,i="script";setTimeout(function(){var e=t.createElement(i);e.src=n.url||"https://az416426.vo.msecnd.net/scripts/b/ai.2.min.js",t.getElementsByTagName(i)[0].parentNode.appendChild(e)});try{o.cookie=t.cookie}catch(e){}function a(n){o[n]=function(){var e=arguments;o.queue.push(function(){o[n].apply(o,e)})}}o.queue=[],o.version=2;for(var s=["Event","PageView","Exception","Trace","DependencyData","Metric","PageViewPerformance"];s.length;)a("track"+s.pop());var r="Track",c=r+"Page";a("start"+c),a("stop"+c);var u=r+"Event";if(a("start"+u),a("stop"+u),a("addTelemetryInitializer"),a("setAuthenticatedUserContext"),a("clearAuthenticatedUserContext"),a("flush"),o.SeverityLevel={Verbose:0,Information:1,Warning:2,Error:3,Critical:4},!(!0===n.disableExceptionTracking||n.extensionConfig&&n.extensionConfig.ApplicationInsightsAnalytics&&!0===n.extensionConfig.ApplicationInsightsAnalytics.disableExceptionTracking)){a("_"+(s="onerror"));var p=e[s];e[s]=function(e,n,t,i,a){var r=p&&p(e,n,t,i,a);return!0!==r&&o["_"+s]({message:e,url:n,lineNumber:t,columnNumber:i,error:a}),r},n.autoExceptionInstrumented=!0}return o}(
+{
+    instrumentationKey:"5e03f19a-f5b4-4620-97d5-35707cec7fcb",
+    autoTrackPageVisitTime:true,
+    isCookieUseDisabled:true
+}
+);(window[aiName]=aisdk).queue&&0===aisdk.queue.length&&aisdk.trackPageView({});
+</script>
+
+    
+</body>
+<hr class="shaded"/>
+<footer>
+    <div class="container-fluid">
+        <div class="row footer">
+            <div class="col-lg-6 text-left pb-1">
+           &copy;2024 Microsoft Azure. All rights reserved. 
+ Site last generated: May 30, 2024
+            </div>
+            <div class="col-lg-6 text-right">
+                <p><img src="/azure-sdk/images/company_logo.png" width="100px" alt="Microsoft logo"/></p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+</html>
