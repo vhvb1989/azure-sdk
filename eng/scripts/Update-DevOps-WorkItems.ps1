@@ -3,13 +3,13 @@ param (
   [string] $pkgFilter = $null,
   [bool] $updateAllVersions = $false, # When false only updates the versions in the preview and ga in csv
   [string] $github_pat = $env:GITHUB_PAT,
-  [string] $devops_pat = $env:DEVOPS_PAT
+  [string] $devops_pat = $env:DEVOPS_PAT,
+  [bool] $ignoreReleasePlannerTests = $true
 )
 Set-StrictMode -Version 3
-$ErrorActionPreference = "Continue"
 
 . (Join-Path $PSScriptRoot PackageList-Helpers.ps1)
-. (Join-Path $PSScriptRoot .. common scripts helpers DevOps-WorkItem-Helpers.ps1)
+. (Join-Path $PSScriptRoot .. common scripts Helpers DevOps-WorkItem-Helpers.ps1)
 
 if (!(Get-Command az -ErrorAction SilentlyContinue)) {
   Write-Error 'You must have the Azure CLI installed: https://aka.ms/azure-cli'
@@ -25,9 +25,13 @@ if (!$devops_pat) {
 }
 
 az extension show -n azure-devops *> $null
-if (!$?){
+if (!$?) {
   Write-Host 'Installing azure-devops extension'
   az extension add --name azure-devops
+} else {
+  # Force update the extension to the latest version if it was already installed
+  # this is needed to ensure we have the authentication issue fixed from earlier versions
+  az extension update -n azure-devops *> $null
 }
 
 $allVersions = @{}
@@ -156,9 +160,10 @@ function ParseVersionsFromTags($versionsFromTags, $existingShippedVersionSet)
       $d = $existingShippedVersionSet[$v.RawVersion].Date
     }
     # if we don't have a cached value or the cached value is Unknown look at the
-    # release tag to try and get a date
-    if ($d -eq "Unknown" -and $v.Date -is [DateTime]) {
-      $d = $v.Date.ToString("MM/dd/yyyy")
+    # release tag to try and get a date if we have one
+    $tagDate = $v.Date -as [DateTime]
+    if ($d -eq "Unknown" -and $tagDate) {
+      $d = $tagDate.ToString("MM/dd/yyyy")
     }
     $versionList += New-Object PSObject -Property @{
       Type = $v.VersionType
@@ -209,18 +214,22 @@ function RefreshItems()
       continue
     }
 
+    # Get version info, note this only gets the packages with New=True in this case.
     $pkgInfo = GetVersionInfo $pkgLang $pkgName
 
     $pkg = $null
     $versions = $null
 
-    if ($pkgInfo) {
+    # If the csv entry is marked as "Needs Review" we want to prefer the data in the workitem over the data in csv
+    if ($pkgInfo -and $pkgInfo.PackageInfo.Notes -ne "Needs Review") 
+    {
       if ($pkgInfo.VersionGroups.ContainsKey($verMajorMinor)) {
         $versions = $pkgInfo.VersionGroups[$verMajorMinor].Versions
       }
       $pkg = $pkgInfo.PackageInfo
     }
-    else {
+    else 
+    {
       $pkgFromCsv = $allPackagesFromCSV[$pkgLang].Where({ $pkgName -eq $_.Package })
 
       # For java filter down to com.azure* groupId
@@ -228,7 +237,8 @@ function RefreshItems()
         $pkgFromCsv = $pkgFromCsv.Where({ $_.GroupId -like "com.azure*" })
       }
 
-      if ($pkgFromCsv.Count -ne 0) {
+      if ($pkgFromCsv.Count -ne 0) 
+      {
         if ($pkgFromCsv.Count -gt 1) {
           Write-Warning "[$($pkgWI.id)]$pkgLang - $pkgName($verMajorMinor) - Detected new package with multiple matching package names in the csv, so skipping it."
           continue
@@ -239,13 +249,45 @@ function RefreshItems()
             # For any entry that is explicitly marked as hidden we should skip any udpating
             continue
           }
+
+          $csvEntryVersion = $csvEntry.VersionGA
+          if (!$csvEntryVersion) { $csvEntryVersion = $csvEntry.VersionPreview }
+          if (!$csvEntryVersion.StartsWith($verMajorMinor)) {
+            Write-Warning "[$($pkgWI.id)]$pkgLang - $pkgName($verMajorMinor) - Detected package work item with different version('$csvEntryVersion') then in CSV, so skipping it."
+            continue
+          }
+
           $csvEntry.New = $pkgWI.fields["Custom.PackageTypeNewLibrary"].ToString().ToLower()
           $csvEntry.Type = $pkgWI.fields["Custom.PackageType"]
-          $csvEntry.DisplayName = $pkgWI.fields["Custom.PackageDisplayName"]
-          $csvEntry.ServiceName = $pkgWI.fields["Custom.ServiceName"]
 
-          if ($pkgWI.fields["Custom.PackageRepoPath"] -and ($null -eq $csvEntry.RepoPath -or "NA" -eq $csvEntry.RepoPath)) {
-            $csvEntry.RepoPath = $pkgWI.fields["Custom.PackageRepoPath"]
+          if ($csvEntry.DisplayName.Contains("Unknown")) {
+            $csvEntry.DisplayName = $pkgWI.fields["Custom.PackageDisplayName"]
+          }
+          if ($csvEntry.ServiceName.Contains("Unknown")) {
+            $csvEntry.ServiceName = $pkgWI.fields["Custom.ServiceName"]
+          }
+
+          if ($pkgWI.fields["Custom.PackageRepoPath"] -and (!$csvEntry.RepoPath -or "NA" -eq $csvEntry.RepoPath))
+          {
+            # @azure-rest packages have unique repo path formatting so we need create a custom template for them
+            if ($csvEntry.Package.StartsWith("@azure-rest") -and !$pkgWI.fields["Custom.PackageRepoPath"].StartsWith("https"))
+            {
+              $jsLinkTemplates = GetLinkTemplates "js"
+
+              $repoPath = $jsLinkTemplates["source_url_template"]
+
+              # this assumes that the previous PackageRepoPath is the service directory which is generally the case when first created
+              $repoPath = $repoPath -replace "item.RepoPath", $pkgWI.fields["Custom.PackageRepoPath"]
+
+              # this assumes that the item.TrimmedPackage parameter in the template needs to be remove the scope and add "-rest" to end
+              $repoPath = $repoPath -replace "item.TrimmedPackage", ($csvEntry.Package -replace "@azure-rest/(.*)", "`$1-rest")
+
+              $csvEntry.RepoPath = $repoPath
+            }
+            else
+            {
+              $csvEntry.RepoPath = $pkgWI.fields["Custom.PackageRepoPath"]
+            }
           }
 
           if (!$csvEntry.RepoPath) {
@@ -294,7 +336,7 @@ function RefreshItems()
     $allVersionValues[$pkgLang][$pkgName] += $($updatedWI.fields["Custom.PackagePatchVersions"]) + "|"
   }
 
-  ## Loop over all packages in csv
+  ## Loop over all packages marked as New in CSV files
   foreach ($pkgLang in $allVersions.Keys)
   {
     foreach ($pkgName in $allVersions[$pkgLang].Keys)
@@ -334,7 +376,7 @@ function RefreshItems()
         $today = [DateTime](Get-Date -Format "MM/dd/yyyy")
         foreach ($pkgVersionValue in $pkgVersionValues) {
           $ver, $date = $pkgVersionValue.Split(",")
-          if (($date -as [DateTime]) -gt $today) {
+          if (($date -as [DateTime]) -ge $today) {
             $pkgPlannedVersions[$ver] = New-Object PSObject -Property @{
               Version = $ver
               Date = ([DateTime]$date).Tostring("MM/dd/yyyy")

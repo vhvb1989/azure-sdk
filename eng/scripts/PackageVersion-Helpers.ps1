@@ -1,6 +1,6 @@
 . (Join-Path $PSScriptRoot .. common scripts SemVer.ps1)
 
-function GetLatestTags($repo, [DateTime]$afterDate = [DateTime]::Now.AddMonths(-1))
+function GetLatestTags($repo, [DateTimeOffset]$afterDate = [DateTimeOffset]::UtcNow.AddMonths(-1))
 {
   $GithubHeaders = @{}
   if (!$github_pat) {
@@ -71,24 +71,24 @@ function GetLatestTags($repo, [DateTime]$afterDate = [DateTime]::Now.AddMonths(-
 
       foreach ($tagNode in $response.data.repository.refs.nodes)
       {
+        # Capture the dates as datetimeoffset as they are usually utc and we mostly only care about the date part and not the time
         if ($tagNode.target.psobject.members.name -contains "committedDate")
         {
           # For lightweight tags the target is directly a commit
-          $tagDate = [DateTime]$tagNode.target.committedDate
+          $tagDate = [DateTimeOffset]$tagNode.target.committedDate
         }
         else {
           # For annotated tags the target is one more level deep from the commit
-          $tagDate = [DateTime]$tagNode.target.target.committedDate
+          $tagDate = [DateTimeOffset]$tagNode.target.target.committedDate
         }
-
-        # Convert the commit times from UTC to local for comparison
-        $tagDate = $tagDate.ToLocalTime();
 
         if ($tagDate -ge $afterDate) {
           Write-Verbose "Found $($tagNode.name) in repo $repo with date ${tagDate}"
           $tags += [PSCustomObject]@{
             Tag = $tagNode.name
-            Date = $tagDate
+            # Remove the time part of this date and note this date is UTC so depending on usage context
+            # this can cause an off-by-one day issue if used to compare against local
+            Date = $tagDate.ToString("MM/dd/yyy")
           }
         }
         else {
@@ -117,7 +117,16 @@ function ToSemVer($version, $tagDate = "Unknown")
   return $sv
 }
 
-function GetPackageVersions($lang, [DateTime]$afterDate = [DateTime]::Now.AddMonths(-1), $tagSplit = "_")
+function Get-DateFromSemVer($semVer)
+{
+  $d = $semVer.Date -as [DateTime]
+  if ($d) {
+    return $d.ToString("MM/dd/yyyy")
+  }
+  return ""
+}
+
+function GetPackageVersions($lang, [DateTimeOffset]$afterDate = [DateTimeOffset]::UtcNow.AddMonths(-1), $tagSplit = "_")
 {
   $repoName = "azure-sdk-for-$lang"
   if ($lang -eq "dotnet") { $repoName = "azure-sdk-for-net" }
@@ -133,14 +142,15 @@ function GetPackageVersions($lang, [DateTime]$afterDate = [DateTime]::Now.AddMon
 
     if ($tagSplit)
     {
-      $sp = $tagName -split $tagSplit
-      if ($sp.Length -ne 2) {
-        Write-Verbose "Failed to split tag correctly in language '$lang' with tag '$tagName'."
+      $splitIndex = $tagName.LastIndexOf($tagSplit)
+
+      if ($splitIndex -lt 0) {
+        Write-Verbose "Failed to file '$tagSplit' in tag in language '$lang' for tag '$tagName'."
         continue
       }
 
-      $package = $sp[0]
-      $version = $sp[1]
+      $package = $tagName.Substring(0, $splitIndex)
+      $version = $tagName.Substring($splitIndex + $tagSplit.Length)
     }
     else
     {

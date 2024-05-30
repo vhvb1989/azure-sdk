@@ -6,8 +6,6 @@ folder: cpp
 sidebar: general_sidebar
 ---
 
-{% include draft.html content="The C++ Language guidelines are in DRAFT status" %}
-
 ## Introduction
 
 The C++ guidelines are for the benefit of client library designers targeting service applications written in C++.  You do not have to write a client library for C++ if your service is not normally accessed from C++.
@@ -72,13 +70,55 @@ The API surface of your client library must have the most thought as it is the p
 
 {% include requirement/MUST id="cpp-design-dependencies-adparch" %} consult the [Architecture Board] if you wish to use a dependency that is not on the list of approved dependencies.
 
-### The Service Client {#cpp-client}
+### Service Client {#cpp-client}
 
-> TODO: This section needs to be driven by code in the Core library.
+Service clients are the main starting points for developers calling Azure services with the Azure SDK. Each client library should have at least one client in its main namespace, so it’s easy to discover. The guidelines in this section describe patterns for the design of a service client.
+
+There exists a distinction that must be made clear with service clients: not all classes that perform HTTP (or otherwise) requests to a service are automatically designated as a service client. A service client designation is only applied to classes that are able to be directly constructed because they are uniquely represented on the service. Additionally, a service client designation is only applied if there is a specific scenario that applies where the direct creation of the client is appropriate. If a resource can not be uniquely identified or there is no need for direct creation of the type, then the service client designation should not apply.
+
+{% include requirement/MUST id="cpp-service-client-name" %} name service client types with the _Client_ suffix (for example, `ConfigurationClient`).
+
+{% include requirement/MUST id="cpp-service-client-namespace" %} place service client types that the consumer is most likely to interact with in the root namespace of the client library (for example, `Azure::<group>::<service>`). Specialized service clients should be placed in sub-packages.
+
+{% include requirement/MUST id="cpp-service-client-type" %} make service clients `classes`, not `structs`.
+
+{% include requirement/MUST id="cpp-service-client-immutable" %} ensure that all service client classes thread safe (usually by making them immutable and stateless).
+
+{% include requirement/MUST id="cpp-service-client-geturl" %} expose a `GetUrl()` method which returns the URL.
 
 #### Service Client Constructors {#cpp-client-ctor}
 
-> TODO: This section needs to be driven by code in the Core library.
+{% include requirement/MUST id="cpp-service-client-constructor-minimal" %} provide a minimal constructor that takes only the parameters required to connect to the service.
+
+{% include requirement/MUSTNOT id="cpp-client-constructor-no-default-params" %} use default parameters in the simplest constructor.
+
+{% include requirement/MUST id="cpp-client-constructor-overloads" %} provide constructor overloads that allow specifying additional options via  an `options` parameter. The type of the parameter is typically a subclass of ```ClientOptions``` type, shown below.
+
+{% highlight cpp %}
+ExampleClient ExampleClient(
+  const std::string& url,
+  const ExampleClientOptions& options)
+{
+    ...
+
+    return ExampleClient(......, options);
+}
+{% endhighlight %}
+
+% include requirement/MAY id="cpp-service-client-constructor-connectionstring" %} provide a constructor that takes a connection if the service supports it.
+
+{% highlight cpp %}
+ExampleClient ExampleClient::CreateFromConnectionString(
+  const std::string& connectionString,
+  const ExampleClientOptions& options)
+{
+    ...
+
+    return ExampleClient(......, options);
+}
+{% endhighlight %}
+
+% include requirement/SHOULD id="cpp-service-client-constructor-minimal" %} recommend customers use passwordless authentication methods to connect to the service.
 
 ##### Client Configuration
 
@@ -107,11 +147,7 @@ won't have a filesystem or an "environment block" to read from.
 
 ##### Using ClientOptions {#cpp-usage-options}
 
-> TODO: This section needs to be driven by code in the Core library.
-
 ##### Service Versions
-
-> TODO: This section needs to be driven by code in the Core library.
 
 {% include requirement/MUST id="cpp-versioning-highest-api" %} call the highest supported service API version by default.
 
@@ -127,11 +163,7 @@ Use a constructor parameter called `version` on the client options type.
 
 ##### Mocking
 
-> TODO: This section needs to be driven by code in the Core library.
-
 #### Service Methods {#cpp-client-methods}
-
-> TODO: This section needs to be driven by code in the Core library.
 
 _Service methods_ are the methods on the client that invoke operations on the service.
 
@@ -142,8 +174,6 @@ The C++ SDK is designed for synchronous api calls.
 {% include requirement/MUST id="cpp-design-client-sync-api" %} provide a synchronous programming model.
 
 {% include requirement/MUSTNOT id="cpp-design-client-sync-api" %} provide an async programming model.
-
-> TODO: This section needs to be driven by code in the Core library.
 
 ##### Naming
 
@@ -157,10 +187,10 @@ The C++ SDK is designed for synchronous api calls.
 
 {% highlight cpp %}
 namespace Azure { namespace Group { namespace Service {
-namespace Details {
+namespace _detail {
 // Part of the private API
 [[nodiscard]] int64_t ComputeHash(int32_t a, int32_t b) noexcept;
-} // namespace Details
+} // namespace _detail
 
 // Part of the public API
 [[nodiscard]] CatHerdClient CatHerdCreateClient(char* herdName);
@@ -176,7 +206,7 @@ namespace Details {
 
 {% include requirement/MUST id="cpp-design-naming-variables-constants" %} name namespace scope `const` or `constexpr` variables intended for user consumption with **PascalCase**.
 
-{% include requirement/MUST id="cpp-design-naming-variables-public-global" %} name namespace scope non-constant variables intended only for internal consumption with a `g_` prefix followed by **camelCase**. For example, `g_applicationContext`. Note that all such cases will be in a `Details` namespace or an unnamed namespace.
+{% include requirement/MUST id="cpp-design-naming-variables-public-global" %} name namespace scope non-constant variables intended only for internal consumption with a `g_` prefix followed by **camelCase**. For example, `g_applicationContext`. Note that all such cases will be in a `_detail` namespace or an unnamed namespace.
 
 {% include requirement/MUST id="cpp-design-naming-variables-local" %} name local variables and parameters with **camelCase**.
 
@@ -193,9 +223,9 @@ void Function(int parameterName) {
     int localName;
 }
 
-namespace Details {
+namespace _detail {
     extern int g_internalUseGlobal;
-} // namespace Details
+} // namespace _detail
 
 }}} // namespace Azure::Group::Service
 {% endhighlight %}
@@ -223,7 +253,6 @@ uint32 MyWeightKg;
 
 {% include requirement/MUST id="cpp-design-naming-variables-one-per-line" %} Declare or define each variable on its own line, except when declaring bitfields. An exception can be made when declaring bitfields (to clarify that the variable is a part of one bitfield). The use of bitfields in general is discouraged.
 
-
 ##### Cancellation
 
 {% include requirement/MUST id="cpp-service-methods-cancellation" %} ensure all service methods, both asynchronous and synchronous, take an optional `Context` parameter called _context_.
@@ -231,8 +260,6 @@ uint32 MyWeightKg;
 The context should be further passed to all calls that take a context. DO NOT check the context manually, except when running a significant amount of CPU-bound work within the library, e.g. a loop that can take more than a typical network call.
 
 ##### Mocking
-
-> TODO: This section needs to be driven by code in the Core library.
 
 ##### Return Types
 
@@ -296,14 +323,11 @@ For methods that combine multiple requests into a single call:
 
 {% include requirement/MUST id="cpp-design-logical-client-expose-data-for-composite-failures" %} provide enough information in failure cases for an application to take appropriate corrective action.
 
-
 ##### Thread Safety
 
 {% include requirement/MUST id="cpp-design-client-methods-thread-safety" %} be thread-safe. All public members of the client type must be safe to call from multiple threads concurrently.
 
 #### Service Method Parameters {#cpp-parameters}
-
-> TODO: This section needs to be driven by code in the Core library.
 
 ##### Parameter Validation
 
@@ -331,8 +355,6 @@ Some service operations, known as _Long Running Operations_ or _LROs_ take a lon
 
 Azure::Core library exposes an abstract type called `Operation<T>`, which represents such LROs and supports operations for polling and waiting for status changes, and retrieving the final operation result.  A service method invoking a long running operation will return a subclass of `Operation<T>`, as shown below.
 
-> TODO: This section needs to be driven by code in the Core library.
-
 {% include requirement/MUST id="cpp-lro-prefix" %} name all methods that start an LRO with the `Start` prefix.
 
 {% include requirement/MUST id="cpp-lro-return" %} return a subclass of `Operation<T>` from LRO methods.
@@ -342,11 +364,11 @@ For example, some subclasses add a constructor allowing to create an operation i
 
 ##### Conditional Request Methods
 
-> TODO: This section needs to be driven by code in the Core library.
+{% include requirement/MUST id="cpp-conditional-request-methods-etag-options" %} define ETag-related options e.g., `IfMatch`, `IfNoneMatch`, etc., in the service method options.
 
 ##### Hierarchical Clients
 
-> TODO: This section needs to be driven by code in the Core library.
+{% include requirement/MAY id="cpp-hierarchical-clients-subclients-return" %} return clients from other clients e.g., a `DatabaseClient` from a `CosmosClient`.
 
 ### Supporting Types
 
@@ -356,20 +378,19 @@ In addition to service client types, Azure SDK APIs provide and use other suppor
 
 This section describes guidelines for the design _model types_ and all their transitive closure of public dependencies (i.e. the _model graph_).  A model type is a representation of a REST service's resource.
 
-
 {% include requirement/MUST id="cpp-design-model-public-getters" %} ensure model public properties are const if they aren't intended to be changed by the user.
 
 Most output-only models can be fully read-only. Models that are used as both outputs and inputs (i.e. received from and sent to the service) typically have a mixture of read-only and read-write properties.
 
-> TODO: This section needs to be driven by code in the Core library.
-
 ##### Model Type Naming
 
-> TODO: This section needs to be driven by code in the Core library.
+{% include requirement/MUST id="cpp-model-type-naming-collision" %} define models using the names from TypeSpec unless those names conflict with keywords or common types from `std`, `Azure::Core`, or other common dependencies.
+
+If name collisions are likely and the TypeSpec cannot be changed, you can either use the `@clientName` TypeSpec decorator or update a client `.tsp` file.
+
+{% include requirement/MUST id="cpp-model-names-fields-casing" %} define model fields using "PascalCase".
 
 #### Enumerations
-
-> TODO: This section needs to be driven by code in the Core library.
 
 {% include requirement/MUST id="cpp-design-enums" %} use an `enum` for parameters, properties, and return types when values are known.
 
@@ -382,8 +403,6 @@ See [enumeration-like structure documentation](implementation.md#cpp-enums) for 
 The `azure-core` package provides common functionality for client libraries.  Documentation and usage examples can be found in the [azure/azure-sdk-for-cpp](https://github.com/Azure/azure-sdk-for-cpp/tree/main/sdk/core/azure-core) repository.
 
 #### Using Primitive Types
-
-> TODO: This section needs to be driven by code in the Core library.
 
 {% include requirement/MUST id="cpp-primitives-etag" %} use `Azure::Core::ETag` to represent ETags.
 
@@ -451,8 +470,6 @@ Note that on some comonly deployed platforms like Linux, handling heap exhaustio
 **Recoverable errors**
 
 {% include requirement/MUST id="cpp-design-logical-errorhandling-recov-reporting" %} report errors by throwing C++ exceptions defined in the Azure C++ Core Library.
-
-> TODO: The Core library needs to provide exceptions for the common failure modes, e.g. the same values as `az_result` in the C SDK.
 
 For example:
 
@@ -585,18 +602,18 @@ Many `management` APIs do not have a data plane because they deal with managemen
 
 {% include requirement/MUST id="general-namespaces-registration" %} register the chosen namespace with the [Architecture Board].  Open an issue to request the namespace.  See [the registered namespace list](registered_namespaces.html) for a list of the currently registered namespaces.
 
-{% include requirement/MUST id="cpp-design-naming-namespaces-details" %} place private implementation details in a `Details` namespace.
+{% include requirement/MUST id="cpp-design-naming-namespaces-details" %} place private implementation details in a `_detail` namespace.
 
 {% highlight cpp %}
 namespace Azure { namespace Group { namespace Service {
-namespace Details {
+namespace _detail {
 // Part of the private API
 struct HashComputation {
     int InternalBookkeeping;
 };
 
 const int g_privateConstant = 1729;
-} // namespace Details
+} // namespace _detail
 
 // Part of the public API
 struct UploadBlobRequest {
@@ -644,8 +661,6 @@ Here are some namespaces that do not meet the guidelines:
 {% include requirement/MUST id="cpp-package-vcpkg" %} publish your package to [vcpkg](https://github.com/Microsoft/vcpkg), a C++ library manager supporting Windows, Linux, and MacOS.
 
 #### Common Libraries
-
-> TODO: This section needs to be driven by code in the Core library.
 
 ### Versioning {#cpp-versioning}
 
@@ -704,7 +719,7 @@ dependency.
 
 {% include requirement/MUST id="cpp-docs-document-everything" %} document every exposed (public or protected) type and member within your library's code.
 
-{% include requirement/MUST id="cpp-docs-docstrings" %} use [doxygen](http://www.doxygen.nl/index.html) comments for reference documentation.
+{% include requirement/MUST id="cpp-docs-docstrings" %} use [doxygen](https://www.doxygen.nl/index.html) comments for reference documentation.
 
 See the [documentation guidelines]({{ site.baseurl }}/general_documentation.html) for language-independent guidelines for how to provide good documentation.
 
@@ -713,8 +728,6 @@ See the [documentation guidelines]({{ site.baseurl }}/general_documentation.html
 {% include requirement/MUST id="cpp-general-repository" %} locate all source code and README in the [azure/azure-sdk-for-cpp] GitHub repository.
 
 {% include requirement/MUST id="cpp-general-engsys" %} follow Azure SDK engineering systems guidelines for working in the [azure/azure-sdk-for-cpp] GitHub repository.
-
-> TODO: Content in this section below here should be moved to a better location.
 
 {% include requirement/MUST id="cpp-style-clang-format" %} format your source code with `clang-format`, using the configuration file located in [the azure-sdk-for-cpp repo](https://github.com/Azure/azure-sdk-for-cpp/blob/main/.clang-format).
 
@@ -739,7 +752,6 @@ Filenames should be concise, but convey what role the file plays within the libr
 {% include requirement/SHOULD id="cpp-style-sub-sdk-header" %} have headers for smaller components that make sense to be used together. For example, `<azure/speech/translation.hpp>`.
 
 {% include requirement/MUSTNOT id="cpp-style-change-headers" %} substantially change the names exposed by the header in response to macros or other controls. For example, `NOMINMAX` or `WIN32_LEAN_AND_MEAN` from `<Windows.h>`.
-
 
 ### Documentation Style
 
@@ -766,7 +778,7 @@ As you write your code, *doc it so you never hear about it again.* The less ques
 
 **Docstrings**
 
-{% include requirement/MUST id="cpp-docs-doxygen" %} include docstrings compatible with the [doxygen](http://www.doxygen.nl/index.html) tool for generating reference documentation.
+{% include requirement/MUST id="cpp-docs-doxygen" %} include docstrings compatible with the [doxygen](https://www.doxygen.nl/index.html) tool for generating reference documentation.
 
 For example, a (very) simple docstring might look like:
 {% highlight cpp %}
@@ -1027,11 +1039,11 @@ The contributor guide (`CONTRIBUTING.md`) should be a separate file linked to fr
 
 ### Samples {#cpp-samples}
 
-> TODO: Provide sample guidelines.
+{% include requirement/MUST id="cpp-repo-samples-examples" %} include runnable examples using `Azure::Identity::DefaultAzureCredential` and library-specific environment variables e.g., `AZURE_KEYVAULT_URL`.
+
+{% include requirement/MUST id="cpp-repo-samples-unique" %} use unique example file names within the `samples` folder.
 
 ## Commonly Overlooked C++ API Design Guidelines {#cpp-appendix-overlookedguidelines}
-
-> TODO: Provide C++ specific API design guidelines.  Example:
 
 {% include requirement/SHOULDNOT id="cpp-format-cpp-no-goto" %} use `goto` statements.  The main place where `goto` statements can be usefully employed is to break out of several levels of `switch`, `for`, or `while` nesting, although the need to do such a thing may indicate that the inner constructs should be broken out into a separate function with a success/failure return code.  When a `goto` is necessary, the accompanying label should be alone on a line and to the left of the code that follows.  The `goto` should be commented as to its utility and purpose.
 
